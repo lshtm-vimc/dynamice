@@ -1,0 +1,99 @@
+country_code,country,CFR
+AFG,Afghanistan,4
+ALB,Albania,0.3
+AGO,Angola,3
+ARM,Armenia,0.3
+AZE,Azerbaijan,0.3
+BGD,Bangladesh,1.5
+BLZ,Belize,1
+BEN,Benin,1
+BTN,Bhutan,0.75
+BOL,Bolivia,1
+BIH,Bosnia and Herzegovina,0.3
+BFA,Burkina Faso,4
+BDI,Burundi,4
+KHM,Cambodia,2.5
+CMR,Cameroon,3.5
+CPV,Cape Verde,2.5
+CAF,Central African Republic,4.5
+TCD,Chad,4.5
+COM,Comoros,3.5
+COD,"Congo, DR",4.5
+COG,"Congo, Rep.",4.5
+CIV,Cote d'Ivoire,4.5
+CUB,Cuba,1
+DJI,Djibouti,2.5
+EGY,Egypt,0.75
+SLV,El Salvador,1
+ERI,Eritrea,4.5
+ETH,Ethiopia,3.5
+FJI,Fiji,1
+GMB,Gambia,5.5
+GEO,Georgia,0.3
+GHA,Ghana,4.5
+GTM,Guatemala,1
+GIN,Guinea,5.5
+GNB,Guinea-Bissau,5.5
+GUY,Guyana,1
+HTI,Haiti,2.5
+HND,Honduras,2
+IND,India,1.5
+IDN,Indonesia,2.5
+IRQ,Iraq,0.75
+KEN,Kenya,3.5
+KIR,Kiribati,2
+PRK,"Korea, DPR",3.5
+XK,Kosovo,0.3
+KGZ,Kyrgyzstan,0.3
+LAO,Lao PDR,3.5
+LSO,Lesotho,4.5
+LBR,Liberia,5.5
+MDG,Madagascar,3.5
+MWI,Malawi,2.5
+MLI,Mali,4.5
+MHL,Marshall Islands,1
+MRT,Mauritania,5.5
+FSM,Micronesia,2
+MDA,Moldova,0.3
+MNG,Mongolia,0.5
+MAR,Morocco,1
+MOZ,Mozambique,4.5
+MMR,Myanmar,3.5
+NPL,Nepal,2.5
+NIC,Nicaragua,2
+NER,Niger,4.5
+NGA,Nigeria,4.5
+PAK,Pakistan,1.5
+PNG,Papua New Guinea,2
+PRY,Paraguay,1
+PHL,Philippines,0.75
+RWA,Rwanda,4.5
+WSM,Samoa,1
+STP,Sao Tome e Principe,1
+SEN,Senegal,4.5
+SLE,Sierra Leone,5.5
+SLB,Solomon Islands,1
+SOM,Somalia,4.5
+LKA,Sri Lanka,0.75
+SDN,Sudan: North,2.5
+SSD,Sudan: South,4.5
+SWZ,Swaziland,0.3
+SYR,Syria,0.3
+TJK,Tajikistan,0.5
+TZA,Tanzania,3.5
+TLS,Timor-Leste,2.5
+TGO,Togo,1
+TON,Tonga,1
+TKM,Turkmenistan,1
+TUV,Tuvalu,1
+UGA,Uganda,3.5
+UKR,Ukraine,0.3
+UZB,Uzbekistan,0.3
+VUT,Vanuatu,1
+VNM,Vietnam,2.5
+PSE,West Bank and Gaza,0.75
+YEM,Yemen,2.5
+ZMB,Zambia,4.5
+ZWE,Zimbabwe,5.5
+CHN,China,0.3
+TUN,Tunisia,0.3
