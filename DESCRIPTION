@@ -4,7 +4,9 @@ Version: 0.1
 Author: Modelling and Economic Evaluation of Vaccines group, LSHTM (https://meev.lshtm.ac.uk)
 Maintainer: MEEV <meev@lshtm.ac.uk>
 Description: DynaMICE (DYNAmic Measles Immunisation Calculation Engine) is a measles transmission and vaccination model.
-Depends: R (>= 3.5.0)
+Depends: 
+  R (>= 3.5.0),
+  data.table
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

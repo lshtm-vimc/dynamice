@@ -176,7 +176,7 @@ for (index in first_scenario:last_scenario) {
   # set scenario name
   scenario_name   <- scenarios [index]
   print (scenario_name)
-  tic ()
+  tictoc::tic ()
 
   # set scenario number in order to save it in the right folder
   #   scenarioXX, XX = 01, 02, ... ,10, 11, 12, ...
@@ -248,7 +248,7 @@ for (index in first_scenario:last_scenario) {
                        )
   # ----------------------------------------------------------------------------
 
-  toc ()
+  tictoc::toc ()
 } # end of loop -- for (scenario in scenarios)
 
 

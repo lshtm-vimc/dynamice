@@ -179,8 +179,6 @@ runCountry <- function (
   remove_files
 ) {
 
-  require("data.table")
-
   # temporarily assign 3-letter-ISO code to Kosovo until Kosovo is assigned official ISO3-code
   if (iso3 == "XK"){
     fortran_country_code <- "XKX"
@@ -256,10 +254,8 @@ runCountry <- function (
 
     # country_specific contact matrix
     q             <- c_rnought / r0_basic  # proportionality factor (infectivity, underreporting)
-    gamma         <- 1 / ( dinf * tstep / 365 )  # rate of losing infection (Han: annual rate)
     contact_day   <- contact * q
     contact_tstep <- contact_day * (365 / tstep)
-    r0_tstep      <- Re (eigen (contact_tstep, only.values=T)$values[1])
 
     # country specific timeliness curve
     country_timeliness <- timeliness [country_code == iso3 & !is.na(age), timeliness]
@@ -322,13 +318,13 @@ runCountry <- function (
     # generate DynaMICE input files for each year
     for (y in years) {
 
-      #old script groups those aged 70-80, but division is by actual popsize
+      #old script groups those aged 70-80, but division is by actual population size
       pop.vector <- population[country_code == iso3 & year == y, value]
 
-      # first expand polymod matrix (contact_tstep) and poopulation vector and
+      # first expand polymod matrix (contact_tstep) and population vector and
       # then divide by population sizes, otherwise it doesn't work.
-
       pop.vector_full <- c(rep(pop.vector[1:jt]/s, each = s), pop.vector[(jt +1):length(pop.vector)])
+
       # change zero values to 1 to avoid division by 0
       pop.vector_full[pop.vector_full==0] <- 1
 
@@ -339,7 +335,8 @@ runCountry <- function (
         # To estimate proportion that is vaccinated at each week, we first calculate the number of individuals remaining susceptible
         # Then we calculate the number of individuals that should be vaccinated each week, in order to remain 1 - coverage susceptibles at the end of the timeliness data
         # In essence, this becomes the inverse of the cumulative timeliness curve
-        cycov <- coverage_routine [country_code == iso3 & year == y & vaccine == "MCV1", coverage]/timeliness[country_code == iso3 & is.na(age), prop_final_cov]
+        cycov <- coverage_routine [country_code == iso3 & year == y & vaccine == "MCV1", coverage] /
+          timeliness [country_code == iso3 & is.na(age), prop_final_cov]
 
         if (length(cycov) == 0) {   # check if vaccine is not yet introduced and thereby, coverage value missing for this year
           cycov <- 0
@@ -350,13 +347,14 @@ runCountry <- function (
         country_year_timeliness_mcv1 <- 1 - min(cycov,1) * country_timeliness
 
         country_year_timeliness_mcv1 <- -diff(country_year_timeliness_mcv1) /
-          (country_year_timeliness_mcv1[1:(length(country_year_timeliness_mcv1)-1)])
+          (country_year_timeliness_mcv1 [1:(length(country_year_timeliness_mcv1)-1)])
 
         # Timeliness is reported by week in the first year, and by month in the second year. Assume there is no vaccination in between
-        country_year_timeliness_mcv1[is.na(country_year_timeliness_mcv1)] <- 0
-        country_year_timeliness_mcv1[is.nan(country_year_timeliness_mcv1)] <- 0
+        country_year_timeliness_mcv1 [is.na(country_year_timeliness_mcv1)] <- 0
+        country_year_timeliness_mcv1 [is.nan(country_year_timeliness_mcv1)] <- 0
         country_year_timeliness_mcv1_allages <- rep(0, 254)
-        country_year_timeliness_mcv1_allages[round(timeliness_ages)] <- country_year_timeliness_mcv1
+        country_year_timeliness_mcv1_allages [round(timeliness_ages)] <- country_year_timeliness_mcv1
+
       } else {
         country_year_timeliness_mcv1_allages <- rep(0, 254)
       }
@@ -618,7 +616,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
   #       e) MCV1 and SIA dependency - use linear regression of data from Portnoy et al 2018 to inform the proportion of zero-dose children reached by SIA campaign
   #       f) due to issues with age_range_verbatim field in the scenario (coverage) input files, these runs use age_first and age_last
 
-  require("data.table")
   # save to the scenario folder
   save.scenario <- scenario_number
 
@@ -705,8 +702,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # load correct libraries when on cluster (using open MPI)
   if ("cluster_using_openmpi" %in% commandArgs()){
     using_openmpi <- TRUE
-    require("doMPI")
-    require("parallel")
+    require(doMPI)
+    require(parallel)
     cl <- startMPIcluster()
     registerDoMPI(cl)
     print("using openMPI")
@@ -900,7 +897,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
 
   r0_basic <- Re (eigen (contact * dinf, only.values = T)$values[1])
-  gamma    <- 1 / (dinf * tstep/365)
+  gamma    <- 1 / (dinf * tstep/365) # rate of losing infectivity
 
   # Run model
   writelog ("gavi_log", paste0 ("Main; Foldername: ", foldername))
@@ -908,27 +905,28 @@ runScenario <- function (vaccine_coverage_folder    = "",
   if(using_openmpi | use_cluster > 1){
     if(!using_openmpi){
 
-      if ( use_cluster != detectCores() ) {
-        warning (paste0(detectCores(), " cores detected but ", use_cluster, " specified."))
+      if ( use_cluster != parallel::detectCores() ) {
+        warning (paste0(parallel::detectCores(), " cores detected but ", use_cluster, " specified."))
       }
 
-      cl <- makeCluster (use_cluster)
-      registerDoParallel (cl)
+      cl <- parallel::makeCluster (use_cluster)
+      doParallel::registerDoParallel (cl)
 
     } else {
-      print(paste0("Clustersize: ", clusterSize(cl)))
+      print(paste0("Clustersize: ", doMPI::clusterSize (cl)))
     }
   }
 
 
   # foreach will run countries and PSA runs in parallel if a parallel backend
   # is registered, and sequentially otherwise
-  combine <- foreach::foreach (
+  require(foreach)
+  combine <- foreach (
     ii = 1:length(countries),
     .packages = c("data.table"),
     .errorhandling="stop",
     .export = c("runCountry", "writelog", "expandMatrix", "updateProgress")
-  ) %:% foreach::foreach (
+  ) %:% foreach (
     r = 1:runs,
     .errorhandling = "pass"
   ) %dopar% {
@@ -1076,8 +1074,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
   country_names <- unique (subset (template, select = c("country", "country_name")))
   c_names <- country_names$country_name; names(c_names) = country_names$country
 
-  # life.exp.all <- rbindlist(lapply(0:100, function(i) copy(lexp0)[, age:=i])) #(Han: not used)
-
   all_runs[, c("country_name", "disease") := list(c_names[country],"Measles")]
 
 
@@ -1193,13 +1189,13 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   # save burden estimates to file
   fwrite (x    = output_runs [order(country, year, age)],
-                      file = paste0 (burden_estimate_folder,  burden_estimate_file) )
+          file = paste0 (burden_estimate_folder,  burden_estimate_file) )
 
   # clean environment
   writelog ("gavi_log", paste0 ("Main; gavi.r finished"))
 
   if (using_openmpi) {
-    mpi.quit()
+    Rmpi::mpi.quit()
   }
 
   # return burden estimate filename (cases)
@@ -1301,7 +1297,7 @@ estimateDeathsDalys <- function (cfr_option,
     # cfr estimates are for 2000 to 2030
     # if cfr estimates are required for years below or above this range, then
     # for years below 2000, set cfr estimates of year 2000
-    # for years above 2030, set cfr estimates of year 2030 (Han: change to process beforehand and truncate for certian countries)
+    # for years above 2030, set cfr estimates of year 2030
 
     # find minimum and maximum year
     min_year = min (burden [, year])
@@ -1364,17 +1360,17 @@ estimateDeathsDalys <- function (cfr_option,
   # ----------------------------------------------------------------------------
 
   # append/suffix cfr_option to the end of filename
-  updated_burden_estimate_file <- str_replace (string      = burden_estimate_file,
-                                               pattern     = ".csv",
-                                               replacement = paste0 ("_", cfr_option, ".csv")
+  updated_burden_estimate_file <- stringr::str_replace (string      = burden_estimate_file,
+                                                        pattern     = ".csv",
+                                                        replacement = paste0 ("_", cfr_option, ".csv")
   )
 
   # save updated burden estimate file (cases + deaths) to file
   # cfr_option is also the name of the subfolder
   fwrite (x    = burden,
-                      file = paste0 (burden_estimate_folder,
-                                     cfr_option, "/",
-                                     updated_burden_estimate_file)
+          file = paste0 (burden_estimate_folder,
+                         cfr_option, "/",
+                         updated_burden_estimate_file)
   )
 
   return ()

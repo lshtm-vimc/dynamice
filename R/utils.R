@@ -72,12 +72,12 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   # If age_first = 1 and age_range_verbatim = default or other text, then set start age to 0.5 (6 months).
 
   sia2 [                 , age_first := as.double (age_first)]
-  # sia2 [age_first == 1, age_first := as.double (str_extract (age_range_verbatim, "\\d+")) / 12]
+  # sia2 [age_first == 1, age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
   # age_range_verbatim "1-14 Y" should not interpreted as 1 month
   sia2 [is.na (age_first), age_first := 0.5]
-  sia2 [age_first == 1 & (str_extract (age_range_verbatim, "\\d+") != "1"),
-        age_first := as.double (str_extract (age_range_verbatim, "\\d+")) / 12]
-  sia2 [age_first == 0,    age_first := as.double (str_extract (age_range_verbatim, "\\d+")) / 12]
+  sia2 [age_first == 1 & (stringr::str_extract (age_range_verbatim, "\\d+") != "1"),
+        age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
+  sia2 [age_first == 0,    age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
   # -----------------------------------------------------------------------------------
 
 
@@ -289,7 +289,6 @@ expandMatrix <- function (A,
 #'  )
 create_no_vaccination_coverage_file <- function (no_vaccination_coverage_file,
                                                  vaccination_coverage_file) {
-  require("data.table")
 
   # read vaccine coverage from vaccination scenario coverage file
   vaccine_coverage <- fread (file = vaccination_coverage_file)
@@ -326,7 +325,6 @@ create_no_vaccination_coverage_file <- function (no_vaccination_coverage_file,
 #'  )
 create_campaign_vaccination_coverage_file <- function (campaign_only_vaccination_coverage_file,
                                                        routine_campaign_vaccination_coverage_file) {
-  require("data.table")
 
   # read vaccine coverage from (routine + campaign) vaccination coverage file
   vaccine_coverage <- fread (file = routine_campaign_vaccination_coverage_file)
@@ -409,20 +407,21 @@ tailor_data_lexp_remain <- function (sel_countries = "all"){
     }
 
   # Since year is 5-year intervals, add data for all in-between years
-  for (i in 1:4) {
+  lexp_remain_full <- NULL
+  for (i in 0:4) {
     dt <- copy (lexp_remain)
     dt [, year := year + i]
 
     # add table to full table of remaining life expectancy
-    lexp_remain_full <- rbindlist (list (lexp_remain, dt),
+    lexp_remain_full <- rbindlist (list (lexp_remain_full, dt),
                                    use.names = T)
   }
 
-  # add data for 2100 for remaining life expectancy
+  # add data between 1980 to 2100 for remaining life expectancy
   # copy values for year 2095 to year 2100
   lexp_remain_2100 <- lexp_remain [year == 2095]
   lexp_remain_2100 [, year := 2100]
-  lexp_remain_full <- rbindlist (list (copy (lexp_remain_full), lexp_remain_2100),
+  lexp_remain_full <- rbindlist (list (lexp_remain_full, lexp_remain_2100),
                                  use.names = T)
 
   setorder(lexp_remain_full, country_code, year)
@@ -453,7 +452,6 @@ tailor_data_lexp_remain <- function (sel_countries = "all"){
 create_PSA_data <- function (psa             = 0,
                              seed_state      = 1,
                              psadat_filename = NA) {
-  require("data.table")
 
   # set seed for reproducibility
   set.seed (seed = seed_state)

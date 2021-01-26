@@ -47,7 +47,7 @@
 #'   \item{contact.age}{age between 0 and 100}
 #'   \item{V1:V101}{age between 0 and 100}
 #' }
-#' @source {Estimates provided by and Ferrari and team}
+#' @source {Estimates provided by and Ferrari M and team}
 "data_r0"
 
 
