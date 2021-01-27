@@ -20,7 +20,8 @@ runScenario(
   vaccination,
   using_sia,
   measles_model,
-  debug_model = FALSE
+  debug_model = FALSE,
+  fix.uk.contact = TRUE
 )
 }
 \arguments{

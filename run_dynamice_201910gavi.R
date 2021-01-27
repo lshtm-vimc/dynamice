@@ -32,7 +32,8 @@ load(file = "data/data_pop.rda")
 load(file = "data/data_cfr.rda")
 load(file = "data/data_cfr_portnoy.rda")
 load(file = "data/data_cfr_wolfson.rda")
-load(file = "data/data_contact.rda")
+load(file = "data/data_contact_uk.rda")
+load(file = "data/data_contact_syn.rda")
 load(file = "data/data_r0.rda")
 load(file = "data/data_timeliness.rda")
 load(file = "data/data_lexp0.rda")
@@ -41,8 +42,8 @@ load(file = "data/data_template.rda")
 #load(file = "data/data_psa200.rda")
 
 # rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
-#                         "data_contact","data_r0","data_timeliness","data_lexp0",
-#                         "data_lexp_remain","data_template")))
+#                         "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
+#                         "data_lexp0","data_lexp_remain","data_template")))
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -211,7 +212,6 @@ for (index in first_scenario:last_scenario) {
     scenario_name              = scenario_name,
     scenario_number            = scenario_number,
     vaccine_coverage_subfolder = var$vaccine_coverage_subfolder,
-    # burden_template            = var$burden_template,
     burden_estimate_folder     = burden_estimate_folder,
     group_name                 = var$group_name,
     countries                  = var$countries,
@@ -220,7 +220,8 @@ for (index in first_scenario:last_scenario) {
     vaccination                = set.vaccination [index],
     using_sia                  = set.sia         [index],
     measles_model              = "vaccine2019_sia_singlematrix.exe",
-    debug_model                = FALSE
+    debug_model                = FALSE,
+    fix.uk.contact             = TRUE
     )
   # ----------------------------------------------------------------------------
 

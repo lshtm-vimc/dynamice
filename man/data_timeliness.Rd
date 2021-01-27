@@ -17,9 +17,9 @@ A data table with 34496 observations of 4 variables.
 }
 }
 \source{
-{Clark, A and Sanderson, C. Timing of children's vaccinations in 45
+{Clark A, Sanderson C. Timing of children's vaccinations in 45
 low-income and middle-income countries: an analysis of survey data. Lancet
-2009; 373(9674): 1543-1549.}
+2009; 373(9674): 1543--1549.}
 
 {Check with Kevin/Mark for how the csv is processed}
 }

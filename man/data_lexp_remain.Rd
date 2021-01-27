@@ -10,8 +10,8 @@ A data table with 601920 observations of 8 variables.
   \item{country_code_numeric}{Numeric country code}
   \item{country_code}{ISO3 country code}
   \item{country}{Country name}
-  \item{age_from}{age from (start-age)}
-  \item{age_to}{age to (end-age)}
+  \item{age_from}{Age from (start-age)}
+  \item{age_to}{Age to (end-age)}
   \item{year}{Year}
   \item{gender}{Gender}
   \item{value}{Life expectacy for the age group between age_from and age_to}

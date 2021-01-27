@@ -15,7 +15,7 @@ A data table with 294 observations of 3 variables.
 \source{
 {Wolfson LJ, Grais RF, Luquero FJ, Birmingham ME, Strebel PM.
 Estimates of measles case fatality ratios: a comprehensive review of
-community-based studies. Int J Epidemiol 2009; 38: 192–205.}
+community-based studies. Int J Epidemiol 2009; 38: 192--205.}
 }
 \usage{
 data_cfr_wolfson

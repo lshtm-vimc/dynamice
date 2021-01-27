@@ -7,17 +7,18 @@
 \format{
 A data table with 336 observations of 3 variables.
 \describe{
-  \item{contact.age}{age between 0 and 100}
-  \item{V1:V101}{age between 0 and 100}
+  \item{country}{Country name}
+  \item{country_code}{ISO3 country code}
+  \item{r0}{Numeric value of R0 estimate}
 }
 }
 \source{
-{Estimates provided by and Ferrari and team}
+{Estimates provided by and Ferrari M and team}
 }
 \usage{
 data_r0
 }
 \description{
-A dataset containing the R0 of measles in 112 countries.
+A dataset containing R0 estimates of measles in 112 countries.
 }
 \keyword{datasets}

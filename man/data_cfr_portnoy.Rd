@@ -12,25 +12,25 @@ A data table with 156240 observations of 45 variables.
   \item{GBD Region}{GBD regions}
   \item{U5MR}{Groups for under-5 mortaltiy rate, >=50 or LAC<50}
   \item{year}{Year}
-  \item{cfr_over5_scenario_s4}{CFRs for the age group over 5 years under one
-  of the 10 coverage scenarios. The \code{s4} refers to declining trend after
-   2018.}
-  \item{cfr_over5_scenario_s6}{CFRs for the age group over 5 years under one
-  of the 10 coverage scenarios. The \code{s6} refers to static trend of the
+  \item{cfr_over5_scenario_s4}{CFRs for the age group over 5 years under a
+  specific \code{scenario}, one of the 10 VIMC coverage scenarios. The \code{s4}
+   refers to declining trend after 2018.}
+  \item{cfr_over5_scenario_s6}{CFRs for the age group over 5 years under a
+  specific \code{scenario}. The \code{s6} refers to static trend of the
   2018 level in the future.}
   \item{cfr_uner5_scenario_s4}{CFRs for the age group under 5 years old,
-  under one of the 10 coverage scenarios. The \code{s4} refers
-  to declining trend after 2018.}
+  under a specific \code{scenario}. The \code{s4} refers to declining trend
+  after 2018.}
   \item{cfr_uner5_scenario_s6}{CFRs for the age group under 5 years old,
-  under one of the 10 coverage scenarios. The \code{s6} refers to static
-  trend of the 2018 level in the future.}
+  under a specific \code{scenario}. The \code{s6} refers to static trend of the
+   2018 level in the future.}
 }
 }
 \source{
 {Portnoy A, Jit M, Ferrari M, Hanson M, Brenzel L, Verguet S.
 Estimates of case-fatality ratios of measles in low-income and middle-income
 countries: a systematic review and modelling analysis. Lancet Glob Health
-2019; 7: e472–81.}
+2019; 7: e472--81.}
 }
 \usage{
 data_cfr_portnoy

@@ -26,6 +26,7 @@ A data table with 27137760 observations of 8 variables.
 data_pop
 }
 \description{
-A dataset containing the UNWPP population estimates -- World Population Prospects 2019.
+A dataset containing population estimates from United Nations World
+Population Prospects 2019.
 }
 \keyword{datasets}

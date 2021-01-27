@@ -595,16 +595,17 @@ runScenario <- function (vaccine_coverage_folder    = "",
                          scenario_name,
                          scenario_number,
                          vaccine_coverage_subfolder = "",
-                         # burden_template,                   # burden template file
-                         burden_estimate_folder,            # burden estimate folder
-                         group_name,                        # modelling group name
+                         # burden_template,                  # burden template file
+                         burden_estimate_folder,             # burden estimate folder
+                         group_name,                         # modelling group name
                          countries                  = "all",
                          cluster_cores              = 1,
-                         psa                        = 0,    # psa runs; 0 for single run
+                         psa                        = 0,     # psa runs; 0 for single run
                          vaccination,  # Whether children are vaccinated. 0: No vaccination; 1: Only MCV1; 2: MCV1 and MCV2
                          using_sia,    # Whether supplementary immunization campaigns are used. 0: no SIA; 1: with SIA
-                         measles_model,                     # measles model
-                         debug_model                = FALSE # debug model (T/F)
+                         measles_model,                      # measles model
+                         debug_model                = FALSE, # debug model (T/F)
+                         fix.uk.contact             = TRUE   # use UK or country-specific synthetic matrix
 ) {
 
   # changes 2019:
@@ -660,10 +661,9 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # updated meaning:     take [1] refers to vaceffbyage_a (intercept)
   #                      take [2] refers to vaceffbyage_b (slope)
   take 		    <- c (0.64598, 0.01485, 0.98)
-
-  degree 		  <- c (0.85, 0.95, 0.98)  # vaccine efficacy for degree1 (degree dose 1, before age 1), degree2 (dose 1, after age 1) & degree3 (dose 2). Note that dose2 only has an effect if vaccine==2.
-  tstep			  <- 1000				           # Number of time steps in a year
-
+  degree 		  <- c (0.85, 0.95, 0.98)    # vaccine efficacy for degree1 (degree dose 1, before age 1), degree2 (dose 1, after age 1) & degree3 (dose 2). Note that dose2 only has an effect if vaccine==2.
+  tstep			  <- 1000				             # Number of time steps in a year
+  gamma       <- 1 / (dinf * tstep/365)  # rate of losing infectivity
 
   # ----------------------------------------------------------------------------
   # Measles model
@@ -831,7 +831,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
   rnought	    		  <- setDT(data_r0)
   population  		  <- setDT(data_pop)
   lexp0        		  <- setDT(data_lexp0)
-  contact	    		  <- setDT(data_contact)
   template    		  <- setDT(data_template)
 
   # coverage_sia has multiple entries per year for some countries, take only the first entry
@@ -892,12 +891,26 @@ runScenario <- function (vaccine_coverage_folder    = "",
     }
   }
 
-  contact <- contact [ , -"contact.age"]
-  contact <- as.matrix (contact)
+  # Process country matrices
+  if (fix.uk.contact){
+    ctmat         <- as.matrix (data_contact_uk)
+    r0_basic      <- Re (eigen (ctmat * dinf, only.values = T)$values[1])
+    contact_list  <- sapply(countries,
+                            function(x = NULL){copy(ctmat)},
+                            simplify = FALSE, USE.NAMES = TRUE)
+    r0_basic_list <- sapply(countries,
+                            function(x = NULL){copy(r0_basic)},
+                            simplify = TRUE, USE.NAMES = TRUE)
+  } else {
+    contact_list  <- sapply(countries,
+                            function(cty){data_contact_syn[[cty]]},
+                            simplify = FALSE, USE.NAMES = TRUE)
+    r0_basic_list <- sapply(countries,
+                            function(cty){Re (eigen (contact_list[[cty]] * dinf,
+                                                     only.values = T)$values[1])},
+                            simplify = TRUE, USE.NAMES = TRUE)
+  }
 
-
-  r0_basic <- Re (eigen (contact * dinf, only.values = T)$values[1])
-  gamma    <- 1 / (dinf * tstep/365) # rate of losing infectivity
 
   # Run model
   writelog ("gavi_log", paste0 ("Main; Foldername: ", foldername))
@@ -924,7 +937,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
   combine <- foreach (
     ii = 1:length(countries),
     .packages = c("data.table"),
-    .errorhandling="stop",
+    .errorhandling="pass",
     .export = c("runCountry", "writelog", "expandMatrix", "updateProgress")
   ) %:% foreach (
     r = 1:runs,
@@ -938,7 +951,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
                            using_sia          = using_sia,
                            dinf               = dinf,
                            gamma              = gamma,
-                           r0_basic           = r0_basic,
+                           r0_basic           = r0_basic_list[countries[ii]],
                            amplitude          = amplitude,
                            take               = take,
                            degree             = degree,
@@ -946,11 +959,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
                            coverage_routine   = coverage_routine,
                            coverage_sia       = coverage_sia,
                            timeliness         = timeliness,
-                           contact            = contact,
+                           contact            = contact_list[[countries[ii]]],
                            c_rnought          = rnought[country_code == countries[ii], r0],
                            population         = population,
                            lexp0              = lexp0,
-                           # cfr                = cfr,
                            tstep              = tstep,
                            save.scenario      = save.scenario,
                            foldername         = foldername,

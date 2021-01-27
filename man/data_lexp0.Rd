@@ -10,15 +10,15 @@ A data table with 137712 observations of 8 variables.
   \item{country_code_numeric}{Numeric country code}
   \item{country_code}{ISO3 country code}
   \item{country}{Country name}
-  \item{age_from}{age from (start-age)}
-  \item{age_to}{age to (end-age)}
+  \item{age_from}{Age from (start-age)}
+  \item{age_to}{Age to (end-age)}
   \item{year}{Year}
   \item{gender}{Gender}
   \item{LE0}{Life expectancy at birth (\code{age_from=age_to=0})}
 }
 }
 \source{
-\url{https://population.un.org/wpp/Download/Standard/Population/}
+\url{http://population.un.org/wpp/Download/Standard/Population/}
 
 {VIMC}
 }
