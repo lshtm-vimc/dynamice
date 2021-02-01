@@ -3,7 +3,7 @@
 \docType{data}
 \name{data_cfr_portnoy}
 \alias{data_cfr_portnoy}
-\title{CFRs for DALY calculation with Portnoy estimates}
+\title{CFRs with Portnoy estimates for calculating deaths}
 \format{
 A data table with 156240 observations of 45 variables.
 \describe{

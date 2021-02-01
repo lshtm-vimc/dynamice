@@ -47,19 +47,19 @@ Process_data <- function(){
     load(url("https://github.com/kieshaprem/synthetic-contact-matrices/blob/master/output/syntheticcontactmatrices2020/overall/contact_all.rdata?raw=true"))
 
     contact_syn <- sapply (names(contact_all), function(cty){
-      # rescale for a country-specific matrix
+      # rescale for a country-specific matrix from 5-year to 1-year band
       contact_ori <- contact_all[[cty]]
       contact_101 <- matrix (0, ncol = 101, nrow = 101)
 
       nagegrp     <- dim(contact_ori)[1]
       matvals     <- numeric(0)
       for (icol in 1:nagegrp){
-        matvals   <- c(matvals, rep (contact_ori[,icol], 5, each = 5))
+        matvals   <- c(matvals, rep (contact_ori[,icol]/5, 5, each = 5))
       }
       contact_101 [1:(nagegrp*5), 1:(nagegrp*5)] <- matrix (matvals,
                                                             nrow = nagegrp*5,
                                                             ncol = nagegrp*5)
-      # contacts> 80 y/o set to previously
+      # assume > 80 y/o have the same contact pattern as 75-79 y/o
       contact_101[81:101, 81:101] <- contact_101[80, 80]
       contact_101[81:101, 1:80]   <- matrix (rep (contact_101[80, 1:80], 101-80), nrow = 101-80, byrow = TRUE)
       contact_101[1:80, 81:101]   <- matrix (rep (contact_101[1:80, 80], 101-80), ncol = 101-80)

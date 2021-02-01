@@ -41,9 +41,9 @@ load(file = "data/data_lexp_remain.rda")
 load(file = "data/data_template.rda")
 #load(file = "data/data_psa200.rda")
 
-# rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
-#                         "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
-#                         "data_lexp0","data_lexp_remain","data_template")))
+rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
+                        "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
+                        "data_lexp0","data_lexp_remain","data_template")))
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ var <- list (
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to "all" to analyse all included countries
-  countries                         = c("IND", "PAK"), # debug -- c("BGD", "ETH") / "all"
+  countries                         = c("MDA", "AGO"), # debug -- c("BGD", "ETH") / "all"
 
   cluster_cores                     = 4,    # number of cores
   psa                               = 0     # psa runs; 0 for single central run
@@ -221,7 +221,7 @@ for (index in first_scenario:last_scenario) {
     using_sia                  = set.sia         [index],
     measles_model              = "vaccine2019_sia_singlematrix.exe",
     debug_model                = FALSE,
-    fix.uk.contact             = TRUE
+    contact.mat                = "uk"
     )
   # ----------------------------------------------------------------------------
 
@@ -271,7 +271,6 @@ if (var$psa == 0) {
     group_name                 = var$group_name,
     countries                  = var$countries,
     cfr_options                = c("Wolfson", "Portnoy"),
-    # cfr_options                = c ("Portnoy"),
     psa                        = var$psa,
     start_year                 = 2000,
     end_year                   = 2050,

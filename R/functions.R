@@ -29,7 +29,7 @@
 #' @param using_sia A numeric indicator that determines Whether supplementary
 #' immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.
 #' @param dinf Duration of infection in days.
-#' @param gamma Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).
+#' @param gamma_rate Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).
 #' @param r0_basic Basic reproduction number (R0) calculated by the eigenvalue
 #' of the product of contact matrix (\code{contact}) and duration of infection
 #' (\code{dinf}).
@@ -90,6 +90,9 @@
 #' measles model.
 #' @param remove_files A logical variable that determines whether to remove
 #' output files after finishing a single country run.
+#' @param contact.mat A character variable that determines the assumptions for
+#' contact matrices. "nomix" - homogeneous mixing, "uk" - UK POLYMOD, and "syn"
+#' - country-specific synthetic matrix.
 #' @examples
 #' runCountry (
 #'   ii                 = 2,
@@ -98,7 +101,7 @@
 #'   vaccination        = 1,
 #'   using_sia          = 1,
 #'   dinf               = 14,
-#'   gamma              = 0.02607,
+#'   gamma_rate         = 0.02607,
 #'   r0_basic           = 13,
 #'   amplitude          = 0.05,
 #'   take               = c(0.64598, 0.01485, 0.98),
@@ -127,7 +130,8 @@
 #'   psa                = 0,
 #'   psa_var            = psa_var,
 #'   run_model          = TRUE,
-#'   remove_files       = FALSE)
+#'   remove_files       = FALSE,
+#'   contact.mat        = "nomix")
 runCountry <- function (
   #variables specific for loop
   ii,
@@ -138,7 +142,7 @@ runCountry <- function (
   vaccination,
   using_sia,
   dinf,
-  gamma,
+  gamma_rate,
   r0_basic,
   amplitude,
   take,
@@ -174,9 +178,9 @@ runCountry <- function (
   psa_var,  # used only when psa > 0
 
   #additional options
-  # process_results,
   run_model,
-  remove_files
+  remove_files,
+  contact.mat
 ) {
 
   # temporarily assign 3-letter-ISO code to Kosovo until Kosovo is assigned official ISO3-code
@@ -252,55 +256,51 @@ runCountry <- function (
     degree2 <- c(0, degree[2])[sia.method]  # vaccine degree (dose 1, after age 1)
     degree3 <- c(0, degree[3])[sia.method]  # vaccine degree (dose 2)
 
-    # country_specific contact matrix
-    q             <- c_rnought / r0_basic  # proportionality factor (infectivity, underreporting)
-    contact_day   <- contact * q
-    contact_tstep <- contact_day * (365 / tstep)
-
     # country specific timeliness curve
     country_timeliness <- timeliness [country_code == iso3 & !is.na(age), timeliness]
     timeliness_ages    <- timeliness [country_code == iso3 & !is.na(age), age]
 
-    # Beta only a single file
-    s         <- 52 # number of finer stages within an age band (weekly ages, so 52)
-    jt        <- 3 # how many ages to expand to s (or to weeks)
-    beta_full <- matrix (0,
-                         ncol = 254,
-                         nrow = 254) # expanding to 100 years; contacts> 80 set to previously 0
-
-    beta      <- contact_tstep
+    # country_specific contact matrix
+    q             <- c_rnought / r0_basic  # proportionality factor (infectivity, underreporting)
+    contact_day   <- contact * q
+    contact_tstep <- contact_day * (365 / tstep)
     r0_tstep  <- Re (eigen (contact_tstep, only.values=T)$values[1]) # will need it to make sure R0 is the same after rescaling
 
-    #create a new contact matrix for each age stratum in model
+    # Beta only a single file
+    s         <- 52 # number of finer stages within an age band (weekly ages, so 52)
+    jt        <- 3  # how many ages to expand to s (or to weeks)
+    beta_full <- matrix (0,
+                        ncol = 254,
+                        nrow = 254)
 
-    #expand contact of first 3 age-strata with itself
-
+    # expand contact of first 3 age-strata with itself
     beta_full[(1:(s*jt)), (1:(s*jt))] <- expandMatrix (
-      A = beta[1:jt, 1:jt]/s,  # needs to be divided by 52 so that the mean total number of contacts stays the same,
+      A = contact_tstep [1:jt, 1:jt]/s,  # needs to be divided by 52 so that the mean total number of contacts stays the same
       expand_rows =  s, expand_cols =  s,
-      rescale_rows = FALSE, rescale_cols = FALSE
-    )
+      rescale_rows = FALSE, rescale_cols = FALSE)
 
     # expand contact for first 3 age-strata with all other contacts
     beta_full[1:(s*jt),((s*jt)+1):(ncol(beta_full))] <- expandMatrix(
-      A = beta[1:jt,(jt+1):ncol(beta)]/s,
+      A = contact_tstep [1:jt,(jt+1):ncol(contact_tstep)]/s,
       expand_rows = s, expand_cols = 1,
       rescale_rows = F, rescale_cols = F)
 
     beta_full[((s*jt)+1):(nrow(beta_full)), 1:(s*jt)] <- expandMatrix(
-      A = beta[(jt+1):nrow(beta),1:jt],
+      A = contact_tstep [(jt+1):nrow(contact_tstep),1:jt],
       expand_rows = 1, expand_cols = s,
       rescale_rows = F, rescale_cols = F)
 
     beta_full[((s*jt)+1):(nrow(beta_full)), ((s*jt)+1):(ncol(beta_full))] <-
-      beta[(jt+1):nrow(beta),(jt+1):ncol(beta)]
+      contact_tstep [(jt+1):nrow(contact_tstep),(jt+1):ncol(contact_tstep)]
 
-    # make the matrix symmetric
+    # make the matrix reciprocal
     beta_full <- (beta_full + t(beta_full)) / 2
+    # [method used previously] adjust using age distribution of population
     #	beta_full_country <- (beta_full + t(beta_full)*(pop.vector_full%*%t(1/pop.vector_full)))/2
 
     # make sure the R0 is what it should be
     beta_full <- (r0_tstep / Re(eigen(beta_full, only.values=T)$values[1])) * beta_full
+
 
     # Reduce file-writes
     # beta_full <- sweep(beta_full, 2, pop.vector_full, "/") # these are the infection rates from Wallinga et al
@@ -405,7 +405,7 @@ runCountry <- function (
       dynamice_input_vector <- c(
         t_end,
         1,
-        gamma,
+        gamma_rate,
         tstep,
         take1,
         take2,
@@ -569,6 +569,8 @@ runCountry <- function (
 #' measles model.
 #' @param debug_model A logical variable that determines whether to debug the
 #' model.
+#' @param contact.mat A logical variable that determines whether to use UK
+#' POLYMOD contact matrix or not (use country-specific synthetic matrix instead).
 #' @examples
 #' runScenario (
 #'   vaccine_coverage_folder    = "vaccine_coverage/",
@@ -578,7 +580,6 @@ runCountry <- function (
 #'   scenario_name              = "campaign-only-bestcase",
 #'   scenario_number            = scenario_number,
 #'   vaccine_coverage_subfolder = "scenarios/"
-#'   burden_template            = var$burden_template,
 #'   burden_estimate_folder     = "central_burden_estimate/",
 #'   group_name                 = "LSHTM-Jit-",
 #'   countries                  = c("BGD","ETH"),
@@ -587,7 +588,8 @@ runCountry <- function (
 #'   vaccination                = 0,
 #'   using_sia                  = 1,
 #'   measles_model              = "vaccine2019_sia_singlematrix.exe",
-#'   debug_model                = FALSE)
+#'   debug_model                = FALSE,
+#'   contact.mat                = "nomix")
 runScenario <- function (vaccine_coverage_folder    = "",
                          coverage_prefix            = "",
                          touchstone                 = "",
@@ -595,17 +597,16 @@ runScenario <- function (vaccine_coverage_folder    = "",
                          scenario_name,
                          scenario_number,
                          vaccine_coverage_subfolder = "",
-                         # burden_template,                  # burden template file
-                         burden_estimate_folder,             # burden estimate folder
-                         group_name,                         # modelling group name
+                         burden_estimate_folder,              # burden estimate folder
+                         group_name,                          # modelling group name
                          countries                  = "all",
                          cluster_cores              = 1,
-                         psa                        = 0,     # psa runs; 0 for single run
+                         psa                        = 0,      # psa runs; 0 for single run
                          vaccination,  # Whether children are vaccinated. 0: No vaccination; 1: Only MCV1; 2: MCV1 and MCV2
                          using_sia,    # Whether supplementary immunization campaigns are used. 0: no SIA; 1: with SIA
-                         measles_model,                      # measles model
-                         debug_model                = FALSE, # debug model (T/F)
-                         fix.uk.contact             = TRUE   # use UK or country-specific synthetic matrix
+                         measles_model,                       # measles model
+                         debug_model                = FALSE,  # debug model (T/F)
+                         contact.mat                = "uk"    # contact matrix: "nomix","uk","syn"
 ) {
 
   # changes 2019:
@@ -663,7 +664,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
   take 		    <- c (0.64598, 0.01485, 0.98)
   degree 		  <- c (0.85, 0.95, 0.98)    # vaccine efficacy for degree1 (degree dose 1, before age 1), degree2 (dose 1, after age 1) & degree3 (dose 2). Note that dose2 only has an effect if vaccine==2.
   tstep			  <- 1000				             # Number of time steps in a year
-  gamma       <- 1 / (dinf * tstep/365)  # rate of losing infectivity
+  gamma_rate  <- 1 / (dinf * tstep/365)  # rate of losing infectivity
 
   # ----------------------------------------------------------------------------
   # Measles model
@@ -686,13 +687,13 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # Debug
   # ------------------------------------------------------------------------------
 
-  debug_country		  <- "*"			#ISO3 codes of country to debug, * to debug all countries
-  debug_spinup		  <- FALSE		#TRUE/FALSE: If true, generate data for spin-up period of model
+  debug_country		  <- "*"		    	#ISO3 codes of country to debug, * to debug all countries
+  debug_spinup		  <- FALSE	    	#TRUE/FALSE: If true, generate data for spin-up period of model
   debug_model       <- debug_model	#TRUE/FALSE: If true: generate data for period after spin-up
-  debug_compartments<- 1			  #TRUE/FALSE: If true: output size of each compartment. If false: output number of cases. If 2: debug vaccinated
-  debug_age         <- 0        #0-2. If 0: output all in annual age-strata. If 1: output age 0-2 in weekly age-strata, 3-100 in annual age-strata. If 2: sum all age-strata.
-  debug_timepoints	<- 0			  #0-2. If 0: output per year. If 1: output per timepoint and report first 25% of timepoints. If 2: output per timepoint and report all timepoints.
-  debug_relative		<- FALSE		#If true: output proportion of new cases. If false, output absolute number of new cases.
+  debug_compartments<- 1    	      #0-2: If 0: output number of cases. If 1: output size of each compartment. If 2: debug vaccinated
+  debug_age         <- 0            #0-2. If 0: output all in annual age-strata. If 1: output age 0-2 in weekly age-strata, 3-100 in annual age-strata. If 2: sum all age-strata.
+  debug_timepoints	<- 0			      #0-2. If 0: output per year. If 1: output per timepoint and report first 25% of timepoints. If 2: output per timepoint and report all timepoints.
+  debug_relative		<- FALSE	    	#If true: output proportion of new cases. If false, output absolute number of new cases.
 
 
   # START OF MODEL
@@ -850,7 +851,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
       }
     } else {
       stop(paste0("There is no files for inputting PSA variables. Use CreatePSA_Data to generate the file."))
-}
+      }
   }
   # --------------------------------------------------------------------------
 
@@ -891,8 +892,17 @@ runScenario <- function (vaccine_coverage_folder    = "",
     }
   }
 
-  # Process country matrices
-  if (fix.uk.contact){
+  # Process contact matrices
+  if (contact.mat == "syn"){
+    contact_list  <- sapply(countries,
+                            function(cty){data_contact_syn[[cty]]},
+                            simplify = FALSE, USE.NAMES = TRUE)
+    r0_basic_list <- sapply(countries,
+                            function(cty){Re (eigen (contact_list[[cty]] * dinf,
+                                                     only.values = T)$values[1])},
+                            simplify = TRUE, USE.NAMES = TRUE)}
+
+  if (contact.mat == "uk"){
     ctmat         <- as.matrix (data_contact_uk)
     r0_basic      <- Re (eigen (ctmat * dinf, only.values = T)$values[1])
     contact_list  <- sapply(countries,
@@ -900,16 +910,17 @@ runScenario <- function (vaccine_coverage_folder    = "",
                             simplify = FALSE, USE.NAMES = TRUE)
     r0_basic_list <- sapply(countries,
                             function(x = NULL){copy(r0_basic)},
-                            simplify = TRUE, USE.NAMES = TRUE)
-  } else {
+                            simplify = TRUE, USE.NAMES = TRUE)}
+
+  if (contact.mat == "nomix"){
+    ctmat         <- matrix (1, nrow = 101, ncol = 101)
+    r0_basic      <- Re (eigen (ctmat * dinf, only.values = T)$values[1])
     contact_list  <- sapply(countries,
-                            function(cty){data_contact_syn[[cty]]},
+                            function(x = NULL){copy(ctmat)},
                             simplify = FALSE, USE.NAMES = TRUE)
     r0_basic_list <- sapply(countries,
-                            function(cty){Re (eigen (contact_list[[cty]] * dinf,
-                                                     only.values = T)$values[1])},
-                            simplify = TRUE, USE.NAMES = TRUE)
-  }
+                            function(x = NULL){copy(r0_basic)},
+                            simplify = TRUE, USE.NAMES = TRUE)}
 
 
   # Run model
@@ -943,14 +954,13 @@ runScenario <- function (vaccine_coverage_folder    = "",
     r = 1:runs,
     .errorhandling = "pass"
   ) %dopar% {
-
     out_run <- runCountry (ii                 = ii,
                            iso3               = countries[ii],
                            years              = years,
                            vaccination        = vaccination,
                            using_sia          = using_sia,
                            dinf               = dinf,
-                           gamma              = gamma,
+                           gamma_rate         = gamma_rate,
                            r0_basic           = r0_basic_list[countries[ii]],
                            amplitude          = amplitude,
                            take               = take,
@@ -978,9 +988,9 @@ runScenario <- function (vaccine_coverage_folder    = "",
                            runs               = runs,
                            psa                = psa,
                            psa_var            = psa_var,
-                           # process_results    = process_results,
                            run_model          = run_model,
-                           remove_files       = remove_files
+                           remove_files       = remove_files,
+                           contact.mat        = contact.mat
     )
     return(out_run)
   }

@@ -11,7 +11,7 @@ runCountry(
   vaccination,
   using_sia,
   dinf,
-  gamma,
+  gamma_rate,
   r0_basic,
   amplitude,
   take,
@@ -40,7 +40,8 @@ runCountry(
   psa,
   psa_var,
   run_model,
-  remove_files
+  remove_files,
+  contact.mat
 )
 }
 \arguments{
@@ -58,7 +59,7 @@ immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.}
 
 \item{dinf}{Duration of infection in days.}
 
-\item{gamma}{Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).}
+\item{gamma_rate}{Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).}
 
 \item{r0_basic}{Basic reproduction number (R0) calculated by the eigenvalue
 of the product of contact matrix (\code{contact}) and duration of infection
@@ -146,6 +147,10 @@ measles model.}
 \item{remove_files}{A logical variable that determines whether to remove
 output files after finishing a single country run.}
 
+\item{contact.mat}{A character variable that determines the assumptions for
+contact matrices. "nomix" - homogeneous mixing, "uk" - UK POLYMOD, and "syn"
+- country-specific synthetic matrix.}
+
 \item{debug_compartment}{A numeric variable that determines the compartments
 to output: 0 - number of cases, and 1 - each compartment.}
 }
@@ -162,7 +167,7 @@ runCountry (
   vaccination        = 1,
   using_sia          = 1,
   dinf               = 14,
-  gamma              = 0.02607,
+  gamma_rate         = 0.02607,
   r0_basic           = 13,
   amplitude          = 0.05,
   take               = c(0.64598, 0.01485, 0.98),
@@ -191,5 +196,6 @@ runCountry (
   psa                = 0,
   psa_var            = psa_var,
   run_model          = TRUE,
-  remove_files       = FALSE)
+  remove_files       = FALSE,
+  contact.mat        = "nomix")
 }

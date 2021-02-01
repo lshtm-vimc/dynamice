@@ -3,7 +3,7 @@
 \docType{data}
 \name{data_cfr_wolfson}
 \alias{data_cfr_wolfson}
-\title{CFRs for DALY calculation with Wolfson estimates}
+\title{CFRs with Wolfson estimates for calculating deaths}
 \format{
 A data table with 294 observations of 3 variables.
 \describe{

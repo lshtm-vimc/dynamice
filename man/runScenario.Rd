@@ -21,7 +21,7 @@ runScenario(
   using_sia,
   measles_model,
   debug_model = FALSE,
-  fix.uk.contact = TRUE
+  contact.mat = "nomix"
 )
 }
 \arguments{
@@ -65,6 +65,9 @@ measles model.}
 
 \item{debug_model}{A logical variable that determines whether to debug the
 model.}
+
+\item{contact.mat}{A logical variable that determines whether to use UK
+POLYMOD contact matrix or not (use country-specific synthetic matrix instead).}
 }
 \description{
 A function that execute the measles model under a selected vaccination
@@ -80,7 +83,6 @@ runScenario (
   scenario_name              = "campaign-only-bestcase",
   scenario_number            = scenario_number,
   vaccine_coverage_subfolder = "scenarios/"
-  burden_template            = var$burden_template,
   burden_estimate_folder     = "central_burden_estimate/",
   group_name                 = "LSHTM-Jit-",
   countries                  = c("BGD","ETH"),
@@ -89,5 +91,6 @@ runScenario (
   vaccination                = 0,
   using_sia                  = 1,
   measles_model              = "vaccine2019_sia_singlematrix.exe",
-  debug_model                = FALSE)
+  debug_model                = FALSE,
+  contact.mat                = "nomix")
 }
