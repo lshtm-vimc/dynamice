@@ -6,8 +6,9 @@
 vaccine_coverage/
 plots/
 outcome/
-gavi201910v5/
+gavi_*.txt
 central_burden_estimate/
 stochastic_burden_estimate/
 data-raw/201910gavi-5_dds-201910_*.csv
 data-raw/central-burden-template.201910gavi-5.Measles_LSHTM-Jit_standard.csv
+vac_coverage_upd/scenarios/
