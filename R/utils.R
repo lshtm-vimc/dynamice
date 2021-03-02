@@ -128,8 +128,8 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   # population as 5,000,000.
   #
   # This way of specifying coverage and target population
-  # applies in both past and future years. *target* is the number of individuals in
-  # the target population.
+  # applies in both past and future years. *target* is the number of individuals
+  # in the target population.
   #
   # This is always shown for campaigns, and is now specified
   # at a national level. (See ‘coverage’ section above.)
@@ -143,7 +143,7 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   sia2 [, reached := as.numeric(target) * as.numeric(coverage)]
 
 
-  # add additional columns to make file similar to original (Han: is this necessary, given it's NA?)
+  # add additional columns to make file similar to original
   sia2 [, c("Geography", "Gavi73", "Gavi-supported", "Activity","Extent")] <- NA
 
   # reorder columns to make file similar to original
@@ -388,10 +388,10 @@ tailor_data_cfr <- function (sel_countries){
 
 
 # ------------------------------------------------------------------------------
-#' Tailor the data structure for life expectancy by age
+#' Tailor the data structure for life expectancy by age and year
 #'
 #' Tailor the \code{\link{data_lexp_remain}} data to the format for processing burden
-#' estimates. Changes include calender year and age structures.
+#' estimates. Linear interpolation between calender years was applied.
 #'
 #' @param sel_countries ISO-3 codes for countries included for evaluation. If
 #' "all", all countries in the original data are selected.
@@ -399,33 +399,39 @@ tailor_data_cfr <- function (sel_countries){
 #' lexp_remain <- tailor_data_lexp_remain (sel_countries = c("AGO","BGD"))
 tailor_data_lexp_remain <- function (sel_countries = "all"){
 
-  lexp_remain <- setDT(data_lexp_remain)
-  lexp_remain <- lexp_remain[year>=1980]
+  lexp_remain <- setDT (data_lexp_remain)
+  lexp_remain <- lexp_remain [year >= 1980]
 
   if (sel_countries[[1]] != "all") {
     lexp_remain <- lexp_remain [country_code %in% sel_countries]
-    }
-
-  # Since year is 5-year intervals, add data for all in-between years
-  lexp_remain_full <- NULL
-  for (i in 0:4) {
-    dt <- copy (lexp_remain)
-    dt [, year := year + i]
-
-    # add table to full table of remaining life expectancy
-    lexp_remain_full <- rbindlist (list (lexp_remain_full, dt),
-                                   use.names = T)
   }
 
-  # add data between 1980 to 2100 for remaining life expectancy
   # copy values for year 2095 to year 2100
-  lexp_remain_2100 <- lexp_remain [year == 2095]
-  lexp_remain_2100 [, year := 2100]
-  lexp_remain_full <- rbindlist (list (lexp_remain_full, lexp_remain_2100),
-                                 use.names = T)
+  lexp_remain <- rbind (lexp_remain, copy (lexp_remain [year == 2095])[, year := 2100])
 
-  setorder(lexp_remain_full, country_code, year)
-  return(lexp_remain_full)
+  # calculate the difference between years
+  setorder (lexp_remain, country_code, age_from, year)
+  lexp_remain [ , diffy := value - shift(value) , by = .(country_code, age_from)]
+
+  # interpolate a linear trend for between-years
+  lexp_remain_yr <- copy (lexp_remain) [year == 1980]
+  for (btwyr in 0:4) {
+    dt <- copy (lexp_remain) [year != 1980]
+    dt [, `:=` (year = year - btwyr,
+                value = value - btwyr*(diffy/5))]
+
+    lexp_remain_yr <- rbind (lexp_remain_yr, dt)
+  }
+
+  # interpolate a linear trend for between-ages
+  setorder (lexp_remain_yr, country_code, year, age_from)
+  lexp_remain_yr [ , age_mean := (age_from + age_to)/2]
+
+  lexp_remain_full <- lexp_remain_yr [, .(value = approx(age_mean, value, xout = 0:100)$y),
+                                      by = .(country_code, country, year)]
+  lexp_remain_full [, age := rep(0:100, length(unique(year))*length(unique(country_code)))]
+
+  return (lexp_remain_full)
 
 } # end of function -- tailor_data_lexp_remain
 # ------------------------------------------------------------------------------

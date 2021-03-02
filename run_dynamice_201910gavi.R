@@ -76,7 +76,7 @@ var <- list (
   vaccine_coverage_subfolder        = "scenarios/",
 
   # disease burden
-  # burden_template                   = "burden_template/central-burden-template.201910gavi-5.Measles_LSHTM-Jit_standard.csv",
+  # burden_template                   = "burden_template/central-burden-201910gavi-5.Measles_LSHTM-Jit_standard.csv",
   central_burden_estimate_folder    = "central_burden_estimate/",
   stochastic_burden_estimate_folder = "stochastic_burden_estimate/",
 
@@ -88,9 +88,9 @@ var <- list (
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to "all" to analyse all included countries
-  countries                         = c("MDA", "AGO"), # debug -- c("BGD", "ETH") / "all"
+  countries                         = c("ETH", "PAK"), # debug -- c("BGD", "ETH") / "all"
 
-  cluster_cores                     = 4,    # number of cores
+  cluster_cores                     = 2,    # number of cores
   psa                               = 0     # psa runs; 0 for single central run
   )
 # for central run: set number of runs to 0 (var$psa = 0)
@@ -221,7 +221,8 @@ for (index in first_scenario:last_scenario) {
     using_sia                  = set.sia         [index],
     measles_model              = "vaccine2019_sia_singlematrix.exe",
     debug_model                = FALSE,
-    contact.mat                = "uk"
+    contact_mat                = "uk",
+    step_ve                    = FALSE
     )
   # ----------------------------------------------------------------------------
 

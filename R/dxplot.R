@@ -204,9 +204,8 @@ diagnostic_plots <- function (vaccine_coverage_folder,
                            burden_plot_list [[3]])
 
         # arrange plots in a single page
-        plots <- ggplot2::ggarrange (plotlist = plot_list,
-                            ncol = 2,
-                            nrow = 2)
+        plots <- ggpubr::ggarrange (plotlist = plot_list,
+                                    ncol = 2, nrow = 2)
 
         # print plots
         print (ggpubr::annotate_figure (plots,
