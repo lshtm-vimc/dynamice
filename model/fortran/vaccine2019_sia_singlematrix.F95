@@ -300,9 +300,10 @@ program measles
 		real(dp) :: ve_a
 		real(dp) :: ve_b
 		real(dp) :: SIA_a
-    real(dp) :: SIA_b
+        real(dp) :: SIA_b
 		real(dp) :: vac_numerator
 		real(dp) :: vac_denominator
+	    real(dp) :: p_eff
 		real(dp), allocatable :: tempUnvacS(:)
 		real(dp), allocatable :: tempUnvacI(:)
 		real(dp), allocatable :: tempUnvacR(:)
@@ -665,7 +666,7 @@ program measles
 
 			MCV1_eff(a, hh) = MCV1_eff(a,hh)				&
 							-agerate_annual*MCV1_eff(a,hh)	&
-							-agerate_annual*MCV1_eff(a-1,hh)
+							+agerate_annual*MCV1_eff(a-1,hh)
 
 			V2S(a,hh)	=	V2S(a,hh)					&
 							-agerate_annual*V2S(a,hh)	&
@@ -1284,10 +1285,20 @@ program measles
 			vac_numerator = MCV1_eff(a,hh)
 			vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
 			if(vac_denominator.gt.real(0, dp)) then
-				take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
+			    p_eff = vac_numerator/vac_denominator				
+				if (p_eff > take3) then
+				    take_inc = real(0, dp)
+				else
+					take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
+				endif
 			else
 				take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
 			endif
+			!if(vac_denominator.gt.real(0, dp)) then
+			!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
+			!else
+			!	take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+			!endif
 
 			V2S(a,hh)	=	V2S(a,hh)																	&
 							-agerate_week*V2S(a,hh)														&
@@ -1551,10 +1562,21 @@ program measles
 						vac_numerator = MCV1_eff(a,hh)
 						vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
 						if(vac_denominator.gt.real(0, dp)) then
-							take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
+			                p_eff = vac_numerator/vac_denominator				
+				            if (p_eff > take3) then
+							    take_inc = real(0, dp)
+							else
+								take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
+						    endif
 						else
 							take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
-						endif
+			            endif
+						!if(vac_denominator.gt.real(0, dp)) then
+						!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
+						!else
+						!	take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+						!endif
+						
 						dVS_V2S		=	VS(a,hh)*(real(1, dp)-take_inc)*sia2
 						dVS_V2R		=	VS(a,hh)*take_inc*sia2
 						dVI_V2I		=	VI(a,hh)*sia2
