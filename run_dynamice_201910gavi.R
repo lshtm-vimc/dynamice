@@ -29,21 +29,49 @@ library (truncnorm)
 # ------------------------------------------------------------------------------
 # load data (delete when package is ready)
 load(file = "data/data_pop.rda")
-load(file = "data/data_cfr.rda")
+# load(file = "data/data_cfr.rda")
 load(file = "data/data_cfr_portnoy.rda")
 load(file = "data/data_cfr_wolfson.rda")
 load(file = "data/data_contact_uk.rda")
 load(file = "data/data_contact_syn.rda")
 load(file = "data/data_r0.rda")
 load(file = "data/data_timeliness.rda")
-load(file = "data/data_lexp0.rda")
+# load(file = "data/data_lexp0.rda")
 load(file = "data/data_lexp_remain.rda")
 load(file = "data/data_template.rda")
 #load(file = "data/data_psa200.rda")
 
-rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
-                        "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
-                        "data_lexp0","data_lexp_remain","data_template")))
+# rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
+#                         "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
+#                         "data_lexp0","data_lexp_remain","data_template")))
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# modify Montagu coverage data (may not need when the data are revised)
+campaign_file_default <- "coverage_201910gavi-5_measles-campaign-default"
+campaign_file_bestcase <- "coverage_201910gavi-5_measles-campaign-bestcase"
+process_files <- c(campaign_file_default, campaign_file_bestcase )
+
+for (sel_file in process_files) {
+  ori_cov <- fread (paste0("vaccine_coverage/", sel_file, "_ori.csv"))
+  input_cov <- ori_cov [activity_type == "campaign" & coverage != 0, 5:13]
+  input_cov [, vaccinee := coverage*as.numeric(target)]
+  for (irow in 1:dim(input_cov)[1]){
+    input_cov$pop [irow] <- sum (data_pop [
+      country_code == input_cov$country_code [irow] & year == as.integer(input_cov$year[irow]) &
+        age_from %in% (input_cov$age_first [irow] : input_cov$age_last[irow]), value])
+  }
+  input_cov [, coverage2 := vaccinee/pop]
+
+  mkeys <- c("activity_type", "country_code","year","age_first", "age_last")
+  setkeyv (ori_cov, mkeys)
+  setkeyv (input_cov, mkeys)
+  ori_cov [input_cov, `:=`(target = as.character(i.pop), coverage = i.coverage2)]
+
+  fwrite (ori_cov, paste0("vaccine_coverage/", sel_file, ".csv"))
+  rm (ori_cov)
+}
+
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -88,7 +116,7 @@ var <- list (
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to "all" to analyse all included countries
-  countries                         = c("ETH", "PAK"), # debug -- c("BGD", "ETH") / "all"
+  countries                         = c("BGD", "ETH"), # debug -- c("BGD", "ETH") / "all"
 
   cluster_cores                     = 2,    # number of cores
   psa                               = 0     # psa runs; 0 for single central run
@@ -233,21 +261,20 @@ for (index in first_scenario:last_scenario) {
   #   save results in corresponding cfr_option subfolder
   #   append cfr_option to results file
   # uncomment below to run with cfr_option = "Wolfson"
-  estimateDeathsDalys (cfr_option             = "Wolfson",
-                       burden_estimate_file   = burden_estimate_file,
-                       burden_estimate_folder = burden_estimate_folder,
-                       psa                    = var$psa)
+  estimate_deaths_dalys (cfr_option             = "Wolfson",
+                         burden_estimate_file   = burden_estimate_file,
+                         burden_estimate_folder = burden_estimate_folder,
+                         psa                    = var$psa)
 
   # apply CFR (case fatality rates) to estimate deaths -- Portnoy
   #   save results in corresponding cfr_option subfolder
   #   append cfr_option to results file
-  estimateDeathsDalys (cfr_option             = "Portnoy",
-                       burden_estimate_file   = burden_estimate_file,
-                       burden_estimate_folder = burden_estimate_folder,
-                       vimc_scenario          = scenario_name,
-                       portnoy_scenario       = "s6",  # portnoy scenario 6
-                       psa                    = var$psa
-                       )
+  estimate_deaths_dalys (cfr_option             = "Portnoy",
+                         burden_estimate_file   = burden_estimate_file,
+                         burden_estimate_folder = burden_estimate_folder,
+                         vimc_scenario          = scenario_name,
+                         portnoy_scenario       = "s6",  # portnoy scenario 6
+                         psa                    = var$psa)
   # ----------------------------------------------------------------------------
 
   tictoc::toc ()

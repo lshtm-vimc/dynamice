@@ -3,12 +3,10 @@
 \docType{data}
 \name{data_contact_uk}
 \alias{data_contact_uk}
-\title{Contact matrix - UK POLYMOD}
+\title{Contact matrix - POLYMOD UK}
 \format{
-A data table with 101*101 observations.
-\describe{
-  \item{V1-V101}{age between 0 and 100}
-}
+A data table contains 101*101 observations, with age of contactors in
+ row and age of contactees in column.
 }
 \source{
 {Mossong J, Hens N, Jit M, et al. Social contacts and mixing patterns
@@ -19,6 +17,6 @@ data_contact_uk
 }
 \description{
 A dataset containing a contact matrix of yearly age bands between 0 and 100,
-adapted from physical contact in the UK population in the POLYMOD study.
+adapted from physical contact in the Great Britain in the POLYMOD study.
 }
 \keyword{datasets}

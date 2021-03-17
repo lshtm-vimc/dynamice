@@ -57,7 +57,6 @@
 #' @param c_rnought A numeric variable of R0 value for the selected country
 #' \code{iso3}. Estimates provided by Ferrari and colleagues.
 #' @param population A data frame for population size by country and age.
-#' @param lexp0 A data frame for life expectancy at birth by country.
 #' @param tstep Simulation time steps for each year.
 #' @param save.scenario A folder name of the selected scenario.
 #' @param foldername A folder name for input and output files of the selected
@@ -113,7 +112,6 @@
 #'   contact            = contact,
 #'   c_rnought          = 10,
 #'   population         = population,
-#'   lexp0              = lexp0,
 #'   tstep              = 1000,
 #'   save.scenario      = "scenario01",
 #'   foldername         = NULL,
@@ -156,7 +154,6 @@ runCountry <- function (
   contact,
   c_rnought,
   population,
-  lexp0,
 
   # dynaMICE model options
   tstep,
@@ -205,7 +202,7 @@ runCountry <- function (
   if (run_model) {
 
     # remove 0% coverage SIAs
-    coverage_sia <- coverage_sia [country_code == iso3 & coverage != 0]
+    coverage_sia <- setDT (coverage_sia) [country_code == iso3 & coverage != 0]
 
     if ((using_sia == 1) & (nrow (coverage_sia) > 0)) {
 
@@ -235,7 +232,6 @@ runCountry <- function (
     # assume SIAs to take place at the beginning of a calendar year,
     # with 1-month interval (1000/12 timesteps) for multiple SIA rounds within a single year
 
-    # t_sia <- (t_run[1] + tstep * (sia_year - years[1])) + c(1:length(sia_year))
     t_sia <- unlist (sapply (sort (unique (sia_year)), function (iyr, sia_year)
       return (t_run[1] + tstep * (iyr - years[1]) + c(1:sum(sia_year == iyr) - 1)*(round(1000/12))),
       sia_year = sia_year
@@ -855,14 +851,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # read_data
   coverage_routine	<- fread (paste0 (data_coverage_routine))
   coverage_sia		  <- fread (paste0 (data_coverage_sia))
-  timeliness  		  <- setDT(data_timeliness)    # transformed as internal data in the package
-  rnought	    		  <- setDT(data_r0)
-  population  		  <- setDT(data_pop)
-  lexp0        		  <- setDT(data_lexp0)
-  template    		  <- setDT(data_template)
-
-  # coverage_sia has multiple entries per year for some countries, take only the first entry
-  # coverage_sia <- coverage_sia[, .SD[1], by = c("country_code", "year")]
+  timeliness  		  <- setDT (data_timeliness)
+  rnought	    		  <- setDT (data_r0)
+  population  		  <- setDT (data_pop)
+  template    		  <- setDT (data_template)
 
   # --------------------------------------------------------------------------
   # if psa variables file does not exist, then create psa variables file
@@ -870,7 +862,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
     if (file.exists (data_psa)) {
 
       # read csv if file already exists
-      psa_var <- fread (data_psa)  #fread (paste0 ("input/", data_psa))
+      psa_var <- fread (data_psa)
 
       # check if psa_var corresponds with psa
       if(nrow(psa_var) != psa){
@@ -892,9 +884,9 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # start and end years (should go in as input to function -- INPUT-FUNCTION)
   years <- as.numeric (c(1980:2100))
 
-  for(cty in countries) {
-    if(psa > 1){
-      for(p in 1:psa){
+  for (cty in countries) {
+    if (psa > 1){
+      for (p in 1:psa){
         write(
           paste0(
             cty,
@@ -955,10 +947,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # Run model
   writelog ("gavi_log", paste0 ("Main; Foldername: ", foldername))
 
-  if(using_openmpi | use_cluster > 1){
-    if(!using_openmpi){
+  if (using_openmpi | use_cluster > 1){
+    if (!using_openmpi){
 
-      if ( use_cluster != parallel::detectCores() ) {
+      if (use_cluster != parallel::detectCores()) {
         warning (paste0(parallel::detectCores(), " cores detected but ", use_cluster, " specified."))
       }
 
@@ -966,7 +958,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
       doParallel::registerDoParallel (cl)
 
     } else {
-      print(paste0("Clustersize: ", doMPI::clusterSize (cl)))
+      print (paste0 ("Clustersize: ", doMPI::clusterSize(cl)))
     }
   }
 
@@ -1001,7 +993,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
                            contact            = contact_list[[countries[ii]]],
                            c_rnought          = rnought[country_code == countries[ii], r0],
                            population         = population,
-                           lexp0              = lexp0,
                            tstep              = tstep,
                            save.scenario      = save.scenario,
                            foldername         = foldername,
@@ -1025,7 +1016,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
   }
 
   if(using_openmpi | use_cluster > 1){
-    if(!using_openmpi){
+    if (!using_openmpi){
       parallel::stopCluster(cl)
     } else {
       doMPI::closeCluster(cl)
@@ -1036,10 +1027,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   errorcount <- 0
 
   for (i in 1:length(combine)){
-    if("error" %in% class(combine[[i]])){
+    if ("error" %in% class(combine[[i]])){
       errormessage <- paste0("Error in task ",i,": ",combine[[i]])
       warning(errormessage)
-      writelog(paste0(gavi.dir,"gavi_log"),errormessage)
+      writelog (paste0 (gavi.dir,"gavi_log"),errormessage)
       errorcount <- errorcount + 1
       #remove from data
       combine[[i]] <- NULL
@@ -1053,11 +1044,11 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   # process results
 
-  report_years <- sort(unique(template$year))
-  ages         <- sort(unique(template$age))
+  report_years <- sort (unique (template$year))
+  ages         <- sort (unique (template$age))
 
   # get years that the model was run for (can be different from reporting years)
-  years 		   <- sort(unique(as.numeric(coverage_routine[,year])))
+  years 		   <- sort (unique (as.numeric (coverage_routine[,year])))
 
 
   # ANALYSE RUNS
@@ -1065,22 +1056,22 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # get the names of all the files in all the subfolders the stochastic runs
   # specified in scenarioname; separate cases and popsize files
   # will use those to read them all in at once and put in a data.table
-  myfiles <- list.files(path = paste0("outcome/", save.scenario, "/",foldername,"/output/"),
-                        recursive = T, pattern = "cases", full.names = T)
-  myfiles.popsize <- list.files(path = paste0("outcome/", save.scenario, "/",foldername,"/output"),
-                                recursive = T, pattern = "popsize", full.names = T)
+  myfiles <- list.files (path = paste0 ("outcome/", save.scenario, "/",foldername,"/output/"),
+                         recursive = T, pattern = "cases", full.names = T)
+  myfiles.popsize <- list.files (path = paste0 ("outcome/", save.scenario, "/",foldername,"/output"),
+                                 recursive = T, pattern = "popsize", full.names = T)
 
   # read in all those files specified in myfiles and put them in a single data table
-  all_cases  <- rbindlist(lapply(myfiles, function(fn, ...) {
-    res <- withCallingHandlers(
-      fread(fn, stringsAsFactors=F, check.names = F, fill = T,
-                        col.names = as.character(c(0:100))),
-      warning = function(w) { warning(w, fn); }
-    )
-    res[, country := gsub("^.+/(\\w+)_age.+$","\\1", fn) ]             # get the country code from the filename
+  all_cases  <- rbindlist (lapply (myfiles, function (fn, ...) {
+    res <- withCallingHandlers (
+      fread (fn, stringsAsFactors = F, check.names = F, fill = T,
+             col.names = as.character (c(0:100))),
+      warning = function(w) {warning(w, fn); }
+      )
+    res[, country := gsub ("^.+/(\\w+)_age.+$","\\1", fn)]             # get the country code from the filename
     # get run_id for psa runs
     if (psa > 0) {
-      res[, run_id := as.integer(gsub("^.+run(\\d{3}).+$","\\1", fn)) ]  # get the run_id from the filename (subfolder)
+      res[, run_id := as.integer (gsub("^.+run(\\d{3}).+$","\\1", fn))]  # get the run_id from the filename (subfolder)
     }
     res[, year := years]                                               # add year of simulation (from coverage data file)
   }))
@@ -1088,11 +1079,11 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # switch back Kosovo to XK otherwise montagu returns error on upload
   all_cases[country == "XKX", country := "XK"]
 
-  all_popsize  <- rbindlist(lapply(myfiles.popsize, function(fn, ...) {
-    res <- fread(fn, stringsAsFactors=F, check.names = F, col.names = as.character(c(0:100)))
+  all_popsize  <- rbindlist (lapply (myfiles.popsize, function (fn, ...) {
+    res <- fread (fn, stringsAsFactors = F, check.names = F, col.names = as.character(c(0:100)))
     res[, country := gsub("^.+/(\\w+)_age.+$","\\1", fn) ]             # get the country code from the filename
     if (psa > 0) {
-      res[, run_id := as.integer(gsub("^.+run(\\d{3}).+$","\\1", fn)) ]  # get the run_id from the filename (subfolder)
+      res[, run_id := as.integer (gsub("^.+run(\\d{3}).+$","\\1", fn)) ]  # get the run_id from the filename (subfolder)
     }
     res[, year := years]                                               # add year of model was run for (from coverage data file)
   }))
@@ -1105,14 +1096,14 @@ runScenario <- function (vaccine_coverage_folder    = "",
   }
 
   # all_cases.m <- melt(all_cases, id.vars = c("year","country"),
-  all_cases.m <- melt(all_cases, id.vars = column_names,
-                      measure.vars = c(as.character(0:100)),
-                      variable.name = "age", value.name = "cases", variable.factor = F)
+  all_cases.m <- melt (all_cases, id.vars = column_names,
+                       measure.vars = c(as.character(0:100)),
+                       variable.name = "age", value.name = "cases", variable.factor = F)
 
   # all_popsize.m <- melt(all_popsize, id.vars = c("year", "country"),
-  all_popsize.m <- melt(all_popsize, id.vars = column_names,
-                        measure.vars = c(as.character(0:100)),
-                        variable.name = "age", value.name = "cohort_size", variable.factor = F)
+  all_popsize.m <- melt (all_popsize, id.vars = column_names,
+                         measure.vars = c(as.character(0:100)),
+                         variable.name = "age", value.name = "cohort_size", variable.factor = F)
 
   # melt produces character variable when variable.factor is set to FALSE - change it to integer
   all_cases.m   [, age := lapply(.SD, as.integer), .SDcols = "age"]
@@ -1125,22 +1116,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   country_names <- unique (subset (template, select = c("country", "country_name")))
   c_names <- country_names$country_name; names(c_names) = country_names$country
 
-  all_runs[, c("country_name", "disease") := list(c_names[country],"Measles")]
+  all_runs[, c("country_name", "disease") := list (c_names[country], "Measles")]
 
-
-  # merge mortality rates from CFR file
-  cfr.year.all <- tailor_data_cfr(countries)
-
-  all_runs <- merge(all_runs,
-                    subset(cfr.year.all,
-                    select = c( "Code", "Year", "age", "cfr.value")),
-                    by.x = c("country", "year", "age" ), by.y = c("Code", "Year", "age"),
-                    sort= F, all.x = T)
-
-  all_runs <- merge (all_runs,
-                     subset (lexp0, select= c("country_code", "year", "LE0")),
-                     by.x = c("country", "year"),
-                     by.y = c("country_code", "year"))
 
   # ----------------------------------------------------------------------------
   # add data column for remaining life expectancy
@@ -1148,28 +1125,23 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   if (psa > 0) {
     all_runs <- lexp_remain [all_runs,
-                                  .(run_id, i.country, year, age, cases, cohort_size, country_name, disease, cfr.value, LE0, value),
+                                  .(run_id, i.country, year, age, cases, cohort_size, country_name, disease, value),
                                   on = .(country_code = country,
                                          age_from    <= age,
                                          age_to      >= age,
                                          year         = year) ]
   } else {
     all_runs <- lexp_remain [all_runs,
-                                  .(i.country, year, age, cases, cohort_size, country_name, disease, cfr.value, LE0, value),
+                                  .(i.country, year, age, cases, cohort_size, country_name, disease, value),
                                   on = .(country_code = country,
                                          age          = age,
                                          year         = year) ]
   }
 
-  # rename column "i.country" to "country"
-  setnames (x = all_runs, old = "i.country", new = "country")
-
-  # save a copy of remaining life expectancy values in disease column
-  # rename country column
+  # rename column names for output
   setnames (all_runs,
-            old = c ("value"),
-            new = c ("remain_lexp")
-  )
+            old = c("i.country", "value"      ),
+            new = c("country"  , "remain_lexp"))
 
   # ----------------------------------------------------------------------------
 
@@ -1180,12 +1152,12 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # add MCV1 column
   if (psa > 0) {
     all_runs <- coverage_routine_MCV1 [all_runs,
-                                       .(run_id, i.country, i.year, age, cases, cohort_size, country_name, disease, cfr.value, LE0, coverage, remain_lexp),
+                                       .(run_id, i.country, i.year, age, cases, cohort_size, country_name, disease, coverage, remain_lexp),
                                        on = .(country_code = country,
                                               year         = year) ]
   } else {
     all_runs <- coverage_routine_MCV1 [all_runs,
-                                       .(i.country, i.year, age, cases, cohort_size, country_name, disease, cfr.value, LE0, coverage, remain_lexp),
+                                       .(i.country, i.year, age, cases, cohort_size, country_name, disease,  coverage, remain_lexp),
                                        on = .(country_code = country,
                                               year         = year) ]
   }
@@ -1193,35 +1165,24 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # rename column "coverage" to "MCV1"
   setnames (x = all_runs,
             old = c("i.country", "i.year", "coverage"),
-            new = c("country",   "year",   "MCV1"))
+            new = c("country"  , "year"  , "MCV1"    ))
   # ----------------------------------------------------------------------------
 
-  # calculate deaths and dalys
-  all_runs[, deaths := cases * cfr.value]
-  #all_runs[, dalys := (cases - deaths)*0.002 + deaths*(LE0 - 4)] # assumes all deaths are age 4,
-  all_runs [, dalys := (cases - deaths) * 0.002 + deaths * (LE0 - age)] # to account for actual age of death
-
-  # ------------------------------------------------------------------------------
+  # # Not in use 2021:
+  # # Previous methods for calculating deaths and dalys.
+  # # Additional input data for CFR and life expectancy at birth are needed to recover.
+  # all_runs[, deaths := cases * cfr.value]
+  # all_runs[, dalys := (cases - deaths)*0.002 + deaths*(LE0 - 4)]       # assumes all deaths are age 4
+  # all_runs[, dalys := (cases - deaths) * 0.002 + deaths * (LE0 - age)] # to account for actual age of death
+  # ----------------------------------------------------------------------------
   # YLL calculation above is fine since most measles burden < 5 years
   # remaining life expectancy estimation can be improved by using remaining life
   # years by age, year and country
-  # ------------------------------------------------------------------------------
+  # ----------------------------------------------------------------------------
 
   # OUTPUT RUNS
-
-  # don't need all of these columns for VIMC, save only ones that are needed
-  if (psa > 0) {
-    save.cols <- c("run_id", colnames(template))
-  } else {
-    save.cols <- c(colnames(template))
-  }
-
-  # ----------------------------------------------------------------------------
-  save.cols <- c(save.cols, "MCV1", "remain_lexp")
-  # ----------------------------------------------------------------------------
-
   # keep all columns
-  output_runs <- subset(all_runs, year %in% report_years, select = save.cols)
+  output_runs <- subset (all_runs, year %in% report_years)
 
   # burden estimate type -- central or stochastic
   if (psa > 0) {
@@ -1238,8 +1199,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
                                   ".csv")
 
   # save burden estimates to file
-  fwrite (x    = output_runs [order(country, year, age)],
-          file = paste0 (burden_estimate_folder,  burden_estimate_file) )
+  fwrite (x    = output_runs [order (country, year, age)],
+          file = paste0 (burden_estimate_folder,  burden_estimate_file))
 
   # clean environment
   writelog ("gavi_log", paste0 ("Main; gavi.r finished"))
@@ -1262,8 +1223,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
 #' rates (CFRs) to the number of cases, and then calculates the
 #' disability-adjusted years (DALYs)
 #'
-#' @param cfr_options Methods for specifying the trend of CFRs: "Wolfson" or/and
-#'  "Portnoy".
+#' @param cfr_options Methods for CFR estimates: "Wolfson" or/and "Portnoy".
 #' @param burden_estimate_file A file name for model outputs to be saved.
 #' @param burden_estimate_folder A folder name for the file which contains the
 #' model outputs for evaluation. Include a slash at the end.
@@ -1271,15 +1231,15 @@ runScenario <- function (vaccine_coverage_folder    = "",
 #' \code{data_cfr_portnoy.rda}, for extracting CFR estiamtes by the Portnoy
 #' method.
 #' @param portnoy_scenario A scenario name for future CFR trends when using the
-#' Portnoy method: "s4" - declining after 2018, or "s6" - staying at the 2018
-#' level.
+#' Portnoy method: "s4" - declining after 2018, or "s6" - staying stagnant at
+#' the 2018 level.
 #' @param psa A numeric variable of the total runs for PSA. Use 0 to indicate a
 #' single run without PSA.
 #' @examples
-#' estimateDeathsDalys (
+#' estimate_deaths_dalys (
 #'  cfr_option             = "Portnoy",
 #'  burden_estimate_file   = burden_estimate_file,
-#'  burden_estimate_folder =  "central_burden_estimate/",
+#'  burden_estimate_folder = "central_burden_estimate/",
 #'  vimc_scenario          = "campaign-only",
 #'  portnoy_scenario       = "s6",
 #'  psa                    = 0)
@@ -1287,12 +1247,12 @@ runScenario <- function (vaccine_coverage_folder    = "",
 #   save results in corresponding cfr_option subfolder
 #   append cfr_option to burden estimates file
 # ------------------------------------------------------------------------------
-estimateDeathsDalys <- function (cfr_option,
-                                 burden_estimate_file,
-                                 burden_estimate_folder,
-                                 vimc_scenario,
-                                 portnoy_scenario,
-                                 psa = 0) {
+estimate_deaths_dalys <- function (cfr_option,
+                                   burden_estimate_file,
+                                   burden_estimate_folder,
+                                   vimc_scenario,
+                                   portnoy_scenario,
+                                   psa = 0) {
 
   # read burden estimates (primarily cases)
   burden <- fread (file = paste0 (burden_estimate_folder,
@@ -1303,7 +1263,7 @@ estimateDeathsDalys <- function (cfr_option,
   if (cfr_option == "Wolfson") {
 
     # read CFRs  -- Wolfson
-    cfr = setDT(data_cfr_wolfson)
+    cfr = setDT (data_cfr_wolfson)
 
     # cfr estimates for ages below 5 years, not varying by time
     # cfrs for ages above 5 years are half the cfr values for ages below 5 years
@@ -1311,11 +1271,11 @@ estimateDeathsDalys <- function (cfr_option,
     # add CFR data column to burden estimates
     if (psa > 0) {
       burden <- cfr [burden,
-                     .(run_id, disease, year, age, i.country, country_name, cohort_size, cases, dalys, deaths, CFR, remain_lexp),
+                     .(run_id, disease, year, age, i.country, country_name, cohort_size, cases, CFR, remain_lexp),
                      on = .(country_code = country) ]
     } else {
       burden <- cfr [burden,
-                     .(disease, year, age, i.country, country_name, cohort_size, cases, dalys, deaths, CFR, remain_lexp),
+                     .(disease, year, age, i.country, country_name, cohort_size, cases, CFR, remain_lexp),
                      on = .(country_code = country) ]
     }
 
@@ -1325,13 +1285,8 @@ estimateDeathsDalys <- function (cfr_option,
     burden [age >= 5, deaths := cases * CFR/2]
 
     # rename country column
-    setnames (burden,
-              old = c ("i.country"),
-              new = c ("country")
-    )
+    setnames (burden, old = "i.country", new = "country")
 
-    # drop CFR column
-    burden [, CFR  := NULL]
   }
   # ----------------------------------------------------------------------------
 
@@ -1341,7 +1296,7 @@ estimateDeathsDalys <- function (cfr_option,
   if (cfr_option == "Portnoy") {
 
     # read CFRs (rates between 0 and 1) -- Portnoy
-    cfr = setDT(data_cfr_portnoy)
+    cfr = setDT (data_cfr_portnoy)
 
     # --------------------------------------------------------------------------
     # cfr estimates are for 2000 to 2030
@@ -1369,21 +1324,19 @@ estimateDeathsDalys <- function (cfr_option,
     # rename columns -- cfr of vimc_scenario and portnoy_scenario
     # cfrs for under 5 (< 5) and over 5 (>= 5) years
     setnames (x = cfr,
-              old = c (paste0 ("cfr_under5_", vimc_scenario, "_", portnoy_scenario),
-                       paste0 ("cfr_over5_" , vimc_scenario, "_", portnoy_scenario) ),
-              new = c ("under5",
-                       "over5" )
-    )
+              old = c(paste0 ("cfr_under5_", vimc_scenario, "_", portnoy_scenario),
+                       paste0 ("cfr_over5_" , vimc_scenario, "_", portnoy_scenario)),
+              new = c("under5", "over5"))
 
     # add CFR data column to burden estimates
     if (psa > 0) {
       burden <- cfr [burden,
-                     .(run_id, disease, year, age, country, country_name, cohort_size, cases, dalys, deaths, over5, under5, remain_lexp),
+                     .(run_id, disease, year, age, country, country_name, cohort_size, cases, over5, under5, remain_lexp),
                      on = .(country_code = country,
                             year         = year) ]
     } else {
       burden <- cfr [burden,
-                     .(disease, year, age, country, country_name, cohort_size, cases, dalys, deaths, over5, under5, remain_lexp),
+                     .(disease, year, age, country, country_name, cohort_size, cases, over5, under5, remain_lexp),
                      on = .(country_code = country,
                             year         = year) ]
     }
@@ -1393,10 +1346,6 @@ estimateDeathsDalys <- function (cfr_option,
 
     # estimate deaths for ages over 5 years
     burden [age >= 5, deaths := cases * over5]
-
-    # drop cfr columns -- under5 and over5
-    burden [, ':=' (under5 = NULL,
-                    over5  = NULL)]
   }
   # ----------------------------------------------------------------------------
 
@@ -1405,8 +1354,13 @@ estimateDeathsDalys <- function (cfr_option,
   # calculate dalys = (ylds) + (ylls)
   burden [, dalys := ((cases - deaths) * 0.002) + (deaths * remain_lexp)]
 
-  # drop column -- remaining life expectancy
-  burden [, remain_lexp  := NULL]
+  # adjust columns for output
+  if (psa > 0) {
+    save.cols <- c("run_id", names(data_template))
+  } else {
+    save.cols <- names(data_template)
+  }
+  burden <- subset (burden, select = save.cols)
   # ----------------------------------------------------------------------------
 
   # append/suffix cfr_option to the end of filename
@@ -1425,6 +1379,6 @@ estimateDeathsDalys <- function (cfr_option,
 
   return ()
 
-} # end of function -- estimateDeathsDalys
+} # end of function -- estimate_deaths_dalys
 # ------------------------------------------------------------------------------
 

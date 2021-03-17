@@ -17,9 +17,6 @@ A data table with 78477 observations of 7 variables.
   \item{uner5}{CFRs for the age group under 5 years old}
 }
 }
-\source{
-{check with Kevin/Kaja/Mark}
-}
 \usage{
 data_cfr
 }

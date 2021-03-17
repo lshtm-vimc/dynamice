@@ -23,7 +23,6 @@ runCountry(
   contact,
   c_rnought,
   population,
-  lexp0,
   tstep,
   save.scenario,
   foldername,
@@ -41,7 +40,7 @@ runCountry(
   psa_var,
   run_model,
   remove_files,
-  contact.mat
+  contact_mat
 )
 }
 \arguments{
@@ -99,8 +98,6 @@ a selected scenario.}
 
 \item{population}{A data frame for population size by country and age.}
 
-\item{lexp0}{A data frame for life expectancy at birth by country.}
-
 \item{tstep}{Simulation time steps for each year.}
 
 \item{save.scenario}{A folder name of the selected scenario.}
@@ -147,9 +144,9 @@ measles model.}
 \item{remove_files}{A logical variable that determines whether to remove
 output files after finishing a single country run.}
 
-\item{contact.mat}{A character variable that determines the assumptions for
-contact matrices. "nomix" - homogeneous mixing, "uk" - UK POLYMOD, and "syn"
-- country-specific synthetic matrix.}
+\item{contact_mat}{A character variable that indicates the assumption for
+contact pattern. "nomix" - homogeneous mixing, "uk" - POLYMOD Great Britain
+physical contacts, and "syn" - country-specific synthetic matrix.}
 
 \item{debug_compartment}{A numeric variable that determines the compartments
 to output: 0 - number of cases, and 1 - each compartment.}
@@ -179,7 +176,6 @@ runCountry (
   contact            = contact,
   c_rnought          = 10,
   population         = population,
-  lexp0              = lexp0,
   tstep              = 1000,
   save.scenario      = "scenario01",
   foldername         = NULL,
@@ -197,5 +193,5 @@ runCountry (
   psa_var            = psa_var,
   run_model          = TRUE,
   remove_files       = FALSE,
-  contact.mat        = "nomix")
+  contact_mat        = "nomix")
 }

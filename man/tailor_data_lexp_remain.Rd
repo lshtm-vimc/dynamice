@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{tailor_data_lexp_remain}
 \alias{tailor_data_lexp_remain}
-\title{Tailor the data structure for life expectancy by age}
+\title{Tailor the data structure for life expectancy by age and year}
 \usage{
 tailor_data_lexp_remain(sel_countries = "all")
 }
@@ -12,7 +12,7 @@ tailor_data_lexp_remain(sel_countries = "all")
 }
 \description{
 Tailor the \code{\link{data_lexp_remain}} data to the format for processing burden
-estimates. Changes include calender year and age structures.
+estimates. Linear interpolation between calender years was applied.
 }
 \examples{
 lexp_remain <- tailor_data_lexp_remain (sel_countries = c("AGO","BGD"))

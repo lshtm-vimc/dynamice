@@ -21,7 +21,8 @@ runScenario(
   using_sia,
   measles_model,
   debug_model = FALSE,
-  contact.mat = "nomix"
+  contact_mat,
+  step_ve
 )
 }
 \arguments{
@@ -60,14 +61,20 @@ for children: 0 - No vaccination, 1 - Only MCV1,  2 - MCV1 and MCV2.}
 \item{using_sia}{A numeric indicator that determines Whether supplementary
 immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.}
 
-\item{measles_model}{An executable file that processes fortan codes of the
+\item{measles_model}{An executable file that processes Fortran codes of the
 measles model.}
 
 \item{debug_model}{A logical variable that determines whether to debug the
 model.}
 
-\item{contact.mat}{A logical variable that determines whether to use UK
-POLYMOD contact matrix or not (use country-specific synthetic matrix instead).}
+\item{contact_mat}{A character variable that indicates the assumption for
+contact pattern. "nomix" - homogeneous mixing, "uk" - POLYMOD Great Britain
+physical contacts, and "syn" - country-specific synthetic matrix.}
+
+\item{step_ve}{A logical variable that determines whether a step change on
+age-related vaccine efficacy is applied. This implies different meaning of
+vaccine efficacy vector (\code{take}) and a corresponding \code{measles_model}
+should be applied.}
 }
 \description{
 A function that execute the measles model under a selected vaccination
@@ -76,11 +83,11 @@ sensitivity analysis (PSA).
 }
 \examples{
 runScenario (
-  vaccine_coverage_folder    = "vaccine_coverage/",
+  vaccine_coverage_folder    = "vaccine_coverage_upd/",
   coverage_prefix            = "coverage",
   touchstone                 = "_201910gavi-5_",
   antigen                    = "measles-",
-  scenario_name              = "campaign-only-bestcase",
+  scenario_name              = "campaign-only-default",
   scenario_number            = scenario_number,
   vaccine_coverage_subfolder = "scenarios/"
   burden_estimate_folder     = "central_burden_estimate/",
@@ -92,5 +99,6 @@ runScenario (
   using_sia                  = 1,
   measles_model              = "vaccine2019_sia_singlematrix.exe",
   debug_model                = FALSE,
-  contact.mat                = "nomix")
+  contact_mat                = "nomix",
+  step_ve                    = FALSE)
 }

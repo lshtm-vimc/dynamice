@@ -64,7 +64,9 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   routine <- sia [activity_type != "campaign",]
 
   # only select campaigns (and exclude NAs and target = 0)
-  sia2 <- sia [activity_type == "campaign" & ( (!is.na(target) & target != 0) | (!is.na(coverage) ) ), ]
+  sia2 <- sia [activity_type == "campaign" & ( (!is.na(target) & target != 0) | (!is.na(coverage)) ),
+               c("vaccine", "country_code", "country", "year", "age_first", "age_last",
+                 "age_range_verbatim", "target", "coverage")]
 
   # -----------------------------------------------------------------------------------
   # set start age to fraction of a year for campaigns starting at ages
@@ -77,13 +79,13 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   sia2 [is.na (age_first), age_first := 0.5]
   sia2 [age_first == 1 & (stringr::str_extract (age_range_verbatim, "\\d+") != "1"),
         age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
-  sia2 [age_first == 0,    age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
+  sia2 [age_first == 0, age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
   # -----------------------------------------------------------------------------------
 
 
   # remove unused columns
-  discard.cols <- c ("scenario", "set_name", "gavi_support", "activity_type")
-  sia2 <- sia2 [, .SD, .SDcols = -discard.cols]
+  # discard.cols <- c ("scenario", "set_name", "gavi_support", "activity_type")
+  # sia2 <- sia2 [, .SD, .SDcols = -discard.cols]
 
   # remove all whitespace from age_range_verbatim, put all in lowercase
   sia2$age_range_verbatim <- tolower (gsub("[[:space:]]", "", sia2$age_range_verbatim))
@@ -143,14 +145,15 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   sia2 [, reached := as.numeric(target) * as.numeric(coverage)]
 
 
-  # add additional columns to make file similar to original
-  sia2 [, c("Geography", "Gavi73", "Gavi-supported", "Activity","Extent")] <- NA
+  # # add additional columns to make file similar to original (Han: not needed for the format)
+  # sia2 [, c("Geography", "Gavi73", "Gavi-supported", "Activity","Extent")] <- NA
+  #
+  # # reorder columns to make file similar to original
+  # sia2 <- sia2 [ , c("Geography", "country_code", "vaccine", "Gavi73", "Gavi-supported",
+  #                    "Activity", "vaccine", "year", "a0", "a1",
+  #                    "Extent", "target", "reached", "coverage") ]
 
-  # reorder columns to make file similar to original
-  sia2 <- sia2 [ , c("Geography", "country_code", "vaccine", "Gavi73", "Gavi-supported",
-                     "Activity", "vaccine", "year", "a0", "a1",
-                     "Extent", "target", "reached", "coverage") ]
-
+  # adjust output format
   sia2 [, vaccine := NULL]
 
   # write vaccine coverage data for routine vaccination and SIAs
@@ -218,57 +221,6 @@ expandMatrix <- function (A,
 
 } # end of function -- expandMatrix
 # ------------------------------------------------------------------------------
-
-
-# # ------------------------------------------------------------------------------
-#  timelinessCov (Han: not being used)
-#
-#  get vaccination coverages according to the age groups used for model inputs.
-#  @param tim_shape
-#  @param target_age
-#  @param max_cov
-#  @examples
-#  timelinessCov()
-# timelinessCov <- function (tim_shape,
-#                            target_age,
-#                            max_cov) {
-#
-#   coverage_byage_cumulative <- c(
-#     rep(0,(target_age-1)),
-#     rep(max_cov,(254-target_age+1))
-#   )
-#
-#   beta_function <- cumsum(
-#     dbeta(
-#       (1:52/52),
-#       4,
-#       tim_shape
-#     )
-#   )/max(
-#     cumsum(
-#       dbeta(
-#         (1:52/52),
-#         4,
-#         tim_shape
-#       )
-#     )
-#   )
-#
-#   coverage_byage_cumulative[39:(39+51)] <- max_cov*beta_function
-#   coverage_byage=rep (0, 254)
-#   coverage_byage [2:length(coverage_byage_cumulative)] <- (
-#     coverage_byage_cumulative [2:length(coverage_byage_cumulative)]
-#     -coverage_byage_cumulative [1:(length(coverage_byage_cumulative)-1)]
-#   )/(
-#     1 - coverage_byage_cumulative [1:(length(coverage_byage_cumulative)-1)]
-#   )
-#
-#   coverage_byage [which (is.na (coverage_byage))] <- 1
-#
-#   return (coverage_byage)
-#
-# } # end of function -- timelinessCov
-# # ------------------------------------------------------------------------------
 
 
 # ------------------------------------------------------------------------------
@@ -339,51 +291,6 @@ create_campaign_vaccination_coverage_file <- function (campaign_only_vaccination
   return ()
 
 } # end of function -- create_campaign_vaccination_coverage_file
-# ------------------------------------------------------------------------------
-
-
-# ------------------------------------------------------------------------------
-#' Tailor the data structure for case fatality ratios (CFRs)
-#'
-#' Tailor \code{\link{data_cfr}} to the format for processing burden estimates.
-#'  Changes include calender year and age structures.
-#'
-#' @param sel_countries ISO-3 codes for countries included for evaluation. If
-#' "all", all countries in the original data are selected.
-#' @examples
-#' cfr.year.all <- tailor_data_cfr (sel_countries = "all")
-tailor_data_cfr <- function (sel_countries){
-
-  cfr <- setDT(data_cfr)
-
-  if (sel_countries[[1]] != "all") {
-    cfr <- cfr [Code %in% sel_countries]
-  }
-
-  # set cfrs before 2000 to 2000
-  cfr.year <- rbindlist(lapply(1980:1999, function(i) copy(cfr[Year ==2000,])[,Year := i]))
-  cfr <- rbind(cfr.year, cfr)
-
-  # set Kosovo mortaity to Serbia as it was once Serbia
-  cfr.xk <- rbindlist(lapply("XK", function(i) copy(cfr[Code == "SRB",])[,Code := i]))
-  cfr.xk[, Country := "Kosovo"]
-  cfr <- rbind(cfr, cfr.xk)
-
-  # expand cfr by age so that it uses the right value for <5 and 5-9 and 0 for >=10
-  cfr.year.all <- rbindlist(lapply(0:100, function(i) copy(cfr)[, age:=i]))
-  over10 <- T
-
-  if (over10){
-    cfr.year.all[, cfr.value :=  if (age < 5) under5 else if (age > 4 & age <10) over5 else 0,
-                 by = c("Code", "Year", "age") ]
-  } else {
-    cfr.year.all[, cfr.value :=  if (age < 5) under5 else if (age > 4 ) over5,
-                 by = c("Code", "Year", "age") ]
-  }
-  cfr.year.all$Year = as.integer(cfr.year.all$Year)
-
-  return(cfr.year.all)
-}
 # ------------------------------------------------------------------------------
 
 
@@ -605,3 +512,100 @@ create_PSA_data <- function (psa             = 0,
 # fwrite (psa_var, paste0 ("input/", data_psa))
 # ------------------------------------------------------------------------------
 
+
+# Not in use the latest version, where deaths are estimated by "function/estimate_deaths_dalys.r"
+# # ------------------------------------------------------------------------------
+# #' Tailor the data structure for case fatality ratios (CFRs)
+# #'
+# #' Tailor \code{\link{data_cfr}} to the format for processing burden estimates.
+# #'  Changes include calender year and age structures.
+# #'
+# #' @param sel_countries ISO-3 codes for countries included for evaluation. If
+# #' "all", all countries in the original data are selected.
+# #' @examples
+# #' cfr.year.all <- tailor_data_cfr (sel_countries = "all")
+# tailor_data_cfr <- function (sel_countries){
+#
+#   cfr <- setDT(data_cfr)
+#
+#   if (sel_countries[[1]] != "all") {
+#     cfr <- cfr [Code %in% sel_countries]
+#   }
+#
+#   # set cfrs before 2000 to 2000
+#   cfr.year <- rbindlist(lapply(1980:1999, function(i) copy(cfr[Year ==2000,])[,Year := i]))
+#   cfr <- rbind(cfr.year, cfr)
+#
+#   # set Kosovo mortaity to Serbia as it was once Serbia
+#   cfr.xk <- rbindlist(lapply("XK", function(i) copy(cfr[Code == "SRB",])[,Code := i]))
+#   cfr.xk[, Country := "Kosovo"]
+#   cfr <- rbind(cfr, cfr.xk)
+#
+#   # expand cfr by age so that it uses the right value for <5 and 5-9 and 0 for >=10
+#   cfr.year.all <- rbindlist(lapply(0:100, function(i) copy(cfr)[, age:=i]))
+#   over10 <- T
+#
+#   if (over10){
+#     cfr.year.all[, cfr.value :=  if (age < 5) under5 else if (age > 4 & age <10) over5 else 0,
+#                  by = c("Code", "Year", "age") ]
+#   } else {
+#     cfr.year.all[, cfr.value :=  if (age < 5) under5 else if (age > 4 ) over5,
+#                  by = c("Code", "Year", "age") ]
+#   }
+#   cfr.year.all$Year = as.integer(cfr.year.all$Year)
+#
+#   return(cfr.year.all)
+# }
+# # ------------------------------------------------------------------------------
+
+
+# Not in use the latest version
+# # ------------------------------------------------------------------------------
+#  timelinessCov
+#
+#  get vaccination coverages according to the age groups used for model inputs.
+#  @param tim_shape
+#  @param target_age
+#  @param max_cov
+#  @examples
+#  timelinessCov()
+# timelinessCov <- function (tim_shape,
+#                            target_age,
+#                            max_cov) {
+#
+#   coverage_byage_cumulative <- c(
+#     rep(0,(target_age-1)),
+#     rep(max_cov,(254-target_age+1))
+#   )
+#
+#   beta_function <- cumsum(
+#     dbeta(
+#       (1:52/52),
+#       4,
+#       tim_shape
+#     )
+#   )/max(
+#     cumsum(
+#       dbeta(
+#         (1:52/52),
+#         4,
+#         tim_shape
+#       )
+#     )
+#   )
+#
+#   coverage_byage_cumulative[39:(39+51)] <- max_cov*beta_function
+#   coverage_byage=rep (0, 254)
+#   coverage_byage [2:length(coverage_byage_cumulative)] <- (
+#     coverage_byage_cumulative [2:length(coverage_byage_cumulative)]
+#     -coverage_byage_cumulative [1:(length(coverage_byage_cumulative)-1)]
+#   )/(
+#     1 - coverage_byage_cumulative [1:(length(coverage_byage_cumulative)-1)]
+#   )
+#
+#   coverage_byage [which (is.na (coverage_byage))] <- 1
+#
+#   return (coverage_byage)
+#
+# } # end of function -- timelinessCov
+# # ------------------------------------------------------------------------------
