@@ -1,9 +1,9 @@
 # process_data.R
 # This file processes raw data and crate exported data for the package.
 
-Process_data <- function(){
+Process_data <- function() {
 
-  wd_rawdata <- paste0(getwd(),"/data-raw/")
+  wd_rawdata <- paste0 (getwd(),"/data-raw/")
 
   #### data without further processing -----------------------------------------
   data_pop		  	  <- fread (paste0 (wd_rawdata, "201910gavi-5_dds-201910_2_int_pop_both.csv"))
@@ -31,38 +31,57 @@ Process_data <- function(){
   ## UK contact matrix
   data_contact_uk <- local({
 
-    # use rescaled POLYMOD matrix for yearly age bands between 0-100
-    contact    <- fread (paste0 (wd_rawdata, "uk_polymod_physical_101.csv"))
-    contact    <- contact [ , -"contact.age"]
+    # use POLYMOD matrix with physical contacts for the Great Britain
+    # original data from https://doi.org/10.1371/journal.pmed.0050074.st005 (Table S5b)
+    # rescaled matrices for yearly age bands between 0-100 years old
 
-    return(contact)
+    contact     <- fread (paste0 (wd_rawdata, "polymod_physical_uk.csv"))
+    contact_ori <- t (as.matrix (contact [ , -"age"]))  # transpose to make participants/contactors presented in rows)
+    contact_101 <- matrix (0, ncol = 101, nrow = 101)
+
+    nagegrp     <- dim(contact_ori)[1]  # 15 groups
+    expd_age1 <- 5         # 0-70 years old: expand from 5-year bands
+    expd_age2 <- 101-70    # 70-100 years old: expand from the oldest group (70+)
+
+    for (icol in 1:nagegrp){
+      contactees <- c(rep (contact_ori[1:(nagegrp-1),icol]/expd_age1, each = expd_age1),
+                      rep (contact_ori[nagegrp, icol]     /expd_age2, each = expd_age2))
+      contact_101 [,(icol-1)*expd_age1+(1:expd_age1)] <-
+        matrix (rep (contactees, expd_age1), ncol = expd_age1)
+    }
+    contact_101 [,(nagegrp*expd_age1+1):101] <-
+      matrix (rep (contact_101 [, nagegrp*expd_age1], expd_age2-expd_age1), ncol = expd_age2-expd_age1)
+
+    return(contact_101)
   })
+
 
   ## Synthetic contact matrices
   data_contact_syn <- local({
 
     # use updated synthetic contact matrices 2020 (acknowledge to Kiesha Prem)
-    # download overall contact without any particular assumptions
-    # rescaled matrices for yearly age bands between 0-100
-    load(url("https://github.com/kieshaprem/synthetic-contact-matrices/blob/master/output/syntheticcontactmatrices2020/overall/contact_all.rdata?raw=true"))
+    # download overall contact without any particular assumptions - "contact_all.rdata"
+    # rescaled matrices for yearly age bands between 0-100 years old
 
-    contact_syn <- sapply (names(contact_all), function(cty){
-      # rescale for a country-specific matrix from 5-year to 1-year band
-      contact_ori <- contact_all[[cty]]
+    load (url ("https://github.com/kieshaprem/synthetic-contact-matrices/blob/master/output/syntheticcontactmatrices2020/overall/contact_all.rdata?raw=true"))
+
+    contact_syn <- sapply (names(contact_all), function(icty) {
+
+      contact_ori <- contact_all[[icty]]
       contact_101 <- matrix (0, ncol = 101, nrow = 101)
 
-      nagegrp     <- dim(contact_ori)[1]
-      matvals     <- numeric(0)
+      nagegrp     <- dim(contact_ori)[1]  # 16 groups
+      expd_age1 <- 5         # 0-74 years old: expand from 5-year bands
+      expd_age2 <- 101-75    # 75-100 years old: expand from the oldest group (75+)
+
       for (icol in 1:nagegrp){
-        matvals   <- c(matvals, rep (contact_ori[,icol]/5, 5, each = 5))
+        contactees <- c(rep (contact_ori[1:(nagegrp-1),icol]/expd_age1, each = expd_age1),
+                        rep (contact_ori[nagegrp, icol]     /expd_age2, each = expd_age2))
+        contact_101 [,(icol-1)*expd_age1+(1:expd_age1)] <-
+          matrix (rep (contactees, expd_age1), ncol = expd_age1)
       }
-      contact_101 [1:(nagegrp*5), 1:(nagegrp*5)] <- matrix (matvals,
-                                                            nrow = nagegrp*5,
-                                                            ncol = nagegrp*5)
-      # assume > 80 y/o have the same contact pattern as 75-79 y/o
-      contact_101[81:101, 81:101] <- contact_101[80, 80]
-      contact_101[81:101, 1:80]   <- matrix (rep (contact_101[80, 1:80], 101-80), nrow = 101-80, byrow = TRUE)
-      contact_101[1:80, 81:101]   <- matrix (rep (contact_101[1:80, 80], 101-80), ncol = 101-80)
+      contact_101 [,(nagegrp*expd_age1+1):101] <-
+        matrix (rep (contact_101 [, nagegrp*expd_age1], expd_age2-expd_age1), ncol = expd_age2-expd_age1)
 
       return(contact_101)
       },
@@ -70,6 +89,7 @@ Process_data <- function(){
 
     return(contact_syn)
   })
+
 
   ## Life expectancy at birth
   data_lexp0 <- local({
@@ -97,6 +117,7 @@ Process_data <- function(){
 
     return(cfr)
   })
+
 
   usethis::use_data(data_contact_uk,
                     data_contact_syn,

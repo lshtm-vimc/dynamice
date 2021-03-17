@@ -23,15 +23,13 @@
 "data_pop"
 
 
-#' Contact matrix - UK POLYMOD
+#' Contact matrix - POLYMOD UK
 #'
 #' A dataset containing a contact matrix of yearly age bands between 0 and 100,
-#' adapted from physical contact in the UK population in the POLYMOD study.
+#' adapted from physical contact in the Great Britain in the POLYMOD study.
 #'
-#' @format A data table with 101*101 observations.
-#' \describe{
-#'   \item{V1-V101}{age between 0 and 100}
-#' }
+#' @format A data table contains 101*101 observations, with age of contactors in
+#'  row and age of contactees in column.
 #' @source {Mossong J, Hens N, Jit M, et al. Social contacts and mixing patterns
 #'  relevant to the spread of infectious diseases. PLoS Med 2008; 5(3): e74.}
 "data_contact_uk"
@@ -85,7 +83,7 @@
 #' @source {Check with Kevin/Mark for how the csv is processed}
 "data_timeliness"
 
-
+# Not in use 2021
 #' Life expectancy at birth
 #'
 #' A dataset containing estimates of life expectancy at birth.
@@ -126,6 +124,7 @@
 "data_lexp_remain"
 
 
+# Not in use 2021
 #' CFRs
 #'
 #' A dataset containing the case fatality ratios (CFRs) by calender year and age
@@ -142,7 +141,6 @@
 #'   \item{over5}{CFRs for the age group over 5 years old}
 #'   \item{uner5}{CFRs for the age group under 5 years old}
 #' }
-#' @source {check with Kevin/Kaja/Mark}
 "data_cfr"
 
 
