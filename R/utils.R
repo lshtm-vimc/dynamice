@@ -1,7 +1,6 @@
 # utils.R
 # Functions for supporting utilities in the DynaMICE model (Dynamic Measles Immunisation Calculation Engine)
 
-
 # ------------------------------------------------------------------------------
 #' Create vaccine coverage files by scenarios
 #'
@@ -10,29 +9,34 @@
 #'
 #' @param vaccine_coverage_folder A folder name for the vaccine coverage files.
 #' Include a slash at the end.
+#' @param vaccine_coverage_subfolder A folder name under the \code{x} folder for
+#' the vaccine coverage files.
 #' @param coverage_prefix A prefix used in the name of vaccine coverage file.
 #' @param touchstone A version note in the file name used by VIMC. Include a
 #' underscore at the beginning and end of the name.
 #' @param antigen A disease name used by VIMC: "Measles".
 #' @param scenario_name A name of vaccination scenarios.
-#' @param vaccine_coverage_subfolder A folder name under the \code{x} folder for
-#' the vaccine coverage files.
+#' @param rev_cov A logical variable that determines whether to revise the SIA
+#' coverage data from Montagu and use precise age at vaccination.
+
 #' @examples
 #'   create_vaccine_coverage_routine_sia (
 #'   vaccine_coverage_folder    = "vaccine_coverage/",
+#'   vaccine_coverage_subfolder = "scenarios/",
 #'   coverage_prefix            = "coverage",
 #'   touchstone                 = "_201910gavi-5_",
 #'   antigen                    = "measles-",
 #'   scenario_name              = "campaign-only-bestcase",
-#'   vaccine_coverage_subfolder = "scenarios/")
+#'   rev_cov                    = TRUE
+#'   )
 create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = "",
+                                                 vaccine_coverage_subfolder = "",
                                                  coverage_prefix            = "",
                                                  touchstone                 = "",
                                                  antigen                    = "",
-                                                 scenario_name,
-                                                 vaccine_coverage_subfolder = "") {
-
-  require("data.table")
+                                                 scenario_name              = "",
+                                                 rev_cov
+                                                 ) {
 
   # vaccine coverage file
   vaccine_coverage_file <- paste0 (vaccine_coverage_folder,
@@ -57,63 +61,102 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
                                ".csv")
 
   # read vaccine coverage data file
-  sia <- fread (file = vaccine_coverage_file,
-                stringsAsFactors = F, na.strings = "<NA>")
+  vaccov <- fread (file = vaccine_coverage_file,
+                   stringsAsFactors = F, na.strings = "<NA>")
 
-  # extract routine vaccination coverage
-  routine <- sia [activity_type != "campaign",]
+  keep.cols <- c("vaccine", "country_code", "country", "year", "age_first", "age_last",
+                 "age_range_verbatim", "target", "coverage")
 
-  # only select campaigns (and exclude NAs and target = 0)
-  sia2 <- sia [activity_type == "campaign" & ( (!is.na(target) & target != 0) | (!is.na(coverage)) ),
-               c("vaccine", "country_code", "country", "year", "age_first", "age_last",
-                 "age_range_verbatim", "target", "coverage")]
+  # select routine vaccination coverage
+  routine <- vaccov [activity_type != "campaign", ..keep.cols]
+
+  # only select campaigns with coverage > 0 and with information of target population size
+  sia <- vaccov [activity_type == "campaign" & ( !is.na(target) & !is.na(coverage) & coverage != 0 ),
+              ..keep.cols]
+
+  # add columns for the number of reached and precise age at vaccination of SIAs
+  sia [, `:=` (a0 = 0, a1 = 0,
+               reached = as.numeric(target) * as.numeric(coverage))]
+
+  if ((rev_cov) & (nrow(sia) > 0)) {
+
+    # remove all whitespace from age_range_verbatim, put all in lowercase
+    sia$age_range_verbatim <- tolower (gsub("[[:space:]]", "", sia$age_range_verbatim))
+
+    # adjust format for following extraction of precise age
+    sia [age_range_verbatim == "9-5y" , age_range_verbatim := "9m-5y"]
+    sia [age_range_verbatim == "1to4", age_range_verbatim := "1-4y"]
+    sia [age_range_verbatim == "<5y", age_range_verbatim := "0-<5y"]
+    sia [age_range_verbatim == "<15y", age_range_verbatim := "0-<15y"]
+    sia [age_range_verbatim == "6m+" , age_range_verbatim := "6m-100y"]
+    sia [age_range_verbatim == "1yschool" , age_range_verbatim := "1-6y"]
+
+    sia [, `:=`(age_first_verb = stringr::str_extract (age_range_verbatim, "[^-]+"),
+                age_last_verb  = stringr::str_extract (age_range_verbatim, "[^-]+$"))]
+
+    sia [, `:=`(age_first_num  = as.double (stringr::str_extract (age_first_verb, "\\d+")),
+                age_first_unit = stringr::str_extract (age_first_verb, "\\D+$"),
+                age_last_num   = as.double (stringr::str_extract (age_last_verb, "\\d+")),
+                age_last_unit  = stringr::str_extract (age_last_verb, "\\D+$"))]
+
+    sia [is.na(age_first_unit), age_first_unit := age_last_unit]
+    sia [, `:=` (age_first = as.double (age_first), age_last = as.double (age_last))]
+
+    # use precise age for those <3 years old
+    sia [age_first_unit == "m" ,
+         age_first := ifelse(age_first_num < 36, age_first_num/12, round(age_first_num/12))]
+    sia [age_last_unit == "m" ,
+         age_last := ifelse(age_last_num < 36, age_last_num/12, round(age_last_num/12))]
+
+    # recalculate the size of target population
+    get_targetpop <- function (icty, iyr, iage1, iage2){
+      targetpop <- sum (data_pop [country_code == icty & year == as.integer(iyr) &
+                                    age_from %in% (ceiling(iage1):floor(iage2)), value])
+      if (ceiling(iage1) > iage1){
+        targetpop <- targetpop +
+          (ceiling(iage1)-iage1)*data_pop [country_code == icty & year == as.integer(iyr) &
+                                     age_from == ceiling(iage1)-1, value] }
+
+      if (iage2 > floor(iage2)){
+        targetpop <- targetpop +
+          (iage2-floor(iage2))*data_pop [country_code == icty & year == as.integer(iyr) &
+                                           age_from == floor(iage2)+1, value]}
+
+      return (targetpop)
+    }
+
+    sia [, target2 := get_targetpop(country_code, year, age_first, age_last),
+         by = seq_len (nrow(sia))]
+
+    # use VIMC results for special age ranges
+    sia [age_range_verbatim %in% c("defaultageandgender", "school-age", "16-35yfemales", "17-24ymales"),
+          target2 := target]
+
+    sia [, coverage2 := reached/target2]
+    sia [coverage2 > 1, coverage2 := 1]
+
+    # remove temporary columns
+    sia [, `:=` (target = target2, coverage = coverage2)]
+    sia <- sia [, .SD, .SDcols = !c("age_first_verb", "age_last_verb",
+                                    "age_first_num", "age_first_unit",
+                                    "age_last_num", "age_last_unit",
+                                    "target2", "coverage2")]
+    }
 
   # -----------------------------------------------------------------------------------
-  # set start age to fraction of a year for campaigns starting at ages
-  # less than 1 year, that is, 6 months, 9 months, etc will become 0.5, 0.75, etc
-  # If age_first = 1 and age_range_verbatim = default or other text, then set start age to 0.5 (6 months).
-
-  sia2 [                 , age_first := as.double (age_first)]
-  # sia2 [age_first == 1, age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
-  # age_range_verbatim "1-14 Y" should not interpreted as 1 month
-  sia2 [is.na (age_first), age_first := 0.5]
-  sia2 [age_first == 1 & (stringr::str_extract (age_range_verbatim, "\\d+") != "1"),
-        age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
-  sia2 [age_first == 0, age_first := as.double (stringr::str_extract (age_range_verbatim, "\\d+")) / 12]
-  # -----------------------------------------------------------------------------------
-
-
-  # remove unused columns
-  # discard.cols <- c ("scenario", "set_name", "gavi_support", "activity_type")
-  # sia2 <- sia2 [, .SD, .SDcols = -discard.cols]
-
-  # remove all whitespace from age_range_verbatim, put all in lowercase
-  sia2$age_range_verbatim <- tolower (gsub("[[:space:]]", "", sia2$age_range_verbatim))
-
-  # use more inprecise values if age range verbatim is empty
-  temp.cols2 <- c("t_combined", "t_l_a0", "t_l_a1", "t_n_a0", "t_n_a1")
-
-  # age_first and age_last is what is used
-  sia2 [, (temp.cols2) := list (0, "y", "y", age_first, age_last)]
-
   # calculate values for a0 and a1 to match the age groups
   # for age <= 3 years, age is in weeks
   # for age >= 3 years, (156 weeks for up to age 3) + (remaining years above 3)
   #      age 1 year ~ 52; 2 year ~ 104; 3 year ~ 156; 4 year ~ 157; 5 year ~ 158
   find.a <- function (x) {
     t0 <- ifelse (x <= 3, round (x * 52), round ((x - 3) + (3 * 52) ) )
-    return (t0)
-  }
+    return (t0) }
 
-  # set start and end ages for SIA
-  sia2 [, `:=` (a0 = find.a(t_n_a0), a1 = find.a(t_n_a1))]
+  sia [, `:=` (a0 = find.a(age_first), a1 = find.a(age_last))]
 
   # set age == 0 year as 1 week
-  sia2 [a0 == 0, a0 := 1]
-  sia2 [a1 == 0, a1 := 1]
-
-  # remove temporary columns
-  sia2 <- sia2 [, .SD, .SDcols = -temp.cols2]
+  sia [a0 == 0, a0 := 1]
+  sia [a1 == 0, a1 := 1]
 
   # ----------------------------------------------------------------------------
   # FROM GUIDELINES FOR 2019 RUNS:
@@ -139,26 +182,22 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   # For routine, target is shown as NA, which means you should assume the target
   # population matches the population shown in the demographic data downloads
   # for the corresponding ages (age_first and age_last).
-  # ----------------------------------------------------------------------------
-
-  # infer reached from coverage
-  sia2 [, reached := as.numeric(target) * as.numeric(coverage)]
-
-
-  # # add additional columns to make file similar to original (Han: not needed for the format)
-  # sia2 [, c("Geography", "Gavi73", "Gavi-supported", "Activity","Extent")] <- NA
   #
-  # # reorder columns to make file similar to original
-  # sia2 <- sia2 [ , c("Geography", "country_code", "vaccine", "Gavi73", "Gavi-supported",
-  #                    "Activity", "vaccine", "year", "a0", "a1",
-  #                    "Extent", "target", "reached", "coverage") ]
-
-  # adjust output format
-  sia2 [, vaccine := NULL]
+  # ----------------------------------------------------------------------------
+  # REVISIONS FOR 2021 RUNS:
+  # The coverage is revised by recalculating the number of reached by campaign
+  # (target*coverage, numerator) and the size of targeted age group using the
+  # UNWPP data (denominator). This is to improve the precision of coverage
+  # estimates and age at vaccination.
+  #
+  # However, one limitation remains - for those with Montagu coverage = 1, the
+  # number of reached equals to the size of targeted population. The original
+  # number 'reached' cannot be obtained.
+  # ----------------------------------------------------------------------------
 
   # write vaccine coverage data for routine vaccination and SIAs
   fwrite (x = routine, file = routine_coverage_file)
-  fwrite (x = sia2,    file = sia_coverage_file)
+  fwrite (x = sia,     file = sia_coverage_file)
 
 } # end of function -- create_vaccine_coverage_routine_sia
 # ------------------------------------------------------------------------------
@@ -429,13 +468,15 @@ create_PSA_data <- function (psa             = 0,
   low_95CI   <- 0.004882493
   sd_slope   <- (mean_slope - low_95CI) / 1.96
 
-  psadat [, vaceffbyage_b := qtruncnorm (cube [, 1],
-                                         # a    = (mean_slope - 3 * sd_slope), == -0.0004079801
-                                         a    = 0,
-                                         b    = (mean_slope + 3 * sd_slope),
-                                         mean = mean_slope,
-                                         sd   = sd_slope
-  ) ]
+  psadat [, vaceffbyage_b := truncnorm::qtruncnorm (cube [, 1],
+                                                    a    = 0,
+                                                    # a    = (mean_slope - 3 * sd_slope), == -0.0004079801
+                                                    b    = (mean_slope + 3 * sd_slope),
+                                                    mean = mean_slope,
+                                                    sd   = sd_slope
+                                                    )
+          ]
+
   # ----------------------------------------------------------------------------
 
   # vaccine efficacy (dose 2)
@@ -445,7 +486,8 @@ create_PSA_data <- function (psa             = 0,
                                                   b    = (0.98 + 0.02),
                                                   mean = 0.98,
                                                   sd   = (0.02/3)
-  ) ]
+                                                  )
+          ]
 
 
   # proportional change in case fatality rate
@@ -455,7 +497,8 @@ create_PSA_data <- function (psa             = 0,
                                                       b    = (1 + 0.25),
                                                       mean = 1,
                                                       sd   = (0.25/3)
-  ) ]
+                                                      )
+          ]
 
   # rename columns of vaceffbyage_a to take1_input and vaceffbyage_b to take2_input
   # this is done take1_input and take2_input were used earlier in the fortran model

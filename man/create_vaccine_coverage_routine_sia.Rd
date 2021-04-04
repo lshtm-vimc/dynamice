@@ -6,16 +6,20 @@
 \usage{
 create_vaccine_coverage_routine_sia(
   vaccine_coverage_folder = "",
+  vaccine_coverage_subfolder = "",
   coverage_prefix = "",
   touchstone = "",
   antigen = "",
-  scenario_name,
-  vaccine_coverage_subfolder = ""
+  scenario_name = "",
+  rev_cov = NULL
 )
 }
 \arguments{
 \item{vaccine_coverage_folder}{A folder name for the vaccine coverage files.
 Include a slash at the end.}
+
+\item{vaccine_coverage_subfolder}{A folder name under the \code{x} folder for
+the vaccine coverage files.}
 
 \item{coverage_prefix}{A prefix used in the name of vaccine coverage file.}
 
@@ -26,8 +30,8 @@ underscore at the beginning and end of the name.}
 
 \item{scenario_name}{A name of vaccination scenarios.}
 
-\item{vaccine_coverage_subfolder}{A folder name under the \code{x} folder for
-the vaccine coverage files.}
+\item{rev_cov}{A logical variable that determines whether to revise the SIA
+coverage data from Montagu and use precise age at vaccination.}
 }
 \description{
 Generates files for routine programmes (MCV1, MCV2) and supplementary
@@ -36,9 +40,11 @@ immunisation activities (SIAs) from the vaccine coverage files.
 \examples{
   create_vaccine_coverage_routine_sia (
   vaccine_coverage_folder    = "vaccine_coverage/",
+  vaccine_coverage_subfolder = "scenarios/",
   coverage_prefix            = "coverage",
   touchstone                 = "_201910gavi-5_",
   antigen                    = "measles-",
   scenario_name              = "campaign-only-bestcase",
-  vaccine_coverage_subfolder = "scenarios/")
+  rev_cov                    = TRUE
+  )
 }
