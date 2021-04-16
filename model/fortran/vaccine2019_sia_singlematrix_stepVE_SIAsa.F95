@@ -93,15 +93,13 @@ contains
                         
     zeroreach = tempreach * zero_dose_children
 		
-	sia1 = scov
-    sia2 = scov 	
-	!	if( doses .le. zeroreach ) then
-	!	  sia1 = doses / zero_dose_children
-	!		sia2 = 0
-	!	else
-	!	  sia1 = tempreach
-	!	  sia2 = (doses-zeroreach)/(sum(pop(agefrom:ageto)) - zero_dose_children)
-	!	endif
+		if( doses .le. zeroreach ) then
+		  sia1 = doses / zero_dose_children
+			sia2 = 0
+		else
+		  sia1 = tempreach
+		  sia2 = (doses-zeroreach)/(sum(pop(agefrom:ageto)) - zero_dose_children)
+		endif
 		
 		if( sia1 .gt. 1) then
 		  sia1 = 1
@@ -309,7 +307,7 @@ program measles
 		real(dp) :: ve_a
 		real(dp) :: ve_b
 		real(dp) :: SIA_a
-    real(dp) :: SIA_b
+        real(dp) :: SIA_b
 		real(dp) :: vac_numerator
 		real(dp) :: vac_denominator
 		real(dp) :: p_eff
@@ -436,8 +434,8 @@ program measles
   ! SIA_b = real(-2.074887, dp)
   
   ! intercept and slope values from weighted logistic regression
-  SIA_a = real(-2.621733, dp)
-  SIA_b = real(5.238249, dp)
+  SIA_a = real(-2.93678, dp) ! main: -2.621733
+  SIA_b = real(6.33749, dp) ! main: 5.238249
   
 	!
 	!  To; (just for sensitivity analysis and error checking, reverting back to above)
@@ -1303,6 +1301,11 @@ program measles
 			else
 				take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
 			endif
+			!if(vac_denominator.gt.real(0, dp)) then
+			!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
+			!else
+			!	take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+			!endif
 
 			V2S(a,hh)	=	V2S(a,hh)																	&
 							-agerate_week*V2S(a,hh)														&
@@ -1565,16 +1568,16 @@ program measles
 						!estimate the incremental efficacy derived from MCV2 to achieve an overall efficacy of take3. Estimate current MCV1 efficacy from those for who the vaccine worked in all who received MCV1 only
 						vac_numerator = MCV1_eff(a,hh)
 						vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
-						if(vac_denominator.gt.real(0, dp)) then
-						    p_eff = vac_numerator/vac_denominator				
-							if (p_eff > take3) then
-							    take_inc = real(0, dp)
-							else
-							    take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
-							endif
-						else
-							take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
-			            endif
+		             	if(vac_denominator.gt.real(0, dp)) then
+		             	    p_eff = vac_numerator/vac_denominator				
+		             		if (p_eff > take3) then
+		             		    take_inc = real(0, dp)
+		             		else
+		             			take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
+		             		endif
+		             	else
+		             		take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+		             	endif
 						!if(vac_denominator.gt.real(0, dp)) then
 						!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
 						!else
@@ -1848,7 +1851,7 @@ program measles
 	endif
 
 	1069 format(101F16.5)
-	1070 format(4I10,A10,F20.10)
+	1070 format(4I10,A10,F15.5)
 
 	return
 
