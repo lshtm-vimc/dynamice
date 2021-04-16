@@ -31,28 +31,46 @@ Process_data <- function() {
   ## UK contact matrix
   data_contact_uk <- local({
 
-    # use POLYMOD matrix with physical contacts for the Great Britain
-    # original data from https://doi.org/10.1371/journal.pmed.0050074.st005 (Table S5b)
-    # rescaled matrices for yearly age bands between 0-100 years old
+    # use POLYMOD matrix with all contacts in Great Britain
+    # obtain data from 'socialmixr' R package
+    # ensure matrix to show contactors in rows and contactees in columns
+    # have briefly check the consistency with original data from
+    # https://doi.org/10.1371/journal.pmed.0050074.st005 (Table S8.4a)
 
-    contact     <- fread (paste0 (wd_rawdata, "polymod_physical_uk.csv"))
-    contact_ori <- t (as.matrix (contact [ , -"age"]))  # transpose to make participants/contactors presented in rows)
+    library('socialmixr')
+    contact_ori <- socialmixr::contact_matrix (polymod,
+                                               countries = "United Kingdom",
+                                               age.limits = seq(0,80,5),
+                                               symmetric = FALSE)$matrix
+
+    # there are no survey participants over 80 years old
+    # assume 80-84, 85-89, 90-94, 95-99 to have same contacts as 75-79
+    contact_5y <- unname (contact_ori[1:16, 1:16])                                     # 16x16
+    contact_5y <- cbind (contact_5y, matrix(rep(contact_5y[,16], 4), ncol = 4))        # 16x20
+    contact_5y <- rbind (contact_5y, matrix(rep(contact_5y[16,], each = 4), nrow = 4)) # 20x20
+
+    # expand matrices from 5-year to 1-year age bands
     contact_101 <- matrix (0, ncol = 101, nrow = 101)
-
-    nagegrp     <- dim(contact_ori)[1]  # 15 groups
-    expd_age1 <- 5         # 0-70 years old: expand from 5-year bands
-    expd_age2 <- 101-70    # 70-100 years old: expand from the oldest group (70+)
-
-    for (icol in 1:nagegrp){
-      contactees <- c(rep (contact_ori[1:(nagegrp-1),icol]/expd_age1, each = expd_age1),
-                      rep (contact_ori[nagegrp, icol]     /expd_age2, each = expd_age2))
-      contact_101 [,(icol-1)*expd_age1+(1:expd_age1)] <-
-        matrix (rep (contactees, expd_age1), ncol = expd_age1)
+    for (icol in 1:20){
+      contactees <- rep(contact_5y[1:20, icol]/5, each = 5)    # 0-99 years old
+      contact_101 [1:100, 5*(icol-1)+(1:5)] <- matrix (rep(contactees, 5), ncol = 5)
+      rm(contactees)
     }
-    contact_101 [,(nagegrp*expd_age1+1):101] <-
-      matrix (rep (contact_101 [, nagegrp*expd_age1], expd_age2-expd_age1), ncol = expd_age2-expd_age1)
+    contact_101 [, 101] <- contact_101 [, 100]   # 100 years old
+    contact_101 [101, ] <- contact_101 [100, ]
 
-    return(contact_101)
+    # adjust contact reciprocity using UNWPP data at survey year (2005)
+    load (file = "data/data_pop.rda")
+    pop_uk      <- data_pop [country == "United Kingdom" & year == 2005, value]
+    contact_rec <- matrix(0, 101, 101)
+    for (i in 1:101){
+      for (j in 1:101) {
+        contact_rec [i, j] <- (contact_101[i, j] * pop_uk[i] +
+                                   contact_101[j, i] * pop_uk[j])/(2*pop_uk[i])
+      }
+    }
+
+    return(contact_rec)
   })
 
 
@@ -61,31 +79,44 @@ Process_data <- function() {
 
     # use updated synthetic contact matrices 2020 (acknowledge to Kiesha Prem)
     # download overall contact without any particular assumptions - "contact_all.rdata"
-    # rescaled matrices for yearly age bands between 0-100 years old
+    # original data is also available as a csv file
+    # urlfile = "https://raw.githubusercontent.com/kieshaprem/synthetic-contact-matrices/master/output/syntheticcontactmatrices2020/synthetic_contacts_2020.csv"
+    # mydata <- readr::read_csv (url (urlfile))
 
     load (url ("https://github.com/kieshaprem/synthetic-contact-matrices/blob/master/output/syntheticcontactmatrices2020/overall/contact_all.rdata?raw=true"))
+    load (file = "data/data_pop.rda")
 
     contact_syn <- sapply (names(contact_all), function(icty) {
 
-      contact_ori <- contact_all[[icty]]
+      # there are no data for contacts over 80 years old
+      # assume 80-84, 85-89, 90-94, 95-99 to have same contacts as 75-79
+      contact_5y <- contact_all[[icty]]                                                  # 16x16
+      contact_5y <- cbind (contact_5y, matrix(rep(contact_5y[,16], 4), ncol = 4))        # 16x20
+      contact_5y <- rbind (contact_5y, matrix(rep(contact_5y[16,], each = 4), nrow = 4)) # 20x20
+
+      # expand matrices from 5-year to 1-year age bands
       contact_101 <- matrix (0, ncol = 101, nrow = 101)
-
-      nagegrp     <- dim(contact_ori)[1]  # 16 groups
-      expd_age1 <- 5         # 0-74 years old: expand from 5-year bands
-      expd_age2 <- 101-75    # 75-100 years old: expand from the oldest group (75+)
-
-      for (icol in 1:nagegrp){
-        contactees <- c(rep (contact_ori[1:(nagegrp-1),icol]/expd_age1, each = expd_age1),
-                        rep (contact_ori[nagegrp, icol]     /expd_age2, each = expd_age2))
-        contact_101 [,(icol-1)*expd_age1+(1:expd_age1)] <-
-          matrix (rep (contactees, expd_age1), ncol = expd_age1)
+      for (icol in 1:20){
+        contactees <- rep(contact_5y[1:20, icol]/5, each = 5)    # 0-99 years old
+        contact_101 [1:100, 5*(icol-1)+(1:5)] <- matrix (rep(contactees, 5), ncol = 5)
+        rm(contactees)
       }
-      contact_101 [,(nagegrp*expd_age1+1):101] <-
-        matrix (rep (contact_101 [, nagegrp*expd_age1], expd_age2-expd_age1), ncol = expd_age2-expd_age1)
+      contact_101 [, 101] <- contact_101 [, 100]   # 100 years old
+      contact_101 [101, ] <- contact_101 [100, ]
 
-      return(contact_101)
-      },
-      simplify = FALSE, USE.NAMES = TRUE)
+      # adjust contact reciprocity using UNWPP data at reference year (2020)
+      pop_ref     <- data_pop [country_code == icty & year == 2020, value]
+      contact_rec <- matrix(0, 101, 101)
+      for (i in 1:101){
+        for (j in 1:101) {
+          contact_rec [i, j] <- (contact_101[i, j] * pop_ref[i] +
+                                   contact_101[j, i] * pop_ref[j])/(2*pop_ref[i])
+        }
+      }
+
+      return(contact_rec)
+    },
+    simplify = FALSE, USE.NAMES = TRUE)
 
     return(contact_syn)
   })
