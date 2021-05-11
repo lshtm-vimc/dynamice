@@ -29,48 +29,19 @@ library (truncnorm)
 # ------------------------------------------------------------------------------
 # load data (delete when package is ready)
 load(file = "data/data_pop.rda")
-# load(file = "data/data_cfr.rda")
 load(file = "data/data_cfr_portnoy.rda")
 load(file = "data/data_cfr_wolfson.rda")
-load(file = "data/data_contact_uk.rda")
+load(file = "data/data_contact_polymod.rda")
 load(file = "data/data_contact_syn.rda")
 load(file = "data/data_r0.rda")
 load(file = "data/data_timeliness.rda")
-# load(file = "data/data_lexp0.rda")
 load(file = "data/data_lexp_remain.rda")
 load(file = "data/data_template.rda")
+
+# load(file = "data/data_cfr.rda")
 #load(file = "data/data_psa200.rda")
-
-# rm(list=setdiff(ls(), c("data_pop","data_cfr","data_cfr_wolfson","data_cfr_portnoy",
-#                         "data_contact_uk","data_contact_syn","data_r0","data_timeliness",
-#                         "data_lexp0","data_lexp_remain","data_template")))
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# modify Montagu coverage data (may not need when the data are revised)
-campaign_file_default <- "coverage_201910gavi-5_measles-campaign-default"
-campaign_file_bestcase <- "coverage_201910gavi-5_measles-campaign-bestcase"
-process_files <- c(campaign_file_default, campaign_file_bestcase )
-
-for (sel_file in process_files) {
-  ori_cov <- fread (paste0("vaccine_coverage/", sel_file, "_ori.csv"))
-  input_cov <- ori_cov [activity_type == "campaign" & coverage != 0, 5:13]
-  input_cov [, vaccinee := coverage*as.numeric(target)]
-  for (irow in 1:dim(input_cov)[1]){
-    input_cov$pop [irow] <- sum (data_pop [
-      country_code == input_cov$country_code [irow] & year == as.integer(input_cov$year[irow]) &
-        age_from %in% (input_cov$age_first [irow] : input_cov$age_last[irow]), value])
-  }
-  input_cov [, coverage2 := vaccinee/pop]
-
-  mkeys <- c("activity_type", "country_code","year","age_first", "age_last")
-  setkeyv (ori_cov, mkeys)
-  setkeyv (input_cov, mkeys)
-  ori_cov [input_cov, `:=`(target = as.character(i.pop), coverage = i.coverage2)]
-
-  fwrite (ori_cov, paste0("vaccine_coverage/", sel_file, ".csv"))
-  rm (ori_cov)
-}
+# load(file = "data/data_contact_uk.rda")
+# load(file = "data/data_lexp0.rda")
 
 # ------------------------------------------------------------------------------
 
@@ -104,7 +75,6 @@ var <- list (
   vaccine_coverage_subfolder        = "scenarios/",
 
   # disease burden
-  # burden_template                   = "burden_template/central-burden-201910gavi-5.Measles_LSHTM-Jit_standard.csv",
   central_burden_estimate_folder    = "central_burden_estimate/",
   stochastic_burden_estimate_folder = "stochastic_burden_estimate/",
 
@@ -116,9 +86,9 @@ var <- list (
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to "all" to analyse all included countries
-  countries                         = c("BGD", "ETH"), # debug -- c("BGD", "ETH") / "all"
+  countries                         = c("BGD","PAK"), # debug -- c( "ETH") / "all"
 
-  cluster_cores                     = 2,    # number of cores
+  cluster_cores                     = 3,    # number of cores
   psa                               = 0     # psa runs; 0 for single central run
   )
 # for central run: set number of runs to 0 (var$psa = 0)
@@ -146,8 +116,8 @@ last_scenario  <- length (scenarios)
 # ------------------------------------------------------------------------------
 
 # set SIAs and vaccination parameters for each scenario to minimize errors for running
-set.sia         <- c (1, 0, 1, 0, 1, 0, 1, 0, 0, 1)
-set.vaccination <- c (0, 2, 2, 1, 0, 2, 2, 1, 0, 2)
+set_sia         <- c (1, 0, 1, 0, 1, 0, 1, 0, 0, 1)
+set_vaccination <- c (0, 2, 2, 1, 0, 2, 2, 1, 0, 2)
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -177,6 +147,21 @@ create_campaign_vaccination_coverage_file (
   campaign_only_vaccination_coverage_file    = "vaccine_coverage/coverage_201910gavi-5_measles-campaign-only-default.csv",
   routine_campaign_vaccination_coverage_file = "vaccine_coverage/coverage_201910gavi-5_measles-campaign-default.csv"
 )
+
+# ------------------------------------------------------------------------------
+# Generate 2 vaccine coverage files per scenario for routine and SIA from
+# VIMC vaccine coverage files
+for (index in 1:length(scenarios)) {
+  create_vaccine_coverage_routine_sia (
+    vaccine_coverage_folder    = var$vaccine_coverage_folder,
+    vaccine_coverage_subfolder = var$vaccine_coverage_subfolder,
+    coverage_prefix            = var$coverage_prefix,
+    touchstone                 = var$touchstone,
+    antigen                    = var$antigen,
+    scenario_name              = scenarios [index],
+    rev_cov                    = TRUE
+  )
+}
 # ------------------------------------------------------------------------------
 
 
@@ -199,8 +184,8 @@ if (var$psa == 0) {
 }
 
 
-# loop through scenarios
-for (index in first_scenario:last_scenario) {
+# loop through scenarios first_scenario:last_scenario, c(1,3,5,7,9,10)
+for (index in 6:7) {
 
   # set scenario name
   scenario_name   <- scenarios [index]
@@ -213,43 +198,27 @@ for (index in first_scenario:last_scenario) {
   scenario_number <- sprintf ("scenario%02d", index)
 
   # ----------------------------------------------------------------------------
-  # generate 2 vaccine coverage files per scenario for routine and SIA from
-  # VIMC vaccine coverage file:
-  #   paste0 (vaccine_coverage_folder, prefix, touchstone, scenario, ".csv")
-
-  create_vaccine_coverage_routine_sia (
-    vaccine_coverage_folder    = var$vaccine_coverage_folder,
-    coverage_prefix            = var$coverage_prefix,
-    touchstone                 = var$touchstone,
-    antigen                    = var$antigen,
-    scenario_name              = scenario_name,
-    vaccine_coverage_subfolder = var$vaccine_coverage_subfolder
-    )
-  # ----------------------------------------------------------------------------
-
-  # ----------------------------------------------------------------------------
   # estimate cases
   #
   # run scenario -- get burden estimates -- primarily cases
   # return burden estimate file name where estimates are saved
   burden_estimate_file <- runScenario (
     vaccine_coverage_folder    = var$vaccine_coverage_folder,
+    vaccine_coverage_subfolder = var$vaccine_coverage_subfolder,
     coverage_prefix            = var$coverage_prefix,
-    touchstone                 = var$touchstone,
     antigen                    = var$antigen,
     scenario_name              = scenario_name,
-    scenario_number            = scenario_number,
-    vaccine_coverage_subfolder = var$vaccine_coverage_subfolder,
+    save_scenario              = scenario_number,
     burden_estimate_folder     = burden_estimate_folder,
     group_name                 = var$group_name,
     countries                  = var$countries,
     cluster_cores              = var$cluster_cores,
     psa                        = var$psa,
-    vaccination                = set.vaccination [index],
-    using_sia                  = set.sia         [index],
-    measles_model              = "vaccine2019_sia_singlematrix.exe",
+    vaccination                = set_vaccination [index],
+    using_sia                  = set_sia         [index],
+    measles_model              = "vaccine2019_sia_adjBeta_mcv2.exe",
     debug_model                = FALSE,
-    contact_mat                = "uk",
+    contact_mat                = "polymod",
     step_ve                    = FALSE
     )
   # ----------------------------------------------------------------------------

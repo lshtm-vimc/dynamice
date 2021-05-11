@@ -44,5 +44,6 @@ estimate_deaths_dalys (
  burden_estimate_folder = "central_burden_estimate/",
  vimc_scenario          = "campaign-only",
  portnoy_scenario       = "s6",
- psa                    = 0)
+ psa                    = 0
+ )
 }

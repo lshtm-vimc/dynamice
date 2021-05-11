@@ -11,7 +11,7 @@ create_vaccine_coverage_routine_sia(
   touchstone = "",
   antigen = "",
   scenario_name = "",
-  rev_cov = NULL
+  rev_cov
 )
 }
 \arguments{

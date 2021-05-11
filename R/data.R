@@ -27,18 +27,37 @@
 #'
 #' A dataset containing a contact matrix of yearly age bands between 0 and 100,
 #' adapted from physical contact in the Great Britain in the POLYMOD study.
+#' Expansion of the age groups in the matrix is based on the UK population
+#' distribution at the survey year (2005).
 #'
 #' @format A data table contains 101*101 observations, with age of contactors in
 #'  row and age of contactees in column.
 #' @source {Mossong J, Hens N, Jit M, et al. Social contacts and mixing patterns
 #'  relevant to the spread of infectious diseases. PLoS Med 2008; 5(3): e74.}
+#' @source \url{https://population.un.org/wpp/Download/Standard/Population/}
 "data_contact_uk"
+
+
+#' Contact matrices - POLYMOD UK extension
+#'
+#' A dataset containing contact matrices of yearly age bands between 0 and 100
+#' in 195 countries, adapted from physical contact in the Great Britain in the
+#' POLYMOD study. Expansion of the age groups in the matrix is based on
+#' country-specific population distribution at the reference year (2020).
+#'
+#' @format A list with multiple data tables denoted by ISO3 country code. Each
+#' data table contains 101*101 observations.
+#' @source {Mossong J, Hens N, Jit M, et al. Social contacts and mixing patterns
+#'  relevant to the spread of infectious diseases. PLoS Med 2008; 5(3): e74.}
+#' @source \url{https://population.un.org/wpp/Download/Standard/Population/}
+"data_contact_polymod"
 
 
 #' Contact matrices - Synthetic
 #'
 #' A dataset containing synthetic contact matrices of yearly age bands between 0
-#'  and 100 in 177 countries.
+#'  and 100 in 177 countries.Expansion of the age groups in the matrix is based
+#'  on country-specific population distribution at the reference year (2020).
 #'
 #' @format A list with multiple data tables denoted by ISO3 country code. Each
 #' data table contains 101*101 observations.
@@ -46,6 +65,9 @@
 #' @source {Prem K, Cook AR, Jit M. Projecting social contact matrices in 152
 #' countries using contact surveys and demographic data. PLoS Comput Biol 2017;
 #' 13(9): e1005697.}
+#' @source {Prem K, van Zandvoort K, Klepac P, Eggo RM, Davies NG, Cook AR, Jit
+#' M. Projecting contact matrices in 177 geographical regions: an update and
+#' comparison with empirical data for the COVID-19 era. medRxiv; 2020.07.22.20159772.}
 "data_contact_syn"
 
 

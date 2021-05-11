@@ -11,20 +11,20 @@ runCountry(
   vaccination,
   using_sia,
   dinf,
-  gamma_rate,
-  r0_basic,
+  gamma_tstep,
   amplitude,
   take,
   degree,
   sia.method,
-  coverage_routine,
-  coverage_sia,
-  timeliness,
-  contact,
+  c_coverage_routine,
+  c_coverage_sia,
+  c_timeliness,
+  contact_mat,
+  c_contact,
   c_rnought,
-  population,
+  c_population,
   tstep,
-  save.scenario,
+  save_scenario,
   foldername,
   measles_model,
   debug_model,
@@ -39,8 +39,7 @@ runCountry(
   psa,
   psa_var,
   run_model,
-  remove_files,
-  contact_mat
+  remove_files
 )
 }
 \arguments{
@@ -58,11 +57,7 @@ immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.}
 
 \item{dinf}{Duration of infection in days.}
 
-\item{gamma_rate}{Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).}
-
-\item{r0_basic}{Basic reproduction number (R0) calculated by the eigenvalue
-of the product of contact matrix (\code{contact}) and duration of infection
-(\code{dinf}).}
+\item{gamma_tstep}{Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).}
 
 \item{amplitude}{A numeric variable for amplitude for seasonality.}
 
@@ -84,23 +79,33 @@ regression model, (1) and (2) elements were directly indicating protection of
 \item{sia.method}{A Numeric indicator that determines how SIAs are carried
 out: 1 - varying \code{take}, 2 - varying \code{degree}.}
 
-\item{coverage_routine}{A data frame for routine vaccination coverage under
-a selected scenario.}
+\item{c_coverage_routine}{A data frame for routine vaccination coverage under
+a selected scenario for a specific country.}
 
-\item{coverage_sia}{A data frame for SIA coverage under a selected scenario.}
+\item{c_coverage_sia}{A data frame for SIA coverage under a selected scenario
+for a specific country.}
 
-\item{timeliness}{A data frame for timeliness estimates by age.}
+\item{c_timeliness}{A data frame for timeliness estimates by age for a
+specific country.}
 
-\item{contact}{A data frame for the contact matrix by age (0-100 years old).}
+\item{contact_mat}{A character variable that indicates the assumption for
+contact pattern. "prpmix" - proportional mixing informed by age distribution
+of population, "unimix" -  uniform mixing (equal mixing probability across
+each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
+using local populations, and "syn" - country-specific synthetic matrix.}
+
+\item{c_contact}{A data frame for the contact matrix by age (0-100 years old)
+for a specific country.}
 
 \item{c_rnought}{A numeric variable of R0 value for the selected country
 \code{iso3}. Estimates provided by Ferrari and colleagues.}
 
-\item{population}{A data frame for population size by country and age.}
+\item{c_population}{A data frame for population size by age for a specific
+country.}
 
 \item{tstep}{Simulation time steps for each year.}
 
-\item{save.scenario}{A folder name of the selected scenario.}
+\item{save_scenario}{A folder name of the selected scenario.}
 
 \item{foldername}{A folder name for input and output files of the selected
 scenario. It typically does not exist but may come in handy when only
@@ -144,10 +149,6 @@ measles model.}
 \item{remove_files}{A logical variable that determines whether to remove
 output files after finishing a single country run.}
 
-\item{contact_mat}{A character variable that indicates the assumption for
-contact pattern. "nomix" - homogeneous mixing, "uk" - POLYMOD Great Britain
-physical contacts, and "syn" - country-specific synthetic matrix.}
-
 \item{debug_compartment}{A numeric variable that determines the compartments
 to output: 0 - number of cases, and 1 - each compartment.}
 }
@@ -164,20 +165,20 @@ runCountry (
   vaccination        = 1,
   using_sia          = 1,
   dinf               = 14,
-  gamma_rate         = 0.02607,
-  r0_basic           = 13,
+  gamma_tstep         = 0.02607,
   amplitude          = 0.05,
   take               = c(0.64598, 0.01485, 0.98),
   degree             = c(0.85, 0.95, 0.98),
   sia.method         = 1,
-  coverage_routine   = coverage_routine,
-  coverage_sia       = coverage_sia,
-  timeliness         = timeliness,
-  contact            = contact,
+  c_coverage_routine = coverage_routine[country_code == "BGD"],
+  c_coverage_sia     = coverage_sia[country_code == "BGD" & coverage!=0],
+  c_timeliness       = timeliness[country_code == "BGD"],
+  contact_mat        = "prpmix",
+  c_contact          = contact[["BGD"]],
   c_rnought          = 10,
-  population         = population,
+  c_population       = population[country_code == "BGD"],
   tstep              = 1000,
-  save.scenario      = "scenario01",
+  save_scenario      = "scenario01",
   foldername         = NULL,
   measles_model      = "vaccine2019_sia_singlematrix.exe",
   debug_model        = FALSE,
@@ -192,6 +193,6 @@ runCountry (
   psa                = 0,
   psa_var            = psa_var,
   run_model          = TRUE,
-  remove_files       = FALSE,
-  contact_mat        = "nomix")
+  remove_files       = FALSE
+  )
 }

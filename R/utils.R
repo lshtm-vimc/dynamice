@@ -108,6 +108,10 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
     sia [age_last_unit == "m" ,
          age_last := ifelse(age_last_num < 36, age_last_num/12, round(age_last_num/12))]
 
+    # deliver SIA to children older than 6 months old, as WHO recommended
+    sia [age_first < 0.5, age_first := 0.5]
+    sia [age_last < 0.5, age_last := 0.5]
+
     # recalculate the size of target population
     get_targetpop <- function (icty, iyr, iage1, iage2){
       targetpop <- sum (data_pop [country_code == icty & year == as.integer(iyr) &
@@ -123,7 +127,7 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
                                            age_from == floor(iage2)+1, value]}
 
       return (targetpop)
-    }
+      }
 
     sia [, target2 := get_targetpop(country_code, year, age_first, age_last),
          by = seq_len (nrow(sia))]

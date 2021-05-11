@@ -14,12 +14,17 @@ data table contains 101*101 observations.
 {Prem K, Cook AR, Jit M. Projecting social contact matrices in 152
 countries using contact surveys and demographic data. PLoS Comput Biol 2017;
 13(9): e1005697.}
+
+{Prem K, van Zandvoort K, Klepac P, Eggo RM, Davies NG, Cook AR, Jit
+M. Projecting contact matrices in 177 geographical regions: an update and
+comparison with empirical data for the COVID-19 era. medRxiv; 2020.07.22.20159772.}
 }
 \usage{
 data_contact_syn
 }
 \description{
 A dataset containing synthetic contact matrices of yearly age bands between 0
- and 100 in 177 countries.
+ and 100 in 177 countries.Expansion of the age groups in the matrix is based
+ on country-specific population distribution at the reference year (2020).
 }
 \keyword{datasets}

@@ -11,6 +11,8 @@ A data table contains 101*101 observations, with age of contactors in
 \source{
 {Mossong J, Hens N, Jit M, et al. Social contacts and mixing patterns
  relevant to the spread of infectious diseases. PLoS Med 2008; 5(3): e74.}
+
+\url{https://population.un.org/wpp/Download/Standard/Population/}
 }
 \usage{
 data_contact_uk
@@ -18,5 +20,7 @@ data_contact_uk
 \description{
 A dataset containing a contact matrix of yearly age bands between 0 and 100,
 adapted from physical contact in the Great Britain in the POLYMOD study.
+Expansion of the age groups in the matrix is based on the UK population
+distribution at the survey year (2005).
 }
 \keyword{datasets}

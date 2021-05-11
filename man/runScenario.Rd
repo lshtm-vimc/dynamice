@@ -6,12 +6,11 @@
 \usage{
 runScenario(
   vaccine_coverage_folder = "",
+  vaccine_coverage_subfolder = "",
   coverage_prefix = "",
-  touchstone = "",
   antigen = "",
   scenario_name,
-  scenario_number,
-  vaccine_coverage_subfolder = "",
+  save_scenario,
   burden_estimate_folder,
   group_name,
   countries = "all",
@@ -28,19 +27,16 @@ runScenario(
 \arguments{
 \item{vaccine_coverage_folder}{A folder name for the vaccine coverage files.}
 
-\item{coverage_prefix}{A prefix used in the name of vaccine coverage file.}
+\item{vaccine_coverage_subfolder}{A folder name under the \code{x} folder for
+the vaccine coverage files.}
 
-\item{touchstone}{A version note in the file name used by VIMC. Include a
-underscore at the beginning and end of the name.}
+\item{coverage_prefix}{A prefix used in the name of vaccine coverage file.}
 
 \item{antigen}{A disease name used by VIMC: "Measles".}
 
 \item{scenario_name}{A name of vaccination scenarios.}
 
-\item{scenario_number}{A folder name of the selected scenario.}
-
-\item{vaccine_coverage_subfolder}{A folder name under the \code{x} folder for
-the vaccine coverage files.}
+\item{save_scenario}{A folder name for saving a selected scenario.}
 
 \item{burden_estimate_folder}{A folder name for the file which contains the
 model outputs for evaluation. Include a slash at the end.}
@@ -68,8 +64,10 @@ measles model.}
 model.}
 
 \item{contact_mat}{A character variable that indicates the assumption for
-contact pattern. "nomix" - homogeneous mixing, "uk" - POLYMOD Great Britain
-physical contacts, and "syn" - country-specific synthetic matrix.}
+contact pattern. "prpmix" - proportional mixing informed by age distribution
+of population, "unimix" -  uniform mixing (equal mixing probability across
+each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
+using local populations, and "syn" - country-specific synthetic matrix.}
 
 \item{step_ve}{A logical variable that determines whether a step change on
 age-related vaccine efficacy is applied. This implies different meaning of
@@ -84,12 +82,11 @@ sensitivity analysis (PSA).
 \examples{
 runScenario (
   vaccine_coverage_folder    = "vaccine_coverage_upd/",
+  vaccine_coverage_subfolder = "scenarios/"
   coverage_prefix            = "coverage",
-  touchstone                 = "_201910gavi-5_",
   antigen                    = "measles-",
   scenario_name              = "campaign-only-default",
-  scenario_number            = scenario_number,
-  vaccine_coverage_subfolder = "scenarios/"
+  save_scenario               = scenario_number,
   burden_estimate_folder     = "central_burden_estimate/",
   group_name                 = "LSHTM-Jit-",
   countries                  = c("BGD","ETH"),
@@ -99,6 +96,7 @@ runScenario (
   using_sia                  = 1,
   measles_model              = "vaccine2019_sia_singlematrix.exe",
   debug_model                = FALSE,
-  contact_mat                = "nomix",
-  step_ve                    = FALSE)
+  contact_mat                = "prpmix",
+  step_ve                    = FALSE
+  )
 }

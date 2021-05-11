@@ -29,48 +29,70 @@ Process_data <- function() {
 
   #### data need initial processing  -------------------------------------------
   ## UK contact matrix
-  data_contact_uk <- local({
+  data_contact_polymod <- local({
 
-    # use POLYMOD matrix with all contacts in Great Britain
-    # obtain data from 'socialmixr' R package
-    # ensure matrix to show contactors in rows and contactees in columns
-    # have briefly check the consistency with original data from
-    # https://doi.org/10.1371/journal.pmed.0050074.st005 (Table S8.4a)
+    # use POLYMOD matrix with physical contacts in Great Britain
+    # obtain from the original paper:
+    # https://doi.org/10.1371/journal.pmed.0050074.st005 (Table S8.4b)
 
-    library('socialmixr')
-    contact_ori <- socialmixr::contact_matrix (polymod,
-                                               countries = "United Kingdom",
-                                               age.limits = seq(0,80,5),
-                                               symmetric = FALSE)$matrix
+    # data for all contacts (physical and non-physical) also available through 'socialmixr' R package
+    # https://cran.r-project.org/web/packages/socialmixr/vignettes/introduction.html
+    # contact_ori <- socialmixr::contact_matrix (polymod,
+    #                                            countries = "United Kingdom",
+    #                                            age.limits = seq(0,80,5),
+    #                                            symmetric = FALSE)$matrix
 
-    # there are no survey participants over 80 years old
-    # assume 80-84, 85-89, 90-94, 95-99 to have same contacts as 75-79
-    contact_5y <- unname (contact_ori[1:16, 1:16])                                     # 16x16
-    contact_5y <- cbind (contact_5y, matrix(rep(contact_5y[,16], 4), ncol = 4))        # 16x20
-    contact_5y <- rbind (contact_5y, matrix(rep(contact_5y[16,], each = 4), nrow = 4)) # 20x20
+    # ensure the matrix to show contactors in rows and contactees in columns
+    contact_ori <- fread (paste0 (wd_rawdata, "polymod_physical_uk.csv"))
+    contact_ori <- unname (t(contact_ori[, age := NULL]))
 
-    # expand matrices from 5-year to 1-year age bands
-    contact_101 <- matrix (0, ncol = 101, nrow = 101)
-    for (icol in 1:20){
-      contactees <- rep(contact_5y[1:20, icol]/5, each = 5)    # 0-99 years old
-      contact_101 [1:100, 5*(icol-1)+(1:5)] <- matrix (rep(contactees, 5), ncol = 5)
-      rm(contactees)
-    }
-    contact_101 [, 101] <- contact_101 [, 100]   # 100 years old
-    contact_101 [101, ] <- contact_101 [100, ]
-
-    # adjust contact reciprocity using UNWPP data at survey year (2005)
+    # prepare a contact matrix with yearly age groups between 0-100
+    # according to single-age populations for each country at reference year (2020)
+    # an earlier version based on the UK population at survey year (2005): data_contact_uk.Rdata
+    # assume contacts of 70+ include those between 70-100
     load (file = "data/data_pop.rda")
-    pop_uk      <- data_pop [country == "United Kingdom" & year == 2005, value]
-    contact_rec <- matrix(0, 101, 101)
-    for (i in 1:101){
-      for (j in 1:101) {
-        contact_rec [i, j] <- (contact_101[i, j] * pop_uk[i] +
-                                   contact_101[j, i] * pop_uk[j])/(2*pop_uk[i])
-      }
-    }
+    pop_2020     <- data_pop [year == 2020]
+    country_list <- unique(pop_2020$country_code)   # 195 countries
 
-    return(contact_rec)
+    contact_polymod <- sapply (country_list, function(icty) {
+
+      pop_ref <- pop_2020 [country_code == icty, value]
+
+      # expand contactees (break down in to single-year age groups by proportion)
+      contact_col <- matrix (0, ncol = 101, nrow = dim(contact_ori)[1])
+
+      # 0-69 years old
+      for (icol in 1:14){
+        pop_prp <- pop_ref[5*(icol-1)+(1:5)] / sum (pop_ref[5*(icol-1)+(1:5)])
+        contactees <- rep (contact_ori[, icol], 5)
+        contact_col[, 5*(icol-1)+(1:5)] <- sweep (matrix (contactees, ncol = 5), 2, pop_prp, "*")
+      }
+
+      # 70-100 years old
+      pop_prp <- pop_ref[71:101] / sum (pop_ref[71:101])
+      contact_col[, 71:101] <- sweep (matrix (rep(contact_ori[, 15], 100-70+1) , ncol = 100-70+1),
+                                    2, pop_prp, "*")
+
+      # expand contactors (apply the average to different groups)
+      contactor_0to69   <- matrix (rep (contact_col[1:14,], each = 5), nrow = 14*5)
+      contactor_70to100 <- matrix (rep (contact_col[15,], each = 100-70+1), nrow = 100-70+1)
+      contact_101 <- rbind (contactor_0to69, contactor_70to100)
+
+
+      # # adjust contact reciprocity using UNWPP data at survey year (2005)
+      # contact_rec <- matrix(0, 101, 101)
+      # for (i in 1:101){
+      #   for (j in 1:101) {
+      #     contact_rec [i, j] <- (contact_101[i, j] * pop_uk[i] +
+      #                                contact_101[j, i] * pop_uk[j])/(2*pop_uk[i])
+      #   }
+      # }
+
+      return(contact_101)
+    },
+    simplify = FALSE, USE.NAMES = TRUE)
+
+    return(contact_polymod)
   })
 
 
@@ -79,42 +101,55 @@ Process_data <- function() {
 
     # use updated synthetic contact matrices 2020 (acknowledge to Kiesha Prem)
     # download overall contact without any particular assumptions - "contact_all.rdata"
-    # original data is also available as a csv file
+    # original data also available as a csv file
     # urlfile = "https://raw.githubusercontent.com/kieshaprem/synthetic-contact-matrices/master/output/syntheticcontactmatrices2020/synthetic_contacts_2020.csv"
     # mydata <- readr::read_csv (url (urlfile))
 
     load (url ("https://github.com/kieshaprem/synthetic-contact-matrices/blob/master/output/syntheticcontactmatrices2020/overall/contact_all.rdata?raw=true"))
     load (file = "data/data_pop.rda")
 
+    # use Ethiopia's synthetic matrix for Somalia (missing)
+    contact_all[["SOM"]] <- contact_all[["ETH"]]
+
     contact_syn <- sapply (names(contact_all), function(icty) {
 
-      # there are no data for contacts over 80 years old
-      # assume 80-84, 85-89, 90-94, 95-99 to have same contacts as 75-79
-      contact_5y <- contact_all[[icty]]                                                  # 16x16
-      contact_5y <- cbind (contact_5y, matrix(rep(contact_5y[,16], 4), ncol = 4))        # 16x20
-      contact_5y <- rbind (contact_5y, matrix(rep(contact_5y[16,], each = 4), nrow = 4)) # 20x20
+      contact_ori <- contact_all[[icty]]
 
-      # expand matrices from 5-year to 1-year age bands
-      contact_101 <- matrix (0, ncol = 101, nrow = 101)
-      for (icol in 1:20){
-        contactees <- rep(contact_5y[1:20, icol]/5, each = 5)    # 0-99 years old
-        contact_101 [1:100, 5*(icol-1)+(1:5)] <- matrix (rep(contactees, 5), ncol = 5)
-        rm(contactees)
-      }
-      contact_101 [, 101] <- contact_101 [, 100]   # 100 years old
-      contact_101 [101, ] <- contact_101 [100, ]
+      # prepare a contact matrix with yearly age groups between 0-100
+      # according to single-age populations at the survey year (2005)
+      # assume contacts of 75+ include those between 75-100
+      pop_cty  <- data_pop [country_code == icty & year == 2020, value]
 
-      # adjust contact reciprocity using UNWPP data at reference year (2020)
-      pop_ref     <- data_pop [country_code == icty & year == 2020, value]
-      contact_rec <- matrix(0, 101, 101)
-      for (i in 1:101){
-        for (j in 1:101) {
-          contact_rec [i, j] <- (contact_101[i, j] * pop_ref[i] +
-                                   contact_101[j, i] * pop_ref[j])/(2*pop_ref[i])
-        }
+      # expand contactees (break down in to single-year age groups by proportion)
+      contact_col <- matrix (0, ncol = 101, nrow = dim(contact_ori)[1])
+
+      # 0-74 years old
+      for (icol in 1:15){
+        pop_prp <- pop_cty [5*(icol-1)+(1:5)] / sum(pop_cty[5*(icol-1)+(1:5)])
+        contactees <- rep(contact_ori[, icol], 5)
+        contact_col [, 5*(icol-1)+(1:5)] <- sweep (matrix (contactees, ncol = 5), 2, pop_prp, "*")
       }
 
-      return(contact_rec)
+      # 75-100 year old
+      pop_prp <- pop_cty[76:101] / sum(pop_cty[76:101])
+      contact_col[, 76:101] <- sweep (matrix (rep(contact_ori[, 16], 100-75+1) , ncol = 100-75+1),
+                                      2, pop_prp, "*")   # 75-100 years old
+
+      # expand contactors (apply the average to different groups)
+      contactor_0to74   <- matrix (rep(contact_col[1:15,], each = 5), nrow = 15*5)
+      contactor_75to100 <- matrix (rep(contact_col[16,], each = 100-75+1), nrow = 100-75+1)
+      contact_101 <- rbind (contactor_0to74, contactor_75to100)
+
+      # # adjust contact reciprocity using UNWPP data at reference year (2020)
+      # contact_rec <- matrix(0, 101, 101)
+      # for (i in 1:101){
+      #   for (j in 1:101) {
+      #     contact_rec [i, j] <- (contact_101[i, j] * pop_ref[i] +
+      #                              contact_101[j, i] * pop_ref[j])/(2*pop_ref[i])
+      #   }
+      # }
+
+      return(contact_101)
     },
     simplify = FALSE, USE.NAMES = TRUE)
 
@@ -150,7 +185,7 @@ Process_data <- function() {
   })
 
 
-  usethis::use_data(data_contact_uk,
+  usethis::use_data(data_contact_polymod, # data_contact_uk
                     data_contact_syn,
                     data_lexp0,
                     data_cfr_wolfson,
