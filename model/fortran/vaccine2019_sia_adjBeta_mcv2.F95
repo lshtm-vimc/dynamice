@@ -29,17 +29,10 @@ contains
 			m = 12*(3+t-156)
 		endif
 
-		!! vacc_eff = a + b* age -> linear regression from Hughes et al paper
-		!vaceffByAge = a+b*m
-		!if( vaceffByAge .gt. real(0.98, dp) ) then
-		!	vaceffByAge = real(0.98, dp)
-		!endif
-		
-		! assume a 'step chagne' of vaccine efficacy
-		if (m .lt. real(12, dp)) then	
-		    vaceffByAge = a
-		else
-		    vaceffByAge = b
+		! vacc_eff = a + b* age -> linear regression from Hughes et al paper
+		vaceffByAge = a+b*m
+		if( vaceffByAge .gt. real(0.98, dp) ) then
+			vaceffByAge = real(0.98, dp)
 		endif
 
 		return
@@ -310,7 +303,7 @@ program measles
         real(dp) :: SIA_b
 		real(dp) :: vac_numerator
 		real(dp) :: vac_denominator
-		real(dp) :: p_eff
+	    real(dp) :: p_eff
 		real(dp), allocatable :: tempUnvacS(:)
 		real(dp), allocatable :: tempUnvacI(:)
 		real(dp), allocatable :: tempUnvacR(:)
@@ -464,9 +457,10 @@ program measles
 	V3R = real(0, dp)
 
 	!introduce 0.95 susceptible people in all agegroups at first timepoint
-	S(:,1) = real(0.95, dp)
+	S(:,1) = real(0.95, dp)   
 	!introduce 0.05 infectious people in all agegroups at first timepoint
-	I(:,1) = real(0.05, dp)
+	I(:,1) = real(0.05, dp)  
+	!R(:,1) = real(0.01, dp)            !  add to avoid zero cases
 
 	hh=2
 	h=1
@@ -537,9 +531,9 @@ program measles
 	!dont need to do this in the loop anymore
 	!contact rates
 	if(psa_run.gt.0) then
-		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',1,'beta.txt'
+		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',counter,'beta.txt'
 	else
-		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',1,'beta.txt'
+		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',counter,'beta.txt'
 	endif
 
 	open(2000,file=filename,status='unknown')
@@ -572,7 +566,16 @@ program measles
 		!loop through all age-groups
 		do 1982 a=1,amax
 			!calculate number of infected individuals
-			betta= sum(bet(a,:)*cyc) ! removed - change: should be multiplied by the a-th column in bet matrix and divided by total population (frequency dependent mixing)
+			betta   =   dot_product(bet(a,:),cyc) !sum(bet(a,:)*cyc) ! removed - change: should be multiplied by the a-th column in bet matrix and divided by total population (frequency dependent mixing)
+			if (betta > 0.000001) then
+			   betta   =   real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
+			endif
+			!if (t <= 75300 .OR. t > 75000)  then              !add for check
+			!   if (a == 50 .OR. a == 180) then                !add for check
+			!	  !print*, 'age group', a                     !add for check
+			!	  print*, t , 'age group:', a, ', I sum:', cyc(a), ', lambda:', betta                 !add for check
+			!   endif                                          !add for check
+			!endif                                             !add for check
 			dI		=	S(a,h)*betta
 			dVI 	=	VS(a,h)*(real(1, dp) - degree1)*betta
 			dV2I	=	V2S(a,h)*(real(1, dp) - degree2)*betta
@@ -597,10 +600,10 @@ program measles
 
 			I(a,hh)		=	I(a,h)						&
 							+dI							&
-							-dR
+							-dR                         
 
 			R(a,hh)		=	R(a,h)						&
-							+dR
+							+dR                         
 
 			VS(a,hh)	=	VS(a,h)						&
 							-dVI
@@ -766,7 +769,7 @@ program measles
 		!Births, newborn aging and routine vaccination (starts at t.cov)
 		!NB birth rate per timestep = 1/real(tstep)
 		!Maternal immunity in proportion to those infected and vaccinated (this is more complex in nature than in current model)
-		M(1,hh) 	=	M(1,hh-1)																		&
+		    M(1,hh) 	=	M(1,hh-1)																		&
 							-agerate_week*M(1,hh-1)															&
 							+agerate_week*sum(																&
 								(																			&
@@ -846,7 +849,7 @@ program measles
 		open(9915,file=outfile,status='NEW')
 
 		if( debug_timepoints == 0 ) then
-			t_increment = tstep - 1
+			t_increment = tstep !tstep - 1
 			t_scale = 1
 		else
 			t_increment = 1
@@ -859,7 +862,7 @@ program measles
 		do 1155 t=1, int(t_cov/t_scale), t_increment
 			tstart = t
 			if( debug_timepoints == 0 ) then
-				tend = tstart+tstep
+				tend = tstart+(tstep-1) !tstart+tstep
 			else
 				tend = tstart
 			endif
@@ -884,20 +887,20 @@ program measles
 				if( debug_compartments == 0 ) then
 					write(9915,1070) tstart, tend, astart, aend, "cases", sum(newinfect(astart:aend,tstart:tend))
 				else
-					write(9915,1070) tstart, tend, astart, aend, "M", 	sum(M(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "S", 	sum(S(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "I", 	sum(I(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "R", 	sum(R(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "VS", 	sum(VS(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "VI", 	sum(VI(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "VR", 	sum(VR(astart:aend,tstart:tend))
-	        write(9915,1070) tstart, tend, astart, aend, "MCV1_eff", 	sum(MCV1_eff(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V2S",	sum(V2S(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V2I",	sum(V2I(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V2R",	sum(V2R(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V3S",	sum(V3S(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V3I",	sum(V3I(astart:aend,tstart:tend))
-					write(9915,1070) tstart, tend, astart, aend, "V3R",	sum(V3R(astart:aend,tstart:tend))
+					write(9915,1070) tstart, tend, astart, aend, "M", 	sum(M(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "S", 	sum(S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "I", 	sum(I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "R", 	sum(R(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "VS", 	sum(VS(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "VI", 	sum(VI(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "VR", 	sum(VR(astart:aend,tstart:tend))/real(t_increment, dp)
+	        write(9915,1070) tstart, tend, astart, aend, "MCV1_eff", 	sum(MCV1_eff(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V2S",	sum(V2S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V2I",	sum(V2I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V2R",	sum(V2R(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V3S",	sum(V3S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V3I",	sum(V3I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9915,1070) tstart, tend, astart, aend, "V3R",	sum(V3R(astart:aend,tstart:tend))/real(t_increment, dp)
 				endif
 			1144 continue
 		1155 continue
@@ -1014,18 +1017,20 @@ program measles
 					read(counter+1000,*)pop(k)
 				1000 continue
 			close(counter+1000)
+			
 			!read contact-data
-			!if(psa_run.gt.0) then
-			!	write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',1,'beta.txt'
-			!else
-			!	write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',1,'beta.txt'
-			!endif
-			!open(counter,file=filename,status='old')
-			!	do 1111 k=1,amax
-			!		read(counter,*,end=787)(bet(k,is),is=1,amax)
-			!	1111 continue
-			!	787 continue
-			!close(counter)
+			if(psa_run.gt.0) then
+				write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',counter,'beta.txt'
+			else
+				write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',counter,'beta.txt'
+			endif
+			open(counter,file=filename,status='old')
+				do 1111 k=1,amax
+					read(counter,*,end=787)(bet(k,is),is=1,amax)
+				1111 continue
+				787 continue
+			close(counter)
+			
 			!substract t_cov from t_sia
 			t_sia=t_sia-t_cov
 			!set t_sia AFTER last timepoint where t_sia is negative (will never run, happens when SIA is disabled on LINUX)
@@ -1048,7 +1053,10 @@ program measles
 			!loop through all age-groups
 			do 1978 a=1,amax, 1
 				!calculate number of infected individuals
-				betta	=	sum(bet(a,:)*cyc)
+				betta	=	dot_product(bet(a,:),cyc) !sum(bet(a,:)*cyc)
+				if (betta > 0.000001) then
+					betta   =   real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
+				endif
 				dI		=	S(a,t)*betta
 				dVI		=	VS(a,t) *(real(1, dp)-degree1)*betta
 				dV2I	=	V2S(a,t)*(real(1, dp)-degree2)*betta
@@ -1073,10 +1081,10 @@ program measles
 
 				I(a,hh)		=	I(a,t)			&
 								+dI				&
-								-dR
+								-dR             
 
 				R(a,hh)		=	R(a,t)			&
-								+dR
+								+dR             
 
 				VS(a,hh)	=	VS(a,t)			&
 								-dVI
@@ -1214,9 +1222,9 @@ program measles
 								+agerate_week*cov(a-1)*R(a-1,hh)
 
 				MCV1_eff(a,hh)	=	MCV1_eff(a,hh)											&
-								-agerate_week * MCV1_eff(a,hh)								&
-								+agerate_week * MCV1_eff(a-1,hh)							&
-								+agerate_week * vaceffByAge(ve_a,ve_b,a-1) * cov(a-1) * S(a-1,hh)
+								-agerate_week*MCV1_eff(a,hh)								&
+								+agerate_week*MCV1_eff(a-1,hh)							&
+								+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*cov(a-1)*S(a-1,hh)
 
 				V2S(a,hh)	=	V2S(a,hh)													&
 								-agerate_week*V2S(a,hh)										&
@@ -1257,37 +1265,37 @@ program measles
 
 			S(a,hh)		=	S(a,hh)																		&
 							-agerate_week*S(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*S(a-1,hh)			&
+							+agerate_week*(real(1, dp)-cov(a-1))*S(a-1,hh)		                     	&
 							+real(0.002, dp)*M(a,hh-1)
 
 			I(a,hh)		=	I(a,hh)																		&
 							-agerate_week*I(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*I(a-1,hh)
+							+agerate_week*(real(1, dp)-cov(a-1))*I(a-1,hh)
 
 			R(a,hh)		=	R(a,hh)																		&
 							-agerate_week*R(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*R(a-1,hh)
+							+agerate_week*(real(1, dp)-cov(a-1))*R(a-1,hh)
 
 			VS(a,hh)	=	VS(a,hh)																	&
 							-agerate_week*VS(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VS(a-1,hh)									&
-							+agerate_week*(real(1, dp)-vaceffByAge(ve_a,ve_b,a-1))*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)
+							+agerate_week*(real(1, dp)-vaceffByAge(ve_a,ve_b,a-1))*cov(a-1)*S(a-1,hh)
 
 			VI(a,hh)	=	VI(a,hh)																	&
 							-agerate_week*VI(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VI(a-1,hh)									&
-							+agerate_week*(cov(a-1)+cov2-cov(a-1)*cov2)*I(a-1,hh)
+							+agerate_week*cov(a-1)*I(a-1,hh)
 
 			VR(a,hh)	=	VR(a,hh)																	&
 							-agerate_week*VR(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VR(a-1,hh)									&
-							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)					&
-							+agerate_week*(cov(a-1)+cov2-cov(a-1)*cov2)*R(a-1,hh)
+							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*cov(a-1)*S(a-1,hh)					&
+							+agerate_week*cov(a-1)*R(a-1,hh)
 
 			MCV1_eff(a,hh)	=	MCV1_eff(a,hh)															&
 							-agerate_week*MCV1_eff(a,hh)												&
 							+agerate_week*(real(1, dp)-cov2)*MCV1_eff(a-1,hh)							&
-							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)
+							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*cov(a-1)*S(a-1,hh)
 
 			vac_numerator = MCV1_eff(a,hh)
 			vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
@@ -1568,16 +1576,16 @@ program measles
 						!estimate the incremental efficacy derived from MCV2 to achieve an overall efficacy of take3. Estimate current MCV1 efficacy from those for who the vaccine worked in all who received MCV1 only
 						vac_numerator = MCV1_eff(a,hh)
 						vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
-		             	if(vac_denominator.gt.real(0, dp)) then
-		             	    p_eff = vac_numerator/vac_denominator				
-		             		if (p_eff > take3) then
-		             		    take_inc = real(0, dp)
-		             		else
-		             			take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
-		             		endif
-		             	else
-		             		take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
-		             	endif
+						if(vac_denominator.gt.real(0, dp)) then
+			                p_eff = vac_numerator/vac_denominator				
+				            if (p_eff > take3) then
+							    take_inc = real(0, dp)
+							else
+								take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
+						    endif
+						else
+							take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+			            endif
 						!if(vac_denominator.gt.real(0, dp)) then
 						!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
 						!else
@@ -1792,7 +1800,7 @@ program measles
 		open(9916,file=outfile,status='NEW')
 
 		if( debug_timepoints == 0 ) then
-			t_increment = tstep - 1
+			t_increment = tstep !tstep - 1
 			t_scale = 1
 		else
 			t_increment = 1
@@ -1803,9 +1811,9 @@ program measles
 			endif
 		endif
 		do 9950 t=1, int(t_cov/t_scale), t_increment
-			tstart = t
+			tstart = t 
 			if( debug_timepoints == 0 ) then
-				tend = tstart+tstep
+				tend = tstart + (tstep-1)  !tstart+tstep
 			else
 				tend = tstart
 			endif
@@ -1830,20 +1838,20 @@ program measles
 				if( debug_compartments == 0 ) then
 					write(9916,1070) tstart, tend, astart, aend, "cases", sum(newinfect(astart:aend,tstart:tend))
 				else
-					write(9916,1070) tstart, tend, astart, aend, "M", 	sum(M(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "S", 	sum(S(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "I", 	sum(I(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "R", 	sum(R(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "VS", 	sum(VS(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "VI", 	sum(VI(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "VR", 	sum(VR(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "MCV1_eff", sum(MCV1_eff(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V2S",	sum(V2S(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V2I",	sum(V2I(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V2R",	sum(V2R(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V3S",	sum(V3S(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V3I",	sum(V3I(astart:aend,tstart:tend))
-					write(9916,1070) tstart, tend, astart, aend, "V3R",	sum(V3R(astart:aend,tstart:tend))
+					write(9916,1070) tstart, tend, astart, aend, "M", 	sum(M(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "S", 	sum(S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "I", 	sum(I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "R", 	sum(R(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "VS", 	sum(VS(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "VI", 	sum(VI(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "VR", 	sum(VR(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "MCV1_eff", sum(MCV1_eff(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V2S",	sum(V2S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V2I",	sum(V2I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V2R",	sum(V2R(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V3S",	sum(V3S(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V3I",	sum(V3I(astart:aend,tstart:tend))/real(t_increment, dp)
+					write(9916,1070) tstart, tend, astart, aend, "V3R",	sum(V3R(astart:aend,tstart:tend))/real(t_increment, dp)
 				endif
 			9951 continue
 		9950 continue

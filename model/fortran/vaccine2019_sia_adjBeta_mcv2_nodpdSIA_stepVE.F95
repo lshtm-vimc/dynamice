@@ -29,10 +29,17 @@ contains
 			m = 12*(3+t-156)
 		endif
 
-		! vacc_eff = a + b* age -> linear regression from Hughes et al paper
-		vaceffByAge = a+b*m
-		if( vaceffByAge .gt. real(0.98, dp) ) then
-			vaceffByAge = real(0.98, dp)
+		!! vacc_eff = a + b* age -> linear regression from Hughes et al paper
+		!vaceffByAge = a+b*m
+		!if( vaceffByAge .gt. real(0.98, dp) ) then
+		!	vaceffByAge = real(0.98, dp)
+		!endif
+		
+		! assume a 'step chagne' of vaccine efficacy
+		if (m .lt. real(12, dp)) then	
+		    vaceffByAge = a
+		else
+		    vaceffByAge = b
 		endif
 
 		return
@@ -302,7 +309,7 @@ program measles
 		real(dp) :: ve_a
 		real(dp) :: ve_b
 		real(dp) :: SIA_a
-        real(dp) :: SIA_b
+    real(dp) :: SIA_b
 		real(dp) :: vac_numerator
 		real(dp) :: vac_denominator
 		real(dp) :: p_eff
@@ -532,9 +539,9 @@ program measles
 	!dont need to do this in the loop anymore
 	!contact rates
 	if(psa_run.gt.0) then
-		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',1,'beta.txt'
+		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',counter,'beta.txt'
 	else
-		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',1,'beta.txt'
+		write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',counter,'beta.txt'
 	endif
 
 	open(2000,file=filename,status='unknown')
@@ -567,7 +574,10 @@ program measles
 		!loop through all age-groups
 		do 1982 a=1,amax
 			!calculate number of infected individuals
-			betta= sum(bet(a,:)*cyc) ! removed - change: should be multiplied by the a-th column in bet matrix and divided by total population (frequency dependent mixing)
+			betta   =   sum(bet(a,:)*cyc) ! removed - change: should be multiplied by the a-th column in bet matrix and divided by total population (frequency dependent mixing)
+			if (betta > 0.000001) then
+			   betta = real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
+			endif
 			dI		=	S(a,h)*betta
 			dVI 	=	VS(a,h)*(real(1, dp) - degree1)*betta
 			dV2I	=	V2S(a,h)*(real(1, dp) - degree2)*betta
@@ -1010,17 +1020,17 @@ program measles
 				1000 continue
 			close(counter+1000)
 			!read contact-data
-			!if(psa_run.gt.0) then
-			!	write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',1,'beta.txt'
-			!else
-			!	write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',1,'beta.txt'
-			!endif
-			!open(counter,file=filename,status='old')
-			!	do 1111 k=1,amax
-			!		read(counter,*,end=787)(bet(k,is),is=1,amax)
-			!	1111 continue
-			!	787 continue
-			!close(counter)
+			if(psa_run.gt.0) then
+				write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,I3.3,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,'run',psa_run,sep,get_country_iso3,'_',counter,'beta.txt'
+			else
+				write(filename,'(A2,A1,A2,A1,A7,A1,A10,A1,A20,A1,A5,A1,A3,A1,I3.3,A8)') '..',sep,'..',sep,'outcome',sep,get_scenarioname,sep,get_foldername,sep,'input',sep,get_country_iso3,'_',counter,'beta.txt'
+			endif
+			open(counter,file=filename,status='old')
+				do 1111 k=1,amax
+					read(counter,*,end=787)(bet(k,is),is=1,amax)
+				1111 continue
+				787 continue
+			close(counter)
 			!substract t_cov from t_sia
 			t_sia=t_sia-t_cov
 			!set t_sia AFTER last timepoint where t_sia is negative (will never run, happens when SIA is disabled on LINUX)
@@ -1044,6 +1054,9 @@ program measles
 			do 1978 a=1,amax, 1
 				!calculate number of infected individuals
 				betta	=	sum(bet(a,:)*cyc)
+				if (betta > 0.000001) then
+			        betta = real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
+			    endif
 				dI		=	S(a,t)*betta
 				dVI		=	VS(a,t) *(real(1, dp)-degree1)*betta
 				dV2I	=	V2S(a,t)*(real(1, dp)-degree2)*betta
@@ -1252,37 +1265,37 @@ program measles
 
 			S(a,hh)		=	S(a,hh)																		&
 							-agerate_week*S(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*S(a-1,hh)			&
+							+agerate_week*(real(1, dp)-cov(a-1))*S(a-1,hh)			&
 							+real(0.002, dp)*M(a,hh-1)
 
 			I(a,hh)		=	I(a,hh)																		&
 							-agerate_week*I(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*I(a-1,hh)
+							+agerate_week*(real(1, dp)-cov(a-1))*I(a-1,hh)
 
 			R(a,hh)		=	R(a,hh)																		&
 							-agerate_week*R(a,hh)														&
-							+agerate_week*(real(1, dp)-cov2)*(real(1, dp)-cov(a-1))*R(a-1,hh)
+							+agerate_week*(real(1, dp)-cov(a-1))*R(a-1,hh)
 
 			VS(a,hh)	=	VS(a,hh)																	&
 							-agerate_week*VS(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VS(a-1,hh)									&
-							+agerate_week*(real(1, dp)-vaceffByAge(ve_a,ve_b,a-1))*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)
+							+agerate_week*(real(1, dp)-vaceffByAge(ve_a,ve_b,a-1))*cov(a-1)*S(a-1,hh)
 
 			VI(a,hh)	=	VI(a,hh)																	&
 							-agerate_week*VI(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VI(a-1,hh)									&
-							+agerate_week*(cov(a-1)+cov2-cov(a-1)*cov2)*I(a-1,hh)
+							+agerate_week*cov(a-1)*I(a-1,hh)
 
 			VR(a,hh)	=	VR(a,hh)																	&
 							-agerate_week*VR(a,hh)														&
 							+agerate_week*(real(1, dp)-cov2)*VR(a-1,hh)									&
-							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)					&
-							+agerate_week*(cov(a-1)+cov2-cov(a-1)*cov2)*R(a-1,hh)
+							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*cov(a-1)*S(a-1,hh)					&
+							+agerate_week*cov(a-1)*R(a-1,hh)
 
 			MCV1_eff(a,hh)	=	MCV1_eff(a,hh)															&
 							-agerate_week*MCV1_eff(a,hh)												&
 							+agerate_week*(real(1, dp)-cov2)*MCV1_eff(a-1,hh)							&
-							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*(cov(a-1)+cov2-cov(a-1)*cov2)*S(a-1,hh)
+							+agerate_week*vaceffByAge(ve_a,ve_b,a-1)*cov(a-1)*S(a-1,hh)
 
 			vac_numerator = MCV1_eff(a,hh)
 			vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
@@ -1296,11 +1309,6 @@ program measles
 			else
 				take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
 			endif
-			!if(vac_denominator.gt.real(0, dp)) then
-			!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
-			!else
-			!	take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
-			!endif
 
 			V2S(a,hh)	=	V2S(a,hh)																	&
 							-agerate_week*V2S(a,hh)														&
@@ -1563,16 +1571,16 @@ program measles
 						!estimate the incremental efficacy derived from MCV2 to achieve an overall efficacy of take3. Estimate current MCV1 efficacy from those for who the vaccine worked in all who received MCV1 only
 						vac_numerator = MCV1_eff(a,hh)
 						vac_denominator = (VS(a,hh) + VI(a,hh) + VR(a,hh))
-                    	if(vac_denominator.gt.real(0, dp)) then
-                    	    p_eff = vac_numerator/vac_denominator				
-                    		if (p_eff > take3) then
-                    		    take_inc = real(0, dp)
-                    		else
-                    			take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
-                    		endif
-                    	else
-                    		take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
-                    	endif
+						if(vac_denominator.gt.real(0, dp)) then
+						    p_eff = vac_numerator/vac_denominator				
+							if (p_eff > take3) then
+							    take_inc = real(0, dp)
+							else
+							    take_inc = (take3 - p_eff)/(real(1, dp) - p_eff)
+							endif
+						else
+							take_inc = (take3 - real(0, dp))/(real(1, dp) - real(0, dp))
+			            endif
 						!if(vac_denominator.gt.real(0, dp)) then
 						!	take_inc = (take3 - (vac_numerator/vac_denominator))/(real(1, dp) - (vac_numerator/vac_denominator))
 						!else
