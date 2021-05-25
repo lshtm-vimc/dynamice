@@ -561,13 +561,13 @@ program measles
 		tcycle=sin(real(t, dp)*real(2, dp)*real(3.1415926535, dp)/(tstep)) !Seasonality in Beta
 		tcycle=real(1, dp)+tcycle*amp
 		!cyc= tcycle*(I(:,h)+VI(:,h)+V2I(:,h)+V3I(:,h))*pop(1:amax+1)
-		cyc= tcycle*(I(:,h)+VI(:,h)+V2I(:,h)+V3I(:,h))
-		totpop = sum(pop(1:amax+1)) ! total population size
+		cyc= tcycle*(I(:,h) + VI(:,h) + V2I(:,h) + V3I(:,h) + real(1e-9, dp)) ! add importation
+		totpop = sum(pop(1:amax+1)) ! total population size 
 		!loop through all age-groups
 		do 1982 a=1,amax
 			!calculate number of infected individuals
 			betta   =   dot_product(bet(a,:),cyc) !sum(bet(a,:)*cyc) ! removed - change: should be multiplied by the a-th column in bet matrix and divided by total population (frequency dependent mixing)
-			if (betta > 0.000001) then
+			if (betta > real(1e-6, dp)) then
 			   betta   =   real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
 			endif
 			!if (t <= 75300 .OR. t > 75000)  then              !add for check
@@ -1048,13 +1048,13 @@ program measles
 			tcycle=sin(real(t, dp)*real(2, dp)*real(3.1415926535, dp)/(tstep)) !Seasonality in Beta
 			tcycle=real(1, dp)+tcycle*amp
 			!cyc= tcycle*(I(:,t)+VI(:,t)+V2I(:,t)+V3I(:,t))*pop(1:amax+1)
-			cyc= tcycle*(I(:,t)+VI(:,t)+V2I(:,t)+V3I(:,t))
+			cyc= tcycle*(I(:,t)+VI(:,t)+V2I(:,t)+V3I(:,t)+ real(1e-9, dp)) ! add importation
 			totpop = sum(pop(1:amax+1))
 			!loop through all age-groups
 			do 1978 a=1,amax, 1
 				!calculate number of infected individuals
 				betta	=	dot_product(bet(a,:),cyc) !sum(bet(a,:)*cyc)
-				if (betta > 0.000001) then
+				if (betta > + real(1e-6, dp)) then
 					betta   =   real(1, dp) - exp(-betta)   !transform rate into probability if less than 1e-6 (exp()function returns number with less precision)
 				endif
 				dI		=	S(a,t)*betta
