@@ -35,7 +35,7 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
                                                  touchstone                 = "",
                                                  antigen                    = "",
                                                  scenario_name              = "",
-                                                 rev_cov
+                                                 rev_cov                    = FALSE
                                                  ) {
 
   # vaccine coverage file
@@ -64,21 +64,21 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   vaccov <- fread (file = vaccine_coverage_file,
                    stringsAsFactors = F, na.strings = "<NA>")
 
-  keep.cols <- c("vaccine", "country_code", "country", "year", "age_first", "age_last",
-                 "age_range_verbatim", "target", "coverage")
-
   # select routine vaccination coverage
-  routine <- vaccov [activity_type != "campaign", ..keep.cols]
+  keep_cols_routine <- c("vaccine", "country_code", "country", "year", "coverage")
+  routine <- vaccov [activity_type != "campaign", ..keep_cols_routine]
 
   # only select campaigns with coverage > 0 and with information of target population size
+  keep_cols_sia <- c("vaccine", "country_code", "country", "year",
+                     "age_first", "age_last", "age_range_verbatim", "target", "coverage")
   sia <- vaccov [activity_type == "campaign" & ( !is.na(target) & !is.na(coverage) & coverage != 0 ),
-              ..keep.cols]
+                 ..keep_cols_sia]
 
   # add columns for the number of reached and precise age at vaccination of SIAs
   sia [, `:=` (a0 = 0, a1 = 0,
                reached = as.numeric(target) * as.numeric(coverage))]
 
-  if ((rev_cov) & (nrow(sia) > 0)) {
+  if ((rev_cov == TRUE) & (nrow(sia) > 0)) {
 
     # remove all whitespace from age_range_verbatim, put all in lowercase
     sia$age_range_verbatim <- tolower (gsub("[[:space:]]", "", sia$age_range_verbatim))
@@ -149,14 +149,14 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
 
   # -----------------------------------------------------------------------------------
   # calculate values for a0 and a1 to match the age groups
-  # for age <= 3 years, age is in weeks
-  # for age >= 3 years, (156 weeks for up to age 3) + (remaining years above 3)
-  #      age 1 year ~ 52; 2 year ~ 104; 3 year ~ 156; 4 year ~ 157; 5 year ~ 158
+  # for age < 3 years, weekly age (0 year: 1-52, 1 year: 53-104, 2 year: 105-156)
+  # for age >= 3 years, yearly age (3 year: 157, 100 year: 254)
   find.a <- function (x) {
-    t0 <- ifelse (x <= 3, round (x * 52), round ((x - 3) + (3 * 52) ) )
+    t0 <- ifelse (x < 3, round (x * 52), round ((x - 2) + (3 * 52)) )
     return (t0) }
 
   sia [, `:=` (a0 = find.a(age_first), a1 = find.a(age_last))]
+  sia [age_first < 3, a0 := a0 + 1] # starting the next weekly age
 
   # set age == 0 year as 1 week
   sia [a0 == 0, a0 := 1]
@@ -198,6 +198,9 @@ create_vaccine_coverage_routine_sia <- function (vaccine_coverage_folder    = ""
   # number of reached equals to the size of targeted population. The original
   # number 'reached' cannot be obtained.
   # ----------------------------------------------------------------------------
+
+  # take out columns not used in model simulation
+  sia [, `:=` (age_range_verbatim = NULL, reached = NULL)]
 
   # write vaccine coverage data for routine vaccination and SIAs
   fwrite (x = routine, file = routine_coverage_file)

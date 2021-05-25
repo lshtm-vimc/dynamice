@@ -33,9 +33,9 @@ beginning and the end.}
 
 \item{antigen}{Disease name used by VIMC.}
 
-\item{scenarios}{Name of vaccination scenarios for evaluation.}
+\item{scenarios}{Name of vaccination strategies included for evaluation.}
 
-\item{base_scenario}{Name of the vaccination scenario that is used as the
+\item{base_scenario}{Name of the vaccination strategy that is used as the
 baseline for calculating averted burden.}
 
 \item{burden_estimate_folder}{A folder name for the file which contains the

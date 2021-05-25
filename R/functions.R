@@ -227,13 +227,13 @@ runCountry <- function (
     # t_run: for each year that is modelled,  get timepoint at which the year starts
     t_run <- t_end - (length(years):1) * tstep + 1
 
-    # get timepoints for SIA years, assuming that year 1 of interest is the year 1980
-    # assume SIAs to take place at the beginning of a calendar year,
-    # with 3-week interval (1000/(52/3) timesteps) for multiple SIA rounds within a single year
-    # the number of SIA rounds in a single year should not exceed 18 (52/3)
+    # get timepoints for SIAs, assumed to take place at the beginning of a calendar year
+    # for multiple SIA rounds within a single year:
+    # if at mutually exclusive age groups, take as the same round and assume an interval of 1 timestep
+    # if at overlapping age groups, treat as separate rounds and assume a wider interval ex. 3 weeks by round(tstep/(52/3))
 
     t_sia <- unlist (sapply (sort (unique (sia_year)), function (iyr, sia_year)
-      return (t_run[1] + tstep * (iyr - years[1]) + c(1:sum(sia_year == iyr) - 1)*(round(tstep/(52/3)))),
+      return (t_run[1] + tstep * (iyr - years[1]) + c(1:sum(sia_year == iyr) - 1)),
       sia_year = sia_year
       ))
 
@@ -623,6 +623,8 @@ runCountry <- function (
 #' age-related vaccine efficacy is applied. This implies different meaning of
 #' vaccine efficacy vector (\code{take}) and a corresponding \code{measles_model}
 #' should be applied.
+#' @param sim_years A numeric vector containing calendar years included for model
+#'  simulation.
 #' @examples
 #' runScenario (
 #'   vaccine_coverage_folder    = "vaccine_coverage_upd/",
@@ -641,7 +643,8 @@ runCountry <- function (
 #'   measles_model              = "vaccine2019_sia_singlematrix.exe",
 #'   debug_model                = FALSE,
 #'   contact_mat                = "prpmix",
-#'   step_ve                    = FALSE
+#'   step_ve                    = FALSE,
+#'   sim_years                  = 1980:2100
 #'   )
 runScenario <- function (vaccine_coverage_folder    = "",
                          vaccine_coverage_subfolder = "",
@@ -649,17 +652,18 @@ runScenario <- function (vaccine_coverage_folder    = "",
                          antigen                    = "",
                          scenario_name,
                          save_scenario,
-                         burden_estimate_folder,              # burden estimate folder
-                         group_name,                          # modelling group name
+                         burden_estimate_folder,                  # burden estimate folder
+                         group_name,                              # modelling group name
                          countries                  = "all",
                          cluster_cores              = 1,
-                         psa                        = 0,      # psa runs; 0 for single run
+                         psa                        = 0,          # psa runs; 0 for single run
                          vaccination,  # Whether children are vaccinated. 0: No vaccination; 1: Only MCV1; 2: MCV1 and MCV2
                          using_sia,    # Whether supplementary immunization campaigns are used. 0: no SIA; 1: with SIA
-                         measles_model,                       # measles model
-                         debug_model                = FALSE,  # debug model (T/F)
-                         contact_mat,                         # contact matrix: "prpmix","polymod","syn"
-                         step_ve                              # step change of take
+                         measles_model,                           # measles model executive file
+                         debug_model                = FALSE,      # debug model (T/F)
+                         contact_mat,                             # contact matrix: "prpmix","polymod","syn"
+                         step_ve,                                 # step change of take
+                         sim_years                  = 1980:2100   # calendar years for simulation
 ) {
 
   # changes 2019:
@@ -886,8 +890,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   }
 
   # read_data
-  coverage_routine	<- fread (data_coverage_routine)
-  coverage_sia		  <- fread (data_coverage_sia)
+  coverage_routine	<- copy (fread (data_coverage_routine))[year %in% sim_years]
+  coverage_sia		  <- copy (fread (data_coverage_sia))[year %in% sim_years]
   timeliness  		  <- setDT (data_timeliness)
   rnought	    		  <- setDT (data_r0) #setNames(as.list(data_r0$r0), data_r0$country_code)
   population  		  <- setDT (data_pop)
@@ -919,7 +923,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   }
 
   # start and end years (should go in as input to function -- INPUT-FUNCTION)
-  years <- as.numeric (c(1980:2100))
+  years    <- as.numeric (sim_years)           # c(1980:2100)
+  template <- template [year %in% years]       # adjust template based on simulation years
 
   for (cty in countries) {
     if (psa > 1){
@@ -950,18 +955,18 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   # Process contact matrices
   contact_list <- switch (contact_mat,
-                          "syn" = sapply (countries,
-                                          function(cty){data_contact_syn[[cty]]},
-                                          simplify = FALSE, USE.NAMES = TRUE),
+                          "syn"     = sapply (countries,
+                                              function(cty){data_contact_syn[[cty]]},
+                                              simplify = FALSE, USE.NAMES = TRUE),
                           "polymod" = sapply (countries,
-                                         function(x = NULL){data_contact_polymod[[cty]]},
-                                         simplify = FALSE, USE.NAMES = TRUE),
-                          "prpmix" = sapply (countries,
-                                            function(x = NULL){matrix (1/101, nrow = 101, ncol = 101)},
-                                            simplify = FALSE, USE.NAMES = TRUE), # not actually used but to fit in the model structure
-                          "unimix" = sapply (countries,
-                                             function(x = NULL){matrix (1/101, nrow = 101, ncol = 101)},
-                                             simplify = FALSE, USE.NAMES = TRUE)
+                                              function(cty){data_contact_polymod[[cty]]},
+                                              simplify = FALSE, USE.NAMES = TRUE),
+                          "prpmix"  = sapply (countries,
+                                              function(x = NULL){matrix (1/101, nrow = 101, ncol = 101)},
+                                              simplify = FALSE, USE.NAMES = TRUE), # not actually used but to fit in the model structure
+                          "unimix"  = sapply (countries,
+                                              function(x = NULL){matrix (1/101, nrow = 101, ncol = 101)},
+                                              simplify = FALSE, USE.NAMES = TRUE)
                           )
 
 
@@ -1049,9 +1054,9 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   for (i in 1:length(combine)){
     if ("error" %in% class(combine[[i]])){
-      errormessage <- paste0("Error in task ",i,": ",combine[[i]])
+      errormessage <- paste0 ("Error in task ", i, ": ", combine[[i]])
       warning(errormessage)
-      writelog (paste0 (gavi.dir,"gavi_log"),errormessage)
+      writelog (paste0 (gavi.dir,"gavi_log"), errormessage)
       errorcount <- errorcount + 1
       #remove from data
       combine[[i]] <- NULL
@@ -1068,8 +1073,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   report_years <- sort (unique (template$year))
   ages         <- sort (unique (template$age))
 
-  # get years that the model was run for (can be different from reporting years)
-  years 		   <- sort (unique (as.numeric (coverage_routine[,year])))
+  # # get years that the model was run for (can be different from reporting years)
+  # years 		   <- sort (unique (as.numeric (coverage_routine[,year])))
 
 
   # ANALYSE RUNS
@@ -1102,11 +1107,11 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   all_popsize  <- rbindlist (lapply (myfiles.popsize, function (fn, ...) {
     res <- fread (fn, stringsAsFactors = F, check.names = F, col.names = as.character(c(0:100)))
-    res[, country := gsub("^.+/(\\w+)_age.+$","\\1", fn) ]             # get the country code from the filename
+    res[, country := gsub("^.+/(\\w+)_age.+$","\\1", fn) ]                # get the country code from the filename
     if (psa > 0) {
       res[, run_id := as.integer (gsub("^.+run(\\d{3}).+$","\\1", fn)) ]  # get the run_id from the filename (subfolder)
     }
-    res[, year := years]                                               # add year of model was run for (from coverage data file)
+    res[, year := years]                                                  # add year of model was run for (from coverage data file)
   }))
   all_popsize[country == "XKX", country := "XK"]
 
@@ -1178,7 +1183,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
                                               year         = year) ]
   } else {
     all_runs <- coverage_routine_MCV1 [all_runs,
-                                       .(i.country, i.year, age, cases, cohort_size, country_name, disease,  coverage, remain_lexp),
+                                       .(i.country, i.year, age, cases, cohort_size, country_name, disease, coverage, remain_lexp),
                                        on = .(country_code = country,
                                               year         = year) ]
   }

@@ -13,8 +13,8 @@
 #' @param touchstone Version note used by VIMC. Include a underscore at the
 #' beginning and the end.
 #' @param antigen Disease name used by VIMC.
-#' @param scenarios Name of vaccination scenarios for evaluation.
-#' @param base_scenario Name of the vaccination scenario that is used as the
+#' @param scenarios Name of vaccination strategies included for evaluation.
+#' @param base_scenario Name of the vaccination strategy that is used as the
 #' baseline for calculating averted burden.
 #' @param burden_estimate_folder A folder name for the file which contains the
 #' model outputs for evaluation.Include a slash at the end.
@@ -165,11 +165,11 @@ diagnostic_plots <- function (vaccine_coverage_folder,
                                  aes (x = year,
                                       y = coverage * 100,
                                       color = factor (vaccine))) +
-          scale_x_continuous (breaks = pretty_breaks ()) +
+          scale_x_continuous (breaks = scales::pretty_breaks ()) +
           geom_point () +
-          labs (title = countrycode (sourcevar   = country_iso3_code,
-                                     origin      = "iso3c",
-                                     destination = "country.name"),
+          labs (title = countrycode::countrycode (sourcevar   = country_iso3_code,
+                                                  origin      = "iso3c",
+                                                  destination = "country.name"),
                 x = "Year",
                 y = "Vaccine coverage (%)",
                 colour = "vaccine") +
@@ -186,12 +186,12 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           p <- ggplot2::ggplot(burden_estimate [country == country_iso3_code],
                                aes(x = year, y = get(toplot))) +
-            scale_x_continuous (breaks = pretty_breaks ()) +
+            scale_x_continuous (breaks = scales::pretty_breaks ()) +
             stat_summary (fun = sum, geom = "line") +
             ylab (toplot) +
-            labs (title = countrycode (sourcevar   = country_iso3_code,
-                                       origin      = "iso3c",
-                                       destination = "country.name"),
+            labs (title = countrycode::countrycode (sourcevar   = country_iso3_code,
+                                                    origin      = "iso3c",
+                                                    destination = "country.name"),
                   x = "Year",
                   y = plotwhat_label [i]) +
             theme_bw ()
@@ -209,9 +209,9 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
         # print plots
         print (ggpubr::annotate_figure (plots,
-                                        top = text_grob (scenario_name,
-                                                         color = "black",
-                                                         size = 9)))
+                                        top = ggpubr::text_grob (scenario_name,
+                                                                 color = "black",
+                                                                 size = 9)))
 
       } # end of loop -- for (country_iso3_code in country_iso3_codes)
 
@@ -238,7 +238,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
                                    y     = get (toplot),
                                    group = scenario,
                                    color = factor (scenario))) +
-            scale_x_continuous (breaks = pretty_breaks ()) +
+            scale_x_continuous (breaks = scales::pretty_breaks ()) +
             stat_summary (fun = sum, geom = "line") +
             ylab (toplot) +
             labs (title = countrycode::countrycode (sourcevar = country_iso3_code,
@@ -296,7 +296,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
                                    y     = get (toplot),
                                    group = scenario,
                                    color = factor (scenario))) +
-            scale_x_continuous (breaks = pretty_breaks ()) +
+            scale_x_continuous (breaks = scales::pretty_breaks ()) +
             stat_summary (fun = sum, geom = "line") +
             ylab (toplot) +
             labs (title = countrycode::countrycode (sourcevar   = country_iso3_code,

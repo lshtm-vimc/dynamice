@@ -21,7 +21,8 @@ runScenario(
   measles_model,
   debug_model = FALSE,
   contact_mat,
-  step_ve
+  step_ve,
+  sim_years = 1980:2100
 )
 }
 \arguments{
@@ -73,6 +74,9 @@ using local populations, and "syn" - country-specific synthetic matrix.}
 age-related vaccine efficacy is applied. This implies different meaning of
 vaccine efficacy vector (\code{take}) and a corresponding \code{measles_model}
 should be applied.}
+
+\item{sim_years}{A numeric vector containing calendar years included for model
+simulation.}
 }
 \description{
 A function that execute the measles model under a selected vaccination
@@ -97,6 +101,7 @@ runScenario (
   measles_model              = "vaccine2019_sia_singlematrix.exe",
   debug_model                = FALSE,
   contact_mat                = "prpmix",
-  step_ve                    = FALSE
+  step_ve                    = FALSE,
+  sim_years                  = 1980:2100
   )
 }
