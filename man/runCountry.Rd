@@ -27,6 +27,7 @@ runCountry(
   save_scenario,
   foldername,
   measles_model,
+  log_name,
   debug_model,
   debug_spinup,
   debug_age,
@@ -114,6 +115,8 @@ processing results.}
 \item{measles_model}{An executable file that processes fortan codes of the
 measles model.}
 
+\item{log_name}{A file name for keeping a log.}
+
 \item{debug_model}{A logical variable that determines whether to debug the
 model.}
 
@@ -165,7 +168,7 @@ runCountry (
   vaccination        = 1,
   using_sia          = 1,
   dinf               = 14,
-  gamma_tstep         = 0.02607,
+  gamma_tstep        = 0.02607,
   amplitude          = 0.05,
   take               = c(0.64598, 0.01485, 0.98),
   degree             = c(0.85, 0.95, 0.98),
@@ -180,6 +183,7 @@ runCountry (
   tstep              = 1000,
   save_scenario      = "scenario01",
   foldername         = NULL,
+  log_name           = "test_log",
   measles_model      = "vaccine2019_sia_singlematrix.exe",
   debug_model        = FALSE,
   debug_spinup       = FALSE,

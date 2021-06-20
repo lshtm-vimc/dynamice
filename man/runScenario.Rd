@@ -13,6 +13,7 @@ runScenario(
   save_scenario,
   burden_estimate_folder,
   group_name,
+  log_name,
   countries = "all",
   cluster_cores = 1,
   psa = 0,
@@ -43,6 +44,8 @@ the vaccine coverage files.}
 model outputs for evaluation. Include a slash at the end.}
 
 \item{group_name}{A modelling group name used by VIMC.}
+
+\item{log_name}{A file name for keeping a log.}
 
 \item{countries}{A vector of ISO-3 country codes used in the analysis. Use
 "all" to include all countries.}
@@ -90,9 +93,10 @@ runScenario (
   coverage_prefix            = "coverage",
   antigen                    = "measles-",
   scenario_name              = "campaign-only-default",
-  save_scenario               = scenario_number,
+  save_scenario              = scenario_number,
   burden_estimate_folder     = "central_burden_estimate/",
-  group_name                 = "LSHTM-Jit-",
+  group_name                 = NULL,
+  log_name                   = "test_log",
   countries                  = c("BGD","ETH"),
   cluster_cores              = 3,
   psa                        = 0,

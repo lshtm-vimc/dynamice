@@ -6,8 +6,8 @@
 vaccine_coverage/
 plots/
 outcome/
-progress.txt
-test_log.txt
+/progress.*
+/test_log.*
 central_burden_estimate/
 stochastic_burden_estimate/
 data-raw/
