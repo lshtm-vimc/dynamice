@@ -463,12 +463,13 @@ create_PSA_data <- function (psa             = 0,
   low_95CI       <- 0.5281395
   sd_intercept   <- (mean_intercept - low_95CI) / 1.96
 
-  psadat [, vaceffbyage_a := qtruncnorm (cube [, 1],
-                                         a    = (mean_intercept - 3 * sd_intercept),
-                                         b    = (mean_intercept + 3 * sd_intercept),
-                                         mean = mean_intercept,
-                                         sd   = sd_intercept
-  ) ]
+  psadat [, vaceffbyage_a := truncnorm::qtruncnorm (cube [, 1],
+                                                    a    = (mean_intercept - 3 * sd_intercept),
+                                                    b    = (mean_intercept + 3 * sd_intercept),
+                                                    mean = mean_intercept,
+                                                    sd   = sd_intercept
+                                                    )
+          ]
 
   # slope of regression function for vaccine efficacy by age
   mean_slope <- 0.014853

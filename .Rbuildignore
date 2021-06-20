@@ -1,5 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^dynamice\.Rproj$
-^run_dynamice_2019gavi\.R$
 ^data-raw$
+^central_burden_estimate$
+^stochastic_burden_estimate$
+^plots$
+^test_log.txt
+^progress.txt

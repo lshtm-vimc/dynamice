@@ -1,0 +1,8 @@
+2021/06/20 11:39:59 Main; Started
+2021/06/20 11:39:59 Main; OpenMPI disabled
+2021/06/20 11:39:59 Main; Foldername: 20210620_v2_s1_deter
+2021/06/20 11:39:59 PAK; Run 1/1; Start generating data
+2021/06/20 11:41:13 PAK; Run 1/1; Finished generating data
+2021/06/20 11:41:13 PAK; Run 1/1; Start model
+2021/06/20 11:42:29 PAK; Run 1/1; Finished model
+2021/06/20 11:42:29 Main; Finished

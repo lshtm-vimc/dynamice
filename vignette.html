@@ -348,29 +348,28 @@ pre code {
 
 
 <h1 class="title toc-ignore">run_example</h1>
-<h4 class="date">24/05/2021</h4>
+<h4 class="date">19/06/2021</h4>
 
 </div>
 
 
-<p>This vignette demonstrates how to process data, set up parameters and scenarios for running simulation with the DynaMICE model. An example run is conducted for Pakistan with MCV1, MCV2, and SIA vaccination, with all the updated assumptions for the key determinants (‘full-update’ scenario).</p>
+<p>This vignette demonstrates how to process data, set up parameters and scenarios for running simulation with the DynaMICE model. Details of model structure and assumptions can be found in a <a href="https://www.medrxiv.org/content/10.1101/2021.05.28.21257964v1">preprint</a> entitled ‘<em>Effect of evidence updates on key determinants of measles vaccination impact: a DynaMICE modelling study in ten high-burden countries</em>’.</p>
+<p>Below we demonstrate an example run using the model incorporated with all the updated assumptions for the key determinants (‘full-update’ scenario), for the vaccination strategies including MCV1, MCV2, and SIA in Pakistan and India.</p>
+<hr />
 <div id="load-relevant-packages" class="section level4">
 <h4>Load relevant packages</h4>
-<pre class="r"><code>devtools::load_all()</code></pre>
-<pre><code>## i Loading dynamice</code></pre>
-<pre><code>## Loading required package: data.table</code></pre>
-<pre><code>## Loading required package: foreach</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre class="r"><code>#library(dynamice)
+<pre class="r"><code>devtools::load_all()
+#library(dynamice)
 #library(data.table)
 #library(foreach)
 #library(ggplot2)</code></pre>
+<hr />
 </div>
 <div id="modify-the-input-datasets" class="section level4">
 <h4>Modify the input datasets</h4>
 <p>In this analysis, we assume perfect timeliness and fix R0 as 16 across countries.</p>
 <pre class="r"><code># assume perfect timeliness: all receive MCV1 at 9-month
-adj.timeliness = TRUE # FALSE
+adj.timeliness = TRUE  # FALSE
 if (adj.timeliness){
   data_timeliness [!is.na(age) &amp; age &lt; 52*(9/12), timeliness := 0]
   data_timeliness [!is.na(age) &amp; age &gt;= 52*(9/12), timeliness := 1]
@@ -380,6 +379,7 @@ adj.fixR0 = 16  # NA
 if (!is.na(adj.fixR0)){
   data_r0 [ , r0 := adj.fixR0]
 }</code></pre>
+<hr />
 </div>
 <div id="set-up-scenarios" class="section level4">
 <h4>Set up scenarios</h4>
@@ -401,18 +401,33 @@ main &lt;- list (
                    &quot;ContactPrp&quot;,    # (5) Base + proportional mixing
                    &quot;ContactUni&quot;,    # (6) Base + uniform mixing
                    &quot;Update&quot;,        # (7) Update: linear VE + synthetic matrix + non-random SIA delivery
-                   &quot;SIAdeliverSA&quot;  # (8) Base + sensitivity analysis for non-random SIA delivery
+                   &quot;SIAdeliverSA&quot;   # (8) Base + sensitivity analysis for non-random SIA delivery
                   ),
   fortran_model = fortran_names [c(4, 2, 3, 4, 4, 4, 1, 5)],
   contact_mat   = contact_mats  [c(2, 2, 2, 1, 3, 4, 1, 2)],
   step_ve       =                c(T, F, T, T, T, T, F, T)
 )</code></pre>
-<div id="specify-the-scenario-for-evaluation" class="section level5">
-<h5>Specify the scenario for evaluation</h5>
+<hr />
+</div>
+<div id="compile-fortran-codes" class="section level4">
+<h4>Compile fortran codes</h4>
+<p>The simulation model was constructed using fortran, to take the advantage of its fast computation speed. The files containing fortran codes (<em>.F95) in the <code>model/fortran</code> folder need to be compiled into executable files (</em>.exe) with the same name and then saved in the <code>model/compiled</code> folder.</p>
+<p><strong>Mac OS</strong><br />
+1. Install <a href="https://brew.sh/">Homebrew</a>, an open-source software package management system for Mac OS or Linux<br />
+2. Install <em>GNU compiler collection (GCC)</em> via terminal: <code>brew install gcc</code><br />
+3. To test that .F95 files can be compiled using this newly installed software, it may be worthwhile to <a href="https://fortran-lang.org/learn/building_programs/compiling_source">run a ‘hello world’ program</a>.</p>
+<p><strong>Windows</strong><br />
+1. Install <a href="https://www.cygwin.com/">cygwin</a>, a runtime environment that provides POSIX compatibility to Windows<br />
+2. Install the <em>GCC</em> package if not already built in</p>
+<p>With the installed compiler, use <em>gfortran</em> (part of <em>GCC</em>) to compile each file in the <code>model/fortran</code> folder via terminal or cygwin terminal: <code>gfortran -o ../compiled/vaccine2019_sia_adjBeta_mcv2.exe vaccine2019_sia_adjBeta_mcv2.F95 -fcheck=bounds -ffree-line-length-0</code></p>
+<hr />
+</div>
+<div id="specify-the-scenario-for-evaluation" class="section level4">
+<h4>Specify the scenario for evaluation</h4>
 <pre class="r"><code>imain &lt;- 7
 print (paste0 (&quot;Evaluation started: &quot;, main$scenarios[imain]))</code></pre>
 <pre><code>## [1] &quot;Evaluation started: Update&quot;</code></pre>
-</div>
+<hr />
 </div>
 <div id="assign-file-paths-and-global-variables" class="section level4">
 <h4>Assign file paths and global variables</h4>
@@ -432,11 +447,14 @@ print (paste0 (&quot;Evaluation started: &quot;, main$scenarios[imain]))</code><
   plot_folder                       = &quot;plots/&quot;,
 
   # modelling group name
-  group_name                        = &quot;LSHTM-Jit-&quot;,
+  group_name                        = NULL,
+  
+  # log file name
+  log_name                          = &quot;test_log&quot;,
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to &quot;all&quot; to analyse all included countries
-  countries                         = c(&quot;PAK&quot;,&quot;IND&quot;),
+  countries                         = c(&quot;PAK&quot;),#,&quot;IND&quot;
 
   cluster_cores                     = 1,    # number of cores 
   psa                               = 0     # psa runs; 0 for single central run
@@ -449,7 +467,12 @@ if (var$psa == 0) {
   burden_estimate_folder &lt;- var$central_burden_estimate_folder
 } else {
   burden_estimate_folder &lt;- var$stochastic_burden_estimate_folder
-}</code></pre>
+}
+
+# folders for burden estimate results
+dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Wolfson/&quot;)), recursive = T)
+dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Portnoy/&quot;)), recursive = T)</code></pre>
+<hr />
 </div>
 <div id="set-up-vaccination-strategies" class="section level4">
 <h4>Set up vaccination strategies</h4>
@@ -471,10 +494,14 @@ portnoy_scenarios &lt;- c(&quot;no-vaccination&quot;,    # (1) no vaccination (s
 # set SIAs and vaccination parameters for each scenario to minimize errors for running
 set_sia         &lt;- c (0, 0, 0, 1, 1)
 set_vaccination &lt;- c (0, 1, 2, 2, 2)</code></pre>
+<hr />
 </div>
 <div id="prepare-coverage-files" class="section level4">
 <h4>Prepare coverage files</h4>
-<p>Pre-processing of vaccine coverage data are needed and additional files are created for the model input, including: 1. Adding the coverage file for ‘no-vaccination’ strategy, 2. Adding the coverage file for ‘stop-future-campaign’ strategy, 3. Separating coverage for routine and campaign immunisations into two files for each vaccination strategy.</p>
+<p>Pre-processing of vaccine coverage data are needed and additional files are created for the model input, including:<br />
+1. Adding the coverage file for ‘no-vaccination’ strategy,<br />
+2. Adding the coverage file for ‘stop-future-campaign’ strategy,<br />
+3. Separating coverage for routine and campaign immunisations into two files for each vaccination strategy.</p>
 <pre class="r"><code>update_coverage_inputs = FALSE
 if (update_coverage_inputs) {
   # (1) create vaccine coverage file (0% coverage) for no vaccination scenario
@@ -505,6 +532,7 @@ if (update_coverage_inputs) {
       )
   }
 }</code></pre>
+<hr />
 </div>
 <div id="create-samples-for-probabilistic-sensitivity-analysis" class="section level4">
 <h4>Create samples for probabilistic sensitivity analysis</h4>
@@ -514,6 +542,7 @@ if (update_coverage_inputs) {
                              seed_state      = 1,
                              psadat_filename = &quot;psa_variables.csv&quot;)
 }</code></pre>
+<hr />
 </div>
 <div id="get-reulsts-from-a-selected-vaccination-strategy" class="section level4">
 <h4>Get reulsts from a selected vaccination strategy</h4>
@@ -535,6 +564,7 @@ burden_estimate_file &lt;- runScenario (
   save_scenario              = scenario_number,
   burden_estimate_folder     = burden_estimate_folder,
   group_name                 = var$group_name,
+  log_name                   = var$log_name,
   countries                  = var$countries,
   cluster_cores              = var$cluster_cores,
   psa                        = var$psa,
@@ -548,8 +578,7 @@ burden_estimate_file &lt;- runScenario (
   )</code></pre>
 <pre><code>## [1] &quot;no openMPI&quot;</code></pre>
 <pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
-<pre><code>## [1] &quot;Generating data for model...&quot;
-## [1] &quot;Generating data for model...&quot;</code></pre>
+<pre><code>## [1] &quot;Generating data for model...&quot;</code></pre>
 <pre class="r"><code># estimate deaths and DALYs by Wolfson and Portnoy&#39;s methods
 estimate_deaths_dalys (cfr_option             = &quot;Wolfson&quot;,
                        burden_estimate_file   = burden_estimate_file,
@@ -563,11 +592,15 @@ estimate_deaths_dalys (cfr_option             = &quot;Wolfson&quot;,
                        portnoy_scenario       = &quot;s6&quot;,  # constant CFR after 2018
                        psa                    = var$psa)</code></pre>
 <pre><code>## NULL</code></pre>
+<hr />
 </div>
 <div id="get-diagnostic-plots" class="section level4">
 <h4>Get diagnostic plots</h4>
 <p>For central estimates, simple diagnostics plots for vaccine coverage and disease burden (cases, deaths, DALYs) are generated and then saved in a pdf file for each country.</p>
 <pre class="r"><code>if (var$psa == 0) {
+
+  dir.create (file.path (paste0 (getwd(), &quot;/&quot;, var$plot_folder)), recursive = T)
+
   diagnostic_plots (
     vaccine_coverage_folder    = var$vaccine_coverage_folder,
     coverage_prefix            = var$coverage_prefix,

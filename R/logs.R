@@ -1,4 +1,4 @@
-# gavi_log.R
+# logs.R
 # Functions for generating code execution notes
 
 # ------------------------------------------------------------------------------
@@ -9,7 +9,7 @@
 #' @param logname Name of log file.
 #' @param x Text content to be added.
 #' @examples
-#' writelog ("gavi_log", "Start generating data")
+#' writelog ("test_log", "Start generating data")
 writelog <- function (logname,
                       x) {
   write (
@@ -37,7 +37,7 @@ writelog <- function (logname,
 #' @param r A numeric order of the current run.
 #' @param status A numeric variable for the stage of simulation progress: \code{1}
 #' -Generate the input data, \code{2}-Start to run the fortran code, \code{3}-
-#' Finish the fotran code, \code{4}-Return the processed results.
+#' Finish the fortran code, \code{4}-Return the processed results.
 #' @examples
 #' updateProgress ('BGD', 1, 200, 25, 1)
 

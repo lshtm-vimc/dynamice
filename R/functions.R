@@ -68,6 +68,7 @@
 #' @param foldername A folder name for input and output files of the selected
 #' scenario. It typically does not exist but may come in handy when only
 #' processing results.
+#' @param log_name A file name for keeping a log.
 #' @param measles_model An executable file that processes fortan codes of the
 #' measles model.
 #' @param debug_model A logical variable that determines whether to debug the
@@ -103,7 +104,7 @@
 #'   vaccination        = 1,
 #'   using_sia          = 1,
 #'   dinf               = 14,
-#'   gamma_tstep         = 0.02607,
+#'   gamma_tstep        = 0.02607,
 #'   amplitude          = 0.05,
 #'   take               = c(0.64598, 0.01485, 0.98),
 #'   degree             = c(0.85, 0.95, 0.98),
@@ -118,6 +119,7 @@
 #'   tstep              = 1000,
 #'   save_scenario      = "scenario01",
 #'   foldername         = NULL,
+#'   log_name           = "test_log",
 #'   measles_model      = "vaccine2019_sia_singlematrix.exe",
 #'   debug_model        = FALSE,
 #'   debug_spinup       = FALSE,
@@ -163,6 +165,7 @@ runCountry <- function (
   save_scenario,
   foldername,
   measles_model,
+  log_name,
   debug_model,
   debug_spinup,
   debug_age,
@@ -242,7 +245,7 @@ runCountry <- function (
     }
 
     print ("Generating data for model...")
-    writelog ("gavi_log", paste0 (iso3, "; Run ",r,"/",runs,"; Start generating data"))
+    writelog (log_name, paste0 (iso3, "; Run ",r,"/",runs,"; Start generating data"))
     updateProgress (iso3, ii, runs, r, 1)
 
     # Vaccine parameters
@@ -330,7 +333,9 @@ runCountry <- function (
     # # # here, rows should be divided by the appropriate population vector, not columns, but Fortran uses rows, rather than columns to calculate force of infection so it works out.
 
 
+    # --------------------------------------------------------------------------
     # generate fortran input files for each year
+    # --------------------------------------------------------------------------
     for (y in years) {
 
       #old script groups those aged 70-80, but division is by actual population size
@@ -491,13 +496,16 @@ runCountry <- function (
       )
     }
 
+
+    # --------------------------------------------------------------------------
     # run actual model
+    # --------------------------------------------------------------------------
     if (psa == 0) {
       p <- 0
     } else {
       p <- r
     }
-    writelog ("gavi_log", paste0(iso3, "; Run ",r,"/",runs,"; Finished generating data"))
+    writelog (log_name, paste0(iso3, "; Run ",r,"/",runs,"; Finished generating data"))
 
     # process debugging options
     if (debug_country != "*" & !(iso3 %in% debug_country)){
@@ -513,7 +521,7 @@ runCountry <- function (
     }
 
     # run the model
-    writelog ("gavi_log",paste0(iso3, "; Run ",r,"/",runs,"; Start model"))
+    writelog (log_name,paste0(iso3, "; Run ",r,"/",runs,"; Start model"))
     updateProgress (iso3, ii, runs, r, 2)
 
     if(Sys.info()[["sysname"]] == "Windows"){
@@ -560,7 +568,7 @@ runCountry <- function (
     }
   }
 
-  writelog ("gavi_log", paste0(iso3, "; Run ",r,"/",runs,"; Finished model"))
+  writelog (log_name, paste0(iso3, "; Run ",r,"/",runs,"; Finished model"))
   updateProgress (iso3, ii, runs, r, 3)
 
   # remove input data for this country
@@ -601,6 +609,7 @@ runCountry <- function (
 #' @param burden_estimate_folder A folder name for the file which contains the
 #' model outputs for evaluation. Include a slash at the end.
 #' @param group_name A modelling group name used by VIMC.
+#' @param log_name A file name for keeping a log.
 #' @param countries A vector of ISO-3 country codes used in the analysis. Use
 #' "all" to include all countries.
 #' @param cluster_cores A number of cores to be used in the cluster.
@@ -632,9 +641,10 @@ runCountry <- function (
 #'   coverage_prefix            = "coverage",
 #'   antigen                    = "measles-",
 #'   scenario_name              = "campaign-only-default",
-#'   save_scenario               = scenario_number,
+#'   save_scenario              = scenario_number,
 #'   burden_estimate_folder     = "central_burden_estimate/",
-#'   group_name                 = "LSHTM-Jit-",
+#'   group_name                 = NULL,
+#'   log_name                   = "test_log",
 #'   countries                  = c("BGD","ETH"),
 #'   cluster_cores              = 3,
 #'   psa                        = 0,
@@ -654,6 +664,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
                          save_scenario,
                          burden_estimate_folder,                  # burden estimate folder
                          group_name,                              # modelling group name
+                         log_name,
                          countries                  = "all",
                          cluster_cores              = 1,
                          psa                        = 0,          # psa runs; 0 for single run
@@ -680,7 +691,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   # --------------------------------------------------------------------------
   # input data file names
-  #
+  # --------------------------------------------------------------------------
   # vaccine coverage file for routine immunisation
   data_coverage_routine <- paste0 (vaccine_coverage_folder,
                                    vaccine_coverage_subfolder,
@@ -698,8 +709,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # data file name for PSA variables
   # same for each scenario. should be CREATED before simulation using CreatePSA_Data()
   data_psa 		<- "psa_variables.csv"
-
-  # --------------------------------------------------------------------------
 
 
   # --------------------------------------------------------------------------
@@ -730,15 +739,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
   tstep			  <- 1000				             # Number of time steps in a year
   gamma_tstep <- 1 / (dinf * tstep/365)  # rate of losing infectivity
 
-  # ----------------------------------------------------------------------------
-  # Measles model
-  # filename of compiled fortran-model (in ./model/compiled/)
-  # ----------------------------------------------------------------------------
-  # measles_model <- "vaccine2019_sia_singlematrix.exe" # change this to reflect the right version of the fortran code
-  measles_model <- measles_model
-  # ----------------------------------------------------------------------------
-
-
   # number of clusters to use
   # if larger than 1, country-specific model runs are distributed over specified number of clusters
   # note that model uses a lot of memory, so might not want to max out all clusters
@@ -747,10 +747,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   run_model    <- TRUE
   # folder will be created if not given - should usually be commented out, except when run model is FALSE
 
+
   # ------------------------------------------------------------------------------
   # Debug
   # ------------------------------------------------------------------------------
-
   debug_country		  <- "*"		    	#ISO3 codes of country to debug, * to debug all countries
   debug_spinup		  <- FALSE	    	#TRUE/FALSE: If true, generate data for spin-up period of model
   debug_model       <- debug_model	#TRUE/FALSE: If true: generate data for period after spin-up
@@ -760,9 +760,9 @@ runScenario <- function (vaccine_coverage_folder    = "",
   debug_relative		<- FALSE	    	#If true: output proportion of new cases. If false, output absolute number of new cases. Dose not affect compartments, which are always in proportions.
 
 
+  # ----------------------------------------------------------------------------
   # START OF MODEL
   # ----------------------------------------------------------------------------
-  # SETUP
 
   # load correct libraries when on cluster (using open MPI)
   if ("cluster_using_openmpi" %in% commandArgs()){
@@ -778,8 +778,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   }
 
   # clean environment
-  if (file.exists ("gavi_progress")) {
-    file.remove ("gavi_progress")
+  if (file.exists ("progress")) {
+    file.remove ("progress")
   }
 
   # are we running a PSA - a deterministic or "stochastic" model?
@@ -876,17 +876,16 @@ runScenario <- function (vaccine_coverage_folder    = "",
     foldername <- foldername_analysis
   }
 
-  # ----------------------------------------------------------------------------
-  # ----------------------------------------------------------------------------
 
-
+  # ----------------------------------------------------------------------------
   # log
-  writelog ("gavi_log", paste0("Main; gavi.r started"))
+  # ----------------------------------------------------------------------------
+  writelog (log_name, paste0("Main; Started"))
 
   if (using_openmpi) {
-    writelog ("gavi_log", paste0 ("Main; OpenMPI enabled"))
+    writelog (log_name, paste0 ("Main; OpenMPI enabled"))
   } else {
-    writelog ("gavi_log", paste0 ("Main; OpenMPI disabled"))
+    writelog (log_name, paste0 ("Main; OpenMPI disabled"))
   }
 
   # read_data
@@ -897,8 +896,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   population  		  <- setDT (data_pop)
   template    		  <- setDT (data_template)
 
-  # --------------------------------------------------------------------------
-  # if psa variables file does not exist, then create psa variables file
+
+  # ----------------------------------------------------------------------------
+  # pas variables
+  # ----------------------------------------------------------------------------
   if (psa > 0) {
     if (file.exists (data_psa)) {
 
@@ -913,9 +914,11 @@ runScenario <- function (vaccine_coverage_folder    = "",
       stop(paste0("There is no files for inputting PSA variables. Use CreatePSA_Data() to generate the file."))
       }
   }
-  # --------------------------------------------------------------------------
 
+
+  # ----------------------------------------------------------------------------
   # process data
+  # ----------------------------------------------------------------------------
 
   # if countries are specified to all, then set countries to all countries in coverage file
   if (countries[[1]] == "all") {
@@ -936,7 +939,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
             paste0(c(rep(0,(nchar(psa)-nchar(p))),p),collapse=""),
             " 0"
           ),
-          file   = "gavi_progress",
+          file   = "progress",
           append = TRUE
         )
       }
@@ -947,7 +950,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
           " ",
           "1 0"
         ),
-        file   = "gavi_progress",
+        file   = "progress",
         append = TRUE
       )
     }
@@ -970,8 +973,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
                           )
 
 
+  # ----------------------------------------------------------------------------
   # Run model
-  writelog ("gavi_log", paste0 ("Main; Foldername: ", foldername))
+  # ----------------------------------------------------------------------------
+  writelog (log_name, paste0 ("Main; Foldername: ", foldername))
 
   if (using_openmpi | use_cluster > 1){
     if (!using_openmpi){
@@ -1023,6 +1028,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
                                tstep              = tstep,
                                save_scenario      = save_scenario,
                                foldername         = foldername,
+                               log_name           = log_name,
                                measles_model      = measles_model,
                                debug_model        = debug_model,
                                debug_spinup       = debug_spinup,
@@ -1056,7 +1062,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
     if ("error" %in% class(combine[[i]])){
       errormessage <- paste0 ("Error in task ", i, ": ", combine[[i]])
       warning(errormessage)
-      writelog (paste0 (gavi.dir,"gavi_log"), errormessage)
+      writelog (log_name, errormessage)
       errorcount <- errorcount + 1
       #remove from data
       combine[[i]] <- NULL
@@ -1065,17 +1071,12 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # if(errorcount > 0){
   # stop(paste0("There were ",errorcount," errors."))
   # }
+
+
   # ----------------------------------------------------------------------------
-
-
   # process results
-
+  # ----------------------------------------------------------------------------
   report_years <- sort (unique (template$year))
-  ages         <- sort (unique (template$age))
-
-  # # get years that the model was run for (can be different from reporting years)
-  # years 		   <- sort (unique (as.numeric (coverage_routine[,year])))
-
 
   # ANALYSE RUNS
 
@@ -1144,8 +1145,6 @@ runScenario <- function (vaccine_coverage_folder    = "",
 
   all_runs[, c("country_name", "disease") := list (c_names[country], "Measles")]
 
-
-  # ----------------------------------------------------------------------------
   # add data column for remaining life expectancy
   lexp_remain <- tailor_data_lexp_remain(countries)
 
@@ -1153,8 +1152,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
     all_runs <- lexp_remain [all_runs,
                                   .(run_id, i.country, year, age, cases, cohort_size, country_name, disease, value),
                                   on = .(country_code = country,
-                                         age_from    <= age,
-                                         age_to      >= age,
+                                         age          = age,
                                          year         = year) ]
   } else {
     all_runs <- lexp_remain [all_runs,
@@ -1169,13 +1167,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
             old = c("i.country", "value"      ),
             new = c("country"  , "remain_lexp"))
 
-  # ----------------------------------------------------------------------------
 
-  # ----------------------------------------------------------------------------
-  # MCV1 coverage
+  # add data column for MCV1 coverage
   coverage_routine_MCV1 <- coverage_routine [vaccine == "MCV1"]
 
-  # add MCV1 column
   if (psa > 0) {
     all_runs <- coverage_routine_MCV1 [all_runs,
                                        .(run_id, i.country, i.year, age, cases, cohort_size, country_name, disease, coverage, remain_lexp),
@@ -1192,8 +1187,8 @@ runScenario <- function (vaccine_coverage_folder    = "",
   setnames (x = all_runs,
             old = c("i.country", "i.year", "coverage"),
             new = c("country"  , "year"  , "MCV1"    ))
-  # ----------------------------------------------------------------------------
 
+  # ----------------------------------------------------------------------------
   # # Not in use 2021:
   # # Previous methods for calculating deaths and dalys.
   # # Additional input data for CFR and life expectancy at birth are needed to recover.
@@ -1206,7 +1201,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # years by age, year and country
   # ----------------------------------------------------------------------------
 
+
+  # ----------------------------------------------------------------------------
   # OUTPUT RUNS
+  # ----------------------------------------------------------------------------
   # keep all columns
   output_runs <- subset (all_runs, year %in% report_years)
 
@@ -1229,7 +1227,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
           file = paste0 (burden_estimate_folder,  burden_estimate_file))
 
   # clean environment
-  writelog ("gavi_log", paste0 ("Main; gavi.r finished"))
+  writelog (log_name, paste0 ("Main; Finished"))
 
   if (using_openmpi) {
     Rmpi::mpi.quit()
@@ -1288,6 +1286,7 @@ estimate_deaths_dalys <- function (cfr_option,
 
   # ----------------------------------------------------------------------------
   # use CFRs -- Wolfson
+  # ----------------------------------------------------------------------------
   if (cfr_option == "Wolfson") {
 
     # read CFRs  -- Wolfson
@@ -1316,17 +1315,17 @@ estimate_deaths_dalys <- function (cfr_option,
     setnames (burden, old = "i.country", new = "country")
 
   }
-  # ----------------------------------------------------------------------------
+
 
   # ----------------------------------------------------------------------------
   # use CFRs -- Portnoy
+  # ----------------------------------------------------------------------------
 
   if (cfr_option == "Portnoy") {
 
     # read CFRs (rates between 0 and 1) -- Portnoy
     cfr = setDT (data_cfr_portnoy)
 
-    # --------------------------------------------------------------------------
     # cfr estimates are for 2000 to 2030
     # if cfr estimates are required for years below or above this range, then
     # for years below 2000, set cfr estimates of year 2000
@@ -1347,7 +1346,6 @@ estimate_deaths_dalys <- function (cfr_option,
       cfr.year <- rbindlist (lapply (2031:max_year, function(i) copy (cfr [year == 2030, ])[, year := i]))
       cfr      <- rbind     (cfr, cfr.year, use.names = TRUE)
     }
-    # --------------------------------------------------------------------------
 
     # rename columns -- cfr of vimc_scenario and portnoy_scenario
     # cfrs for under 5 (< 5) and over 5 (>= 5) years
@@ -1375,10 +1373,11 @@ estimate_deaths_dalys <- function (cfr_option,
     # estimate deaths for ages over 5 years
     burden [age >= 5, deaths := cases * over5]
   }
-  # ----------------------------------------------------------------------------
+
 
   # ----------------------------------------------------------------------------
   # DALYs
+  # ----------------------------------------------------------------------------
   # calculate dalys = (ylds) + (ylls)
   burden [, dalys := ((cases - deaths) * 0.002) + (deaths * remain_lexp)]
 
@@ -1389,7 +1388,6 @@ estimate_deaths_dalys <- function (cfr_option,
     save.cols <- names(data_template)
   }
   burden <- subset (burden, select = save.cols)
-  # ----------------------------------------------------------------------------
 
   # append/suffix cfr_option to the end of filename
   updated_burden_estimate_file <- stringr::str_replace (string      = burden_estimate_file,
@@ -1404,9 +1402,7 @@ estimate_deaths_dalys <- function (cfr_option,
                          cfr_option, "/",
                          updated_burden_estimate_file)
   )
-
   return ()
-
 } # end of function -- estimate_deaths_dalys
 # ------------------------------------------------------------------------------
 
