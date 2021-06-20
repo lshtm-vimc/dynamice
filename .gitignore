@@ -2,3 +2,15 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rbuildignore
+vaccine_coverage/
+plots/
+outcome/
+/progress.*
+/test_log.*
+central_burden_estimate/
+stochastic_burden_estimate/
+data-raw/
+vac_coverage_upd/scenarios/
+model/fortran/measlesfunctions.mod
+inst/doc

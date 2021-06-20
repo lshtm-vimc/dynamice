@@ -1,15 +1,30 @@
 Package: dynamice
 Title: DynaMICE -- Dynamic Measles Immunisation Calculation Engine
-Version: 2.0.1
+Version: 0.1
 Author: Modelling and Economic Evaluation of Vaccines group, LSHTM (https://meev.lshtm.ac.uk)
 Maintainer: MEEV <meev@lshtm.ac.uk>
 Description: DynaMICE (DYNAmic Measles Immunisation Calculation Engine) is a measles transmission and vaccination model.
-Depends: R (>= 3.5.0)
-Imports: data.table, foreach, wbstats, lhs, stats, prevalence
+Depends: 
+  R (>= 3.5.0),
+  data.table,
+  foreach,
+  ggplot2
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Suggests: knitr,
-    rmarkdown
+Imports:
+  parallel,
+  doParallel,
+  stringr,
+  scales,
+  countrycode, 
+  ggpubr,
+  lhs,
+  truncnorm
+Suggests: 
+  tictoc,
+  knitr,
+  rmarkdown,
+  doMPI
 VignetteBuilder: knitr
