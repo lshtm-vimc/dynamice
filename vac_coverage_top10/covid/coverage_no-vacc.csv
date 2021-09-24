@@ -1,124 +1,4 @@
 scenario,vaccine,activity_type,country_code,country,year,age_first,age_last,age_range_verbatim,target,coverage
-mcv1,MCV1,routine,AFG,Afghanistan,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,AFG,Afghanistan,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,ETH,Ethiopia,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,1980,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,1981,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,1982,0,0,default age and gender,<NA>,0
@@ -159,246 +39,6 @@ mcv1,MCV1,routine,IND,India,2016,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2017,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2018,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NER,Niger,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,NGA,Nigeria,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,PAK,Pakistan,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SDN,Sudan,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,SOM,Somalia,2019,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1980,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1981,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1982,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1983,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1984,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1985,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1986,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1987,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1988,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1989,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1990,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1991,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1992,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1993,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1994,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1995,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1996,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1997,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1998,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1999,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2000,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2001,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2002,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2003,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2004,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2005,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2006,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2007,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2008,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2009,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2010,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2011,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2012,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2013,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2014,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2015,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2016,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2017,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2018,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2022,0,0,default age and gender,<NA>,0
@@ -480,6 +120,46 @@ mcv1,MCV1,routine,IND,India,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,IND,India,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NGA,Nigeria,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2022,0,0,default age and gender,<NA>,0
@@ -561,6 +241,46 @@ mcv1,MCV1,routine,NGA,Nigeria,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NGA,Nigeria,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,PAK,Pakistan,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2022,0,0,default age and gender,<NA>,0
@@ -642,6 +362,46 @@ mcv1,MCV1,routine,PAK,Pakistan,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,PAK,Pakistan,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,ETH,Ethiopia,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2022,0,0,default age and gender,<NA>,0
@@ -723,6 +483,46 @@ mcv1,MCV1,routine,ETH,Ethiopia,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,ETH,Ethiopia,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,AFG,Afghanistan,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2022,0,0,default age and gender,<NA>,0
@@ -804,6 +604,46 @@ mcv1,MCV1,routine,AFG,Afghanistan,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,AFG,Afghanistan,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SDN,Sudan,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2022,0,0,default age and gender,<NA>,0
@@ -885,87 +725,167 @@ mcv1,MCV1,routine,SDN,Sudan,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,2100,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2020,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2021,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2022,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2023,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2024,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2025,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2026,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2027,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2028,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2029,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2030,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2031,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2032,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2033,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2034,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2035,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2036,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2037,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2038,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2039,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2040,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2041,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2042,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2043,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2044,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2045,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2046,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2047,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2048,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2049,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2050,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2051,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2052,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2053,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2054,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2055,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2056,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2057,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2058,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2059,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2060,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2061,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2062,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2063,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2064,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2065,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2066,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2067,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2068,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2069,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2070,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2071,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2072,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2073,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2074,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2075,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2076,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2077,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2078,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2079,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2080,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2081,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2082,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2083,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2084,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2085,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2086,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2087,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2088,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2089,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2090,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2091,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2092,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2093,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2094,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2095,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2096,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2097,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2098,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2099,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2019,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2020,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2021,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2022,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2023,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2024,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2025,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2026,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2027,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2028,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2029,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2030,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2031,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2032,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2033,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2034,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2035,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2036,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2037,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2038,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2039,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2040,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2041,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2042,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2043,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2044,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2045,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2046,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2047,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2048,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2049,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2050,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2051,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2052,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2053,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2054,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2055,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2056,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2057,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2058,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2059,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2060,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2061,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2062,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2063,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2064,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2065,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2066,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2067,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2068,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2069,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2070,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2071,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2072,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2073,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2074,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2075,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2076,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2077,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2078,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2079,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2080,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2081,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2082,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2083,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2084,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2085,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2086,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2087,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2088,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2089,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2090,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2091,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2092,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2093,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2094,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2095,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2096,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2097,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2098,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2099,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,TZA,"",2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,NER,Niger,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2022,0,0,default age and gender,<NA>,0
@@ -1047,6 +967,46 @@ mcv1,MCV1,routine,NER,Niger,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,NER,Niger,2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,SOM,Somalia,2019,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2020,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2021,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2022,0,0,default age and gender,<NA>,0
@@ -1128,84 +1088,124 @@ mcv1,MCV1,routine,SOM,Somalia,2097,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2098,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2099,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SOM,Somalia,2100,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2020,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2021,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2022,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2023,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2024,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2025,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2026,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2027,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2028,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2029,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2030,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2031,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2032,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2033,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2034,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2035,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2036,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2037,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2038,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2039,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2040,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2041,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2042,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2043,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2044,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2045,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2046,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2047,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2048,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2049,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2050,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2051,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2052,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2053,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2054,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2055,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2056,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2057,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2058,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2059,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2060,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2061,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2062,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2063,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2064,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2065,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2066,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2067,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2068,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2069,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2070,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2071,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2072,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2073,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2074,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2075,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2076,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2077,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2078,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2079,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2080,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2081,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2082,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2083,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2084,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2085,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2086,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2087,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2088,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2089,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2090,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2091,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2092,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2093,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2094,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2095,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2096,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2097,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2098,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2099,0,0,default age and gender,<NA>,0
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2100,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1980,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1981,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1982,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1983,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1984,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1985,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1986,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1987,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1988,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1989,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1990,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1991,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1992,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1993,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1994,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1995,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1996,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1997,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1998,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",1999,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2000,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2001,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2002,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2003,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2004,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2005,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2006,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2007,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2008,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2009,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2010,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2011,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2012,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2013,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2014,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2015,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2016,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2017,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2018,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2019,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2020,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2021,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2022,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2023,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2024,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2025,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2026,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2027,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2028,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2029,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2030,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2031,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2032,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2033,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2034,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2035,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2036,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2037,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2038,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2039,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2040,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2041,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2042,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2043,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2044,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2045,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2046,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2047,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2048,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2049,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2050,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2051,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2052,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2053,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2054,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2055,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2056,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2057,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2058,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2059,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2060,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2061,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2062,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2063,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2064,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2065,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2066,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2067,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2068,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2069,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2070,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2071,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2072,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2073,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2074,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2075,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2076,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2077,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2078,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2079,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2080,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2081,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2082,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2083,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2084,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2085,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2086,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2087,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2088,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2089,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2090,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2091,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2092,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2093,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2094,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2095,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2096,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2097,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2098,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2099,0,0,default age and gender,<NA>,0
+mcv1,MCV1,routine,COD,"",2100,0,0,default age and gender,<NA>,0

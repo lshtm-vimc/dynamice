@@ -34,10 +34,10 @@ mcv1,MCV1,routine,AFG,Afghanistan,2011,0,0,default age and gender,<NA>,0.64
 mcv1,MCV1,routine,AFG,Afghanistan,2012,0,0,default age and gender,<NA>,0.59
 mcv1,MCV1,routine,AFG,Afghanistan,2013,0,0,default age and gender,<NA>,0.57
 mcv1,MCV1,routine,AFG,Afghanistan,2014,0,0,default age and gender,<NA>,0.6
-mcv1,MCV1,routine,AFG,Afghanistan,2015,0,0,default age and gender,<NA>,0.63
+mcv1,MCV1,routine,AFG,Afghanistan,2015,0,0,default age and gender,<NA>,0.62
 mcv1,MCV1,routine,AFG,Afghanistan,2016,0,0,default age and gender,<NA>,0.64
-mcv1,MCV1,routine,AFG,Afghanistan,2017,0,0,default age and gender,<NA>,0.64
-mcv1,MCV1,routine,AFG,Afghanistan,2018,0,0,default age and gender,<NA>,0.64
+mcv1,MCV1,routine,AFG,Afghanistan,2017,0,0,default age and gender,<NA>,0.67
+mcv1,MCV1,routine,AFG,Afghanistan,2018,0,0,default age and gender,<NA>,0.71
 mcv1,MCV1,routine,AFG,Afghanistan,2019,0,0,default age and gender,<NA>,0.64
 mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1980,0,0,default age and gender,<NA>,0.18
 mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",1981,0,0,default age and gender,<NA>,0.23
@@ -277,8 +277,8 @@ mcv1,MCV1,routine,PAK,Pakistan,2014,0,0,default age and gender,<NA>,0.71
 mcv1,MCV1,routine,PAK,Pakistan,2015,0,0,default age and gender,<NA>,0.75
 mcv1,MCV1,routine,PAK,Pakistan,2016,0,0,default age and gender,<NA>,0.75
 mcv1,MCV1,routine,PAK,Pakistan,2017,0,0,default age and gender,<NA>,0.76
-mcv1,MCV1,routine,PAK,Pakistan,2018,0,0,default age and gender,<NA>,0.73
-mcv1,MCV1,routine,PAK,Pakistan,2019,0,0,default age and gender,<NA>,0.75
+mcv1,MCV1,routine,PAK,Pakistan,2018,0,0,default age and gender,<NA>,0.79
+mcv1,MCV1,routine,PAK,Pakistan,2019,0,0,default age and gender,<NA>,0.81
 mcv1,MCV1,routine,SDN,Sudan,1980,0,0,default age and gender,<NA>,0
 mcv1,MCV1,routine,SDN,Sudan,1981,0,0,default age and gender,<NA>,0.01
 mcv1,MCV1,routine,SDN,Sudan,1982,0,0,default age and gender,<NA>,0.01
@@ -365,7 +365,7 @@ mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1982,0,0,default age and ge
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1983,0,0,default age and gender,<NA>,0.6
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1984,0,0,default age and gender,<NA>,0.55
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1985,0,0,default age and gender,<NA>,0.66
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1986,0,0,default age and gender,<NA>,0.97
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1986,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1987,0,0,default age and gender,<NA>,0.78
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1988,0,0,default age and gender,<NA>,0.83
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1989,0,0,default age and gender,<NA>,0.79
@@ -382,7 +382,7 @@ mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",1999,0,0,default age and ge
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2000,0,0,default age and gender,<NA>,0.78
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2001,0,0,default age and gender,<NA>,0.86
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2002,0,0,default age and gender,<NA>,0.89
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2003,0,0,default age and gender,<NA>,0.97
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2003,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2004,0,0,default age and gender,<NA>,0.94
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2005,0,0,default age and gender,<NA>,0.91
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2006,0,0,default age and gender,<NA>,0.93
@@ -391,15 +391,24 @@ mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2008,0,0,default age and ge
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2009,0,0,default age and gender,<NA>,0.91
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2010,0,0,default age and gender,<NA>,0.92
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2011,0,0,default age and gender,<NA>,0.93
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2012,0,0,default age and gender,<NA>,0.97
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2013,0,0,default age and gender,<NA>,0.99
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2014,0,0,default age and gender,<NA>,0.97
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2012,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2013,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2014,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2015,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2016,0,0,default age and gender,<NA>,0.83
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2017,0,0,default age and gender,<NA>,0.9
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2018,0,0,default age and gender,<NA>,0.88
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2019,0,0,default age and gender,<NA>,0.88
 mcv1,MCV1,routine,IND,India,2020,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,NGA,Nigeria,2020,0,0,default age and gender,<NA>,0.55
+mcv1,MCV1,routine,PAK,Pakistan,2020,0,0,default age and gender,<NA>,0.83
+mcv1,MCV1,routine,ETH,Ethiopia,2020,0,0,default age and gender,<NA>,0.6
+mcv1,MCV1,routine,AFG,Afghanistan,2020,0,0,default age and gender,<NA>,0.66
+mcv1,MCV1,routine,SDN,Sudan,2020,0,0,default age and gender,<NA>,0.91
+mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2020,0,0,default age and gender,<NA>,0.89
+mcv1,MCV1,routine,NER,Niger,2020,0,0,default age and gender,<NA>,0.8
+mcv1,MCV1,routine,SOM,Somalia,2020,0,0,default age and gender,<NA>,0.47
+mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2020,0,0,default age and gender,<NA>,0.58
 mcv1,MCV1,routine,IND,India,2021,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,IND,India,2022,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,IND,India,2023,0,0,default age and gender,<NA>,0.95
@@ -480,7 +489,6 @@ mcv1,MCV1,routine,IND,India,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,IND,India,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,IND,India,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,IND,India,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,NGA,Nigeria,2020,0,0,default age and gender,<NA>,0.55
 mcv1,MCV1,routine,NGA,Nigeria,2021,0,0,default age and gender,<NA>,0.56
 mcv1,MCV1,routine,NGA,Nigeria,2022,0,0,default age and gender,<NA>,0.57
 mcv1,MCV1,routine,NGA,Nigeria,2023,0,0,default age and gender,<NA>,0.58
@@ -561,25 +569,24 @@ mcv1,MCV1,routine,NGA,Nigeria,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NGA,Nigeria,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NGA,Nigeria,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NGA,Nigeria,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,PAK,Pakistan,2020,0,0,default age and gender,<NA>,0.76
-mcv1,MCV1,routine,PAK,Pakistan,2021,0,0,default age and gender,<NA>,0.77
-mcv1,MCV1,routine,PAK,Pakistan,2022,0,0,default age and gender,<NA>,0.78
-mcv1,MCV1,routine,PAK,Pakistan,2023,0,0,default age and gender,<NA>,0.79
-mcv1,MCV1,routine,PAK,Pakistan,2024,0,0,default age and gender,<NA>,0.8
-mcv1,MCV1,routine,PAK,Pakistan,2025,0,0,default age and gender,<NA>,0.81
-mcv1,MCV1,routine,PAK,Pakistan,2026,0,0,default age and gender,<NA>,0.82
-mcv1,MCV1,routine,PAK,Pakistan,2027,0,0,default age and gender,<NA>,0.83
-mcv1,MCV1,routine,PAK,Pakistan,2028,0,0,default age and gender,<NA>,0.84
-mcv1,MCV1,routine,PAK,Pakistan,2029,0,0,default age and gender,<NA>,0.85
-mcv1,MCV1,routine,PAK,Pakistan,2030,0,0,default age and gender,<NA>,0.86
-mcv1,MCV1,routine,PAK,Pakistan,2031,0,0,default age and gender,<NA>,0.87
-mcv1,MCV1,routine,PAK,Pakistan,2032,0,0,default age and gender,<NA>,0.88
-mcv1,MCV1,routine,PAK,Pakistan,2033,0,0,default age and gender,<NA>,0.89
-mcv1,MCV1,routine,PAK,Pakistan,2034,0,0,default age and gender,<NA>,0.9
-mcv1,MCV1,routine,PAK,Pakistan,2035,0,0,default age and gender,<NA>,0.91
-mcv1,MCV1,routine,PAK,Pakistan,2036,0,0,default age and gender,<NA>,0.92
-mcv1,MCV1,routine,PAK,Pakistan,2037,0,0,default age and gender,<NA>,0.93
-mcv1,MCV1,routine,PAK,Pakistan,2038,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,PAK,Pakistan,2021,0,0,default age and gender,<NA>,0.84
+mcv1,MCV1,routine,PAK,Pakistan,2022,0,0,default age and gender,<NA>,0.85
+mcv1,MCV1,routine,PAK,Pakistan,2023,0,0,default age and gender,<NA>,0.86
+mcv1,MCV1,routine,PAK,Pakistan,2024,0,0,default age and gender,<NA>,0.87
+mcv1,MCV1,routine,PAK,Pakistan,2025,0,0,default age and gender,<NA>,0.88
+mcv1,MCV1,routine,PAK,Pakistan,2026,0,0,default age and gender,<NA>,0.89
+mcv1,MCV1,routine,PAK,Pakistan,2027,0,0,default age and gender,<NA>,0.9
+mcv1,MCV1,routine,PAK,Pakistan,2028,0,0,default age and gender,<NA>,0.91
+mcv1,MCV1,routine,PAK,Pakistan,2029,0,0,default age and gender,<NA>,0.92
+mcv1,MCV1,routine,PAK,Pakistan,2030,0,0,default age and gender,<NA>,0.93
+mcv1,MCV1,routine,PAK,Pakistan,2031,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,PAK,Pakistan,2032,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2033,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2034,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2035,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2036,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2037,0,0,default age and gender,<NA>,0.95
+mcv1,MCV1,routine,PAK,Pakistan,2038,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2039,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2040,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2041,0,0,default age and gender,<NA>,0.95
@@ -642,42 +649,41 @@ mcv1,MCV1,routine,PAK,Pakistan,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,PAK,Pakistan,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,ETH,Ethiopia,2020,0,0,default age and gender,<NA>,0.59
-mcv1,MCV1,routine,ETH,Ethiopia,2021,0,0,default age and gender,<NA>,0.6
-mcv1,MCV1,routine,ETH,Ethiopia,2022,0,0,default age and gender,<NA>,0.61
-mcv1,MCV1,routine,ETH,Ethiopia,2023,0,0,default age and gender,<NA>,0.62
-mcv1,MCV1,routine,ETH,Ethiopia,2024,0,0,default age and gender,<NA>,0.63
-mcv1,MCV1,routine,ETH,Ethiopia,2025,0,0,default age and gender,<NA>,0.64
-mcv1,MCV1,routine,ETH,Ethiopia,2026,0,0,default age and gender,<NA>,0.65
-mcv1,MCV1,routine,ETH,Ethiopia,2027,0,0,default age and gender,<NA>,0.66
-mcv1,MCV1,routine,ETH,Ethiopia,2028,0,0,default age and gender,<NA>,0.67
-mcv1,MCV1,routine,ETH,Ethiopia,2029,0,0,default age and gender,<NA>,0.68
-mcv1,MCV1,routine,ETH,Ethiopia,2030,0,0,default age and gender,<NA>,0.69
-mcv1,MCV1,routine,ETH,Ethiopia,2031,0,0,default age and gender,<NA>,0.7
-mcv1,MCV1,routine,ETH,Ethiopia,2032,0,0,default age and gender,<NA>,0.71
-mcv1,MCV1,routine,ETH,Ethiopia,2033,0,0,default age and gender,<NA>,0.72
-mcv1,MCV1,routine,ETH,Ethiopia,2034,0,0,default age and gender,<NA>,0.73
-mcv1,MCV1,routine,ETH,Ethiopia,2035,0,0,default age and gender,<NA>,0.74
-mcv1,MCV1,routine,ETH,Ethiopia,2036,0,0,default age and gender,<NA>,0.75
-mcv1,MCV1,routine,ETH,Ethiopia,2037,0,0,default age and gender,<NA>,0.76
-mcv1,MCV1,routine,ETH,Ethiopia,2038,0,0,default age and gender,<NA>,0.77
-mcv1,MCV1,routine,ETH,Ethiopia,2039,0,0,default age and gender,<NA>,0.78
-mcv1,MCV1,routine,ETH,Ethiopia,2040,0,0,default age and gender,<NA>,0.79
-mcv1,MCV1,routine,ETH,Ethiopia,2041,0,0,default age and gender,<NA>,0.8
-mcv1,MCV1,routine,ETH,Ethiopia,2042,0,0,default age and gender,<NA>,0.81
-mcv1,MCV1,routine,ETH,Ethiopia,2043,0,0,default age and gender,<NA>,0.82
-mcv1,MCV1,routine,ETH,Ethiopia,2044,0,0,default age and gender,<NA>,0.83
-mcv1,MCV1,routine,ETH,Ethiopia,2045,0,0,default age and gender,<NA>,0.84
-mcv1,MCV1,routine,ETH,Ethiopia,2046,0,0,default age and gender,<NA>,0.85
-mcv1,MCV1,routine,ETH,Ethiopia,2047,0,0,default age and gender,<NA>,0.86
-mcv1,MCV1,routine,ETH,Ethiopia,2048,0,0,default age and gender,<NA>,0.87
-mcv1,MCV1,routine,ETH,Ethiopia,2049,0,0,default age and gender,<NA>,0.88
-mcv1,MCV1,routine,ETH,Ethiopia,2050,0,0,default age and gender,<NA>,0.89
-mcv1,MCV1,routine,ETH,Ethiopia,2051,0,0,default age and gender,<NA>,0.9
-mcv1,MCV1,routine,ETH,Ethiopia,2052,0,0,default age and gender,<NA>,0.91
-mcv1,MCV1,routine,ETH,Ethiopia,2053,0,0,default age and gender,<NA>,0.92
-mcv1,MCV1,routine,ETH,Ethiopia,2054,0,0,default age and gender,<NA>,0.93
-mcv1,MCV1,routine,ETH,Ethiopia,2055,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,ETH,Ethiopia,2021,0,0,default age and gender,<NA>,0.61
+mcv1,MCV1,routine,ETH,Ethiopia,2022,0,0,default age and gender,<NA>,0.62
+mcv1,MCV1,routine,ETH,Ethiopia,2023,0,0,default age and gender,<NA>,0.63
+mcv1,MCV1,routine,ETH,Ethiopia,2024,0,0,default age and gender,<NA>,0.64
+mcv1,MCV1,routine,ETH,Ethiopia,2025,0,0,default age and gender,<NA>,0.65
+mcv1,MCV1,routine,ETH,Ethiopia,2026,0,0,default age and gender,<NA>,0.66
+mcv1,MCV1,routine,ETH,Ethiopia,2027,0,0,default age and gender,<NA>,0.67
+mcv1,MCV1,routine,ETH,Ethiopia,2028,0,0,default age and gender,<NA>,0.68
+mcv1,MCV1,routine,ETH,Ethiopia,2029,0,0,default age and gender,<NA>,0.69
+mcv1,MCV1,routine,ETH,Ethiopia,2030,0,0,default age and gender,<NA>,0.7
+mcv1,MCV1,routine,ETH,Ethiopia,2031,0,0,default age and gender,<NA>,0.71
+mcv1,MCV1,routine,ETH,Ethiopia,2032,0,0,default age and gender,<NA>,0.72
+mcv1,MCV1,routine,ETH,Ethiopia,2033,0,0,default age and gender,<NA>,0.73
+mcv1,MCV1,routine,ETH,Ethiopia,2034,0,0,default age and gender,<NA>,0.74
+mcv1,MCV1,routine,ETH,Ethiopia,2035,0,0,default age and gender,<NA>,0.75
+mcv1,MCV1,routine,ETH,Ethiopia,2036,0,0,default age and gender,<NA>,0.76
+mcv1,MCV1,routine,ETH,Ethiopia,2037,0,0,default age and gender,<NA>,0.77
+mcv1,MCV1,routine,ETH,Ethiopia,2038,0,0,default age and gender,<NA>,0.78
+mcv1,MCV1,routine,ETH,Ethiopia,2039,0,0,default age and gender,<NA>,0.79
+mcv1,MCV1,routine,ETH,Ethiopia,2040,0,0,default age and gender,<NA>,0.8
+mcv1,MCV1,routine,ETH,Ethiopia,2041,0,0,default age and gender,<NA>,0.81
+mcv1,MCV1,routine,ETH,Ethiopia,2042,0,0,default age and gender,<NA>,0.82
+mcv1,MCV1,routine,ETH,Ethiopia,2043,0,0,default age and gender,<NA>,0.83
+mcv1,MCV1,routine,ETH,Ethiopia,2044,0,0,default age and gender,<NA>,0.84
+mcv1,MCV1,routine,ETH,Ethiopia,2045,0,0,default age and gender,<NA>,0.85
+mcv1,MCV1,routine,ETH,Ethiopia,2046,0,0,default age and gender,<NA>,0.86
+mcv1,MCV1,routine,ETH,Ethiopia,2047,0,0,default age and gender,<NA>,0.87
+mcv1,MCV1,routine,ETH,Ethiopia,2048,0,0,default age and gender,<NA>,0.88
+mcv1,MCV1,routine,ETH,Ethiopia,2049,0,0,default age and gender,<NA>,0.89
+mcv1,MCV1,routine,ETH,Ethiopia,2050,0,0,default age and gender,<NA>,0.9
+mcv1,MCV1,routine,ETH,Ethiopia,2051,0,0,default age and gender,<NA>,0.91
+mcv1,MCV1,routine,ETH,Ethiopia,2052,0,0,default age and gender,<NA>,0.92
+mcv1,MCV1,routine,ETH,Ethiopia,2053,0,0,default age and gender,<NA>,0.93
+mcv1,MCV1,routine,ETH,Ethiopia,2054,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,ETH,Ethiopia,2055,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2056,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2057,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2058,0,0,default age and gender,<NA>,0.95
@@ -723,36 +729,35 @@ mcv1,MCV1,routine,ETH,Ethiopia,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,ETH,Ethiopia,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,AFG,Afghanistan,2020,0,0,default age and gender,<NA>,0.65
-mcv1,MCV1,routine,AFG,Afghanistan,2021,0,0,default age and gender,<NA>,0.66
-mcv1,MCV1,routine,AFG,Afghanistan,2022,0,0,default age and gender,<NA>,0.67
-mcv1,MCV1,routine,AFG,Afghanistan,2023,0,0,default age and gender,<NA>,0.68
-mcv1,MCV1,routine,AFG,Afghanistan,2024,0,0,default age and gender,<NA>,0.69
-mcv1,MCV1,routine,AFG,Afghanistan,2025,0,0,default age and gender,<NA>,0.7
-mcv1,MCV1,routine,AFG,Afghanistan,2026,0,0,default age and gender,<NA>,0.71
-mcv1,MCV1,routine,AFG,Afghanistan,2027,0,0,default age and gender,<NA>,0.72
-mcv1,MCV1,routine,AFG,Afghanistan,2028,0,0,default age and gender,<NA>,0.73
-mcv1,MCV1,routine,AFG,Afghanistan,2029,0,0,default age and gender,<NA>,0.74
-mcv1,MCV1,routine,AFG,Afghanistan,2030,0,0,default age and gender,<NA>,0.75
-mcv1,MCV1,routine,AFG,Afghanistan,2031,0,0,default age and gender,<NA>,0.76
-mcv1,MCV1,routine,AFG,Afghanistan,2032,0,0,default age and gender,<NA>,0.77
-mcv1,MCV1,routine,AFG,Afghanistan,2033,0,0,default age and gender,<NA>,0.78
-mcv1,MCV1,routine,AFG,Afghanistan,2034,0,0,default age and gender,<NA>,0.79
-mcv1,MCV1,routine,AFG,Afghanistan,2035,0,0,default age and gender,<NA>,0.8
-mcv1,MCV1,routine,AFG,Afghanistan,2036,0,0,default age and gender,<NA>,0.81
-mcv1,MCV1,routine,AFG,Afghanistan,2037,0,0,default age and gender,<NA>,0.82
-mcv1,MCV1,routine,AFG,Afghanistan,2038,0,0,default age and gender,<NA>,0.83
-mcv1,MCV1,routine,AFG,Afghanistan,2039,0,0,default age and gender,<NA>,0.84
-mcv1,MCV1,routine,AFG,Afghanistan,2040,0,0,default age and gender,<NA>,0.85
-mcv1,MCV1,routine,AFG,Afghanistan,2041,0,0,default age and gender,<NA>,0.86
-mcv1,MCV1,routine,AFG,Afghanistan,2042,0,0,default age and gender,<NA>,0.87
-mcv1,MCV1,routine,AFG,Afghanistan,2043,0,0,default age and gender,<NA>,0.88
-mcv1,MCV1,routine,AFG,Afghanistan,2044,0,0,default age and gender,<NA>,0.89
-mcv1,MCV1,routine,AFG,Afghanistan,2045,0,0,default age and gender,<NA>,0.9
-mcv1,MCV1,routine,AFG,Afghanistan,2046,0,0,default age and gender,<NA>,0.91
-mcv1,MCV1,routine,AFG,Afghanistan,2047,0,0,default age and gender,<NA>,0.92
-mcv1,MCV1,routine,AFG,Afghanistan,2048,0,0,default age and gender,<NA>,0.93
-mcv1,MCV1,routine,AFG,Afghanistan,2049,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,AFG,Afghanistan,2021,0,0,default age and gender,<NA>,0.67
+mcv1,MCV1,routine,AFG,Afghanistan,2022,0,0,default age and gender,<NA>,0.68
+mcv1,MCV1,routine,AFG,Afghanistan,2023,0,0,default age and gender,<NA>,0.69
+mcv1,MCV1,routine,AFG,Afghanistan,2024,0,0,default age and gender,<NA>,0.7
+mcv1,MCV1,routine,AFG,Afghanistan,2025,0,0,default age and gender,<NA>,0.71
+mcv1,MCV1,routine,AFG,Afghanistan,2026,0,0,default age and gender,<NA>,0.72
+mcv1,MCV1,routine,AFG,Afghanistan,2027,0,0,default age and gender,<NA>,0.73
+mcv1,MCV1,routine,AFG,Afghanistan,2028,0,0,default age and gender,<NA>,0.74
+mcv1,MCV1,routine,AFG,Afghanistan,2029,0,0,default age and gender,<NA>,0.75
+mcv1,MCV1,routine,AFG,Afghanistan,2030,0,0,default age and gender,<NA>,0.76
+mcv1,MCV1,routine,AFG,Afghanistan,2031,0,0,default age and gender,<NA>,0.77
+mcv1,MCV1,routine,AFG,Afghanistan,2032,0,0,default age and gender,<NA>,0.78
+mcv1,MCV1,routine,AFG,Afghanistan,2033,0,0,default age and gender,<NA>,0.79
+mcv1,MCV1,routine,AFG,Afghanistan,2034,0,0,default age and gender,<NA>,0.8
+mcv1,MCV1,routine,AFG,Afghanistan,2035,0,0,default age and gender,<NA>,0.81
+mcv1,MCV1,routine,AFG,Afghanistan,2036,0,0,default age and gender,<NA>,0.82
+mcv1,MCV1,routine,AFG,Afghanistan,2037,0,0,default age and gender,<NA>,0.83
+mcv1,MCV1,routine,AFG,Afghanistan,2038,0,0,default age and gender,<NA>,0.84
+mcv1,MCV1,routine,AFG,Afghanistan,2039,0,0,default age and gender,<NA>,0.85
+mcv1,MCV1,routine,AFG,Afghanistan,2040,0,0,default age and gender,<NA>,0.86
+mcv1,MCV1,routine,AFG,Afghanistan,2041,0,0,default age and gender,<NA>,0.87
+mcv1,MCV1,routine,AFG,Afghanistan,2042,0,0,default age and gender,<NA>,0.88
+mcv1,MCV1,routine,AFG,Afghanistan,2043,0,0,default age and gender,<NA>,0.89
+mcv1,MCV1,routine,AFG,Afghanistan,2044,0,0,default age and gender,<NA>,0.9
+mcv1,MCV1,routine,AFG,Afghanistan,2045,0,0,default age and gender,<NA>,0.91
+mcv1,MCV1,routine,AFG,Afghanistan,2046,0,0,default age and gender,<NA>,0.92
+mcv1,MCV1,routine,AFG,Afghanistan,2047,0,0,default age and gender,<NA>,0.93
+mcv1,MCV1,routine,AFG,Afghanistan,2048,0,0,default age and gender,<NA>,0.94
+mcv1,MCV1,routine,AFG,Afghanistan,2049,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2050,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2051,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2052,0,0,default age and gender,<NA>,0.95
@@ -804,7 +809,6 @@ mcv1,MCV1,routine,AFG,Afghanistan,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,AFG,Afghanistan,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,SDN,Sudan,2020,0,0,default age and gender,<NA>,0.91
 mcv1,MCV1,routine,SDN,Sudan,2021,0,0,default age and gender,<NA>,0.92
 mcv1,MCV1,routine,SDN,Sudan,2022,0,0,default age and gender,<NA>,0.93
 mcv1,MCV1,routine,SDN,Sudan,2023,0,0,default age and gender,<NA>,0.94
@@ -885,7 +889,6 @@ mcv1,MCV1,routine,SDN,Sudan,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SDN,Sudan,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SDN,Sudan,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SDN,Sudan,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2020,0,0,default age and gender,<NA>,0.89
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2021,0,0,default age and gender,<NA>,0.9
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2022,0,0,default age and gender,<NA>,0.91
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2023,0,0,default age and gender,<NA>,0.92
@@ -966,7 +969,6 @@ mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2097,0,0,default age and ge
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,TZA,"Tanzania, United Republic of",2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,NER,Niger,2020,0,0,default age and gender,<NA>,0.8
 mcv1,MCV1,routine,NER,Niger,2021,0,0,default age and gender,<NA>,0.81
 mcv1,MCV1,routine,NER,Niger,2022,0,0,default age and gender,<NA>,0.82
 mcv1,MCV1,routine,NER,Niger,2023,0,0,default age and gender,<NA>,0.83
@@ -1047,7 +1049,6 @@ mcv1,MCV1,routine,NER,Niger,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NER,Niger,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NER,Niger,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,NER,Niger,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,SOM,Somalia,2020,0,0,default age and gender,<NA>,0.47
 mcv1,MCV1,routine,SOM,Somalia,2021,0,0,default age and gender,<NA>,0.48
 mcv1,MCV1,routine,SOM,Somalia,2022,0,0,default age and gender,<NA>,0.49
 mcv1,MCV1,routine,SOM,Somalia,2023,0,0,default age and gender,<NA>,0.5
@@ -1128,7 +1129,6 @@ mcv1,MCV1,routine,SOM,Somalia,2097,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SOM,Somalia,2098,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SOM,Somalia,2099,0,0,default age and gender,<NA>,0.95
 mcv1,MCV1,routine,SOM,Somalia,2100,0,0,default age and gender,<NA>,0.95
-mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2020,0,0,default age and gender,<NA>,0.58
 mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2021,0,0,default age and gender,<NA>,0.59
 mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2022,0,0,default age and gender,<NA>,0.6
 mcv1,MCV1,routine,COD,"Congo, the Democratic Republic of the",2023,0,0,default age and gender,<NA>,0.61

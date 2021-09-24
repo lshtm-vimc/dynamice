@@ -400,6 +400,15 @@ MCV1,TZA,"Tanzania, United Republic of",2017,0
 MCV1,TZA,"Tanzania, United Republic of",2018,0
 MCV1,TZA,"Tanzania, United Republic of",2019,0
 MCV1,IND,India,2020,0
+MCV1,NGA,Nigeria,2020,0
+MCV1,PAK,Pakistan,2020,0
+MCV1,ETH,Ethiopia,2020,0
+MCV1,AFG,Afghanistan,2020,0
+MCV1,SDN,Sudan,2020,0
+MCV1,TZA,"Tanzania, United Republic of",2020,0
+MCV1,NER,Niger,2020,0
+MCV1,SOM,Somalia,2020,0
+MCV1,COD,"Congo, the Democratic Republic of the",2020,0
 MCV1,IND,India,2021,0
 MCV1,IND,India,2022,0
 MCV1,IND,India,2023,0
@@ -480,7 +489,6 @@ MCV1,IND,India,2097,0
 MCV1,IND,India,2098,0
 MCV1,IND,India,2099,0
 MCV1,IND,India,2100,0
-MCV1,NGA,Nigeria,2020,0
 MCV1,NGA,Nigeria,2021,0
 MCV1,NGA,Nigeria,2022,0
 MCV1,NGA,Nigeria,2023,0
@@ -561,7 +569,6 @@ MCV1,NGA,Nigeria,2097,0
 MCV1,NGA,Nigeria,2098,0
 MCV1,NGA,Nigeria,2099,0
 MCV1,NGA,Nigeria,2100,0
-MCV1,PAK,Pakistan,2020,0
 MCV1,PAK,Pakistan,2021,0
 MCV1,PAK,Pakistan,2022,0
 MCV1,PAK,Pakistan,2023,0
@@ -642,7 +649,6 @@ MCV1,PAK,Pakistan,2097,0
 MCV1,PAK,Pakistan,2098,0
 MCV1,PAK,Pakistan,2099,0
 MCV1,PAK,Pakistan,2100,0
-MCV1,ETH,Ethiopia,2020,0
 MCV1,ETH,Ethiopia,2021,0
 MCV1,ETH,Ethiopia,2022,0
 MCV1,ETH,Ethiopia,2023,0
@@ -723,7 +729,6 @@ MCV1,ETH,Ethiopia,2097,0
 MCV1,ETH,Ethiopia,2098,0
 MCV1,ETH,Ethiopia,2099,0
 MCV1,ETH,Ethiopia,2100,0
-MCV1,AFG,Afghanistan,2020,0
 MCV1,AFG,Afghanistan,2021,0
 MCV1,AFG,Afghanistan,2022,0
 MCV1,AFG,Afghanistan,2023,0
@@ -804,7 +809,6 @@ MCV1,AFG,Afghanistan,2097,0
 MCV1,AFG,Afghanistan,2098,0
 MCV1,AFG,Afghanistan,2099,0
 MCV1,AFG,Afghanistan,2100,0
-MCV1,SDN,Sudan,2020,0
 MCV1,SDN,Sudan,2021,0
 MCV1,SDN,Sudan,2022,0
 MCV1,SDN,Sudan,2023,0
@@ -885,7 +889,6 @@ MCV1,SDN,Sudan,2097,0
 MCV1,SDN,Sudan,2098,0
 MCV1,SDN,Sudan,2099,0
 MCV1,SDN,Sudan,2100,0
-MCV1,TZA,"Tanzania, United Republic of",2020,0
 MCV1,TZA,"Tanzania, United Republic of",2021,0
 MCV1,TZA,"Tanzania, United Republic of",2022,0
 MCV1,TZA,"Tanzania, United Republic of",2023,0
@@ -966,7 +969,6 @@ MCV1,TZA,"Tanzania, United Republic of",2097,0
 MCV1,TZA,"Tanzania, United Republic of",2098,0
 MCV1,TZA,"Tanzania, United Republic of",2099,0
 MCV1,TZA,"Tanzania, United Republic of",2100,0
-MCV1,NER,Niger,2020,0
 MCV1,NER,Niger,2021,0
 MCV1,NER,Niger,2022,0
 MCV1,NER,Niger,2023,0
@@ -1047,7 +1049,6 @@ MCV1,NER,Niger,2097,0
 MCV1,NER,Niger,2098,0
 MCV1,NER,Niger,2099,0
 MCV1,NER,Niger,2100,0
-MCV1,SOM,Somalia,2020,0
 MCV1,SOM,Somalia,2021,0
 MCV1,SOM,Somalia,2022,0
 MCV1,SOM,Somalia,2023,0
@@ -1128,7 +1129,6 @@ MCV1,SOM,Somalia,2097,0
 MCV1,SOM,Somalia,2098,0
 MCV1,SOM,Somalia,2099,0
 MCV1,SOM,Somalia,2100,0
-MCV1,COD,"Congo, the Democratic Republic of the",2020,0
 MCV1,COD,"Congo, the Democratic Republic of the",2021,0
 MCV1,COD,"Congo, the Democratic Republic of the",2022,0
 MCV1,COD,"Congo, the Democratic Republic of the",2023,0
