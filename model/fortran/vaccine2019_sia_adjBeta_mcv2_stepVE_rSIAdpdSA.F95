@@ -95,10 +95,16 @@ contains
 		
 		if( doses .le. zeroreach ) then
 		  sia1 = doses / zero_dose_children
-			sia2 = 0
+		  sia2 = real(0, dp)
 		else
-		  sia1 = tempreach
-		  sia2 = (doses-zeroreach)/(sum(pop(agefrom:ageto)) - zero_dose_children)
+		  non_zero_dose_children = sum(pop(agefrom:ageto)) - zero_dose_children
+		  if (non_zero_dose_children .gt. (doses-zeroreach)) then
+		    sia1 = tempreach
+		    sia2 = (doses-zeroreach)/non_zero_dose_children
+		  else
+		    sia1 = (doses-non_zero_dose_children)/zero_dose_children
+		    sia2 = real(1, dp)
+		  endif
 		endif
 		
 		if( sia1 .gt. 1) then
@@ -434,8 +440,8 @@ program measles
   ! SIA_b = real(-2.074887, dp)
   
   ! intercept and slope values from weighted logistic regression
-  SIA_a = real(-2.621733, dp)
-  SIA_b = real(5.238249, dp)
+  SIA_a = real(-2.93678, dp) ! main: -2.621733
+  SIA_b = real(6.33749, dp) ! main: 5.238249
   
 	!
 	!  To; (just for sensitivity analysis and error checking, reverting back to above)

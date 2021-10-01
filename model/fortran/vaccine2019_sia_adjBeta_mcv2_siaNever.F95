@@ -49,9 +49,9 @@ contains
 		real(dp), intent(in) :: scov     ! input - overall SIA coverage
 		integer, intent(in)  :: agefrom
 		integer, intent(in)  :: ageto
-		real(dp)             :: tempreach
+		!real(dp)             :: tempreach
 		real(dp)             :: doses
-		real(dp)             :: zeroreach
+		!real(dp)             :: zeroreach
 		real(dp), dimension(:), intent(in)  :: pop
 		real(dp), dimension(:), intent(in)  :: susceptibles
 		real(dp), dimension(:), intent(in)  :: unvacI
@@ -60,6 +60,9 @@ contains
 		real(dp), intent(out)  :: sia2
 		real(dp)             :: zero_dose_children
 		real(dp)             :: non_zero_dose_children
+		real(dp)             :: never_reach_children
+		real(dp)             :: total_population
+		real(dp)             :: pro_dose_zero
 
     ! --------------------------------------------------------------------------
 		! find what the SIA reach should be from the simple linear regression
@@ -74,25 +77,37 @@ contains
 		! --------------------------------------------------------------------------
 		! find what the SIA reach should be from the weighted logistic regression
 		! tempreach = exp(a + b * m1cov) / (1 + exp(a + b * m1cov))
-		tempreach = exp(a + b * scov) / (1 + exp(a + b * scov))
+		!tempreach = exp(a + b * scov) / (1 + exp(a + b * scov))
 		! --------------------------------------------------------------------------
 		
-		doses = scov*sum(pop(agefrom:ageto))
+		total_population = sum(pop(agefrom:ageto))
+		doses = scov*total_population
 		
 		! --------------------------------------------------------------------------
     zero_dose_children = sum(susceptibles(agefrom:ageto)) &
                         + sum(unvacI(agefrom:ageto)) &
                         + sum(unvacR(agefrom:ageto))
-                        
-    zeroreach = tempreach * zero_dose_children
+    
+	! calculate 'nenver reach population'                    
+    never_reach_children = real(0.077, dp)*total_population
+	if (zero_dose_children <= never_reach_children) then
+	   sia1 = 0
+	   sia2 = doses/(total_population - zero_dose_children)
+	else
+	   pro_dose_zero = (zero_dose_children - never_reach_children)/(total_population - never_reach_children)
+	   sia1 = doses*pro_dose_zero/zero_dose_children
+	   sia2 = doses*(1-pro_dose_zero)/(total_population - zero_dose_children)
+	endif
+	
+	!zeroreach = tempreach * (zero_dose_children - never_reach_children)
 		
-		if( doses .le. zeroreach ) then
-		  sia1 = doses / zero_dose_children
-			sia2 = 0
-		else
-		  sia1 = tempreach
-		  sia2 = (doses-zeroreach)/(sum(pop(agefrom:ageto)) - zero_dose_children)
-		endif
+	!	if( doses .le. zeroreach ) then
+	!	  sia1 = doses / zero_dose_children
+	!		sia2 = 0
+	!	else
+	!	  sia1 = tempreach
+	!	  sia2 = (doses-zeroreach)/(sum(pop(agefrom:ageto)) - zero_dose_children)
+	!	endif
 		
 		if( sia1 .gt. 1) then
 		  sia1 = 1
@@ -362,12 +377,12 @@ program measles
 	! allocate(a1(uu))
 	
 	! memory allocation should be large enough to handle multiple SIAs over multiple years
-	allocate(coverage(uu*2))
-	allocate(t_sia(uu*2))
-	allocate(t_run(uu*2))
-	allocate(sia(uu*2))
-	allocate(a0(uu*2))
-	allocate(a1(uu*2))
+	allocate(coverage(uu*3))
+	allocate(t_sia(uu*3))
+	allocate(t_run(uu*3))
+	allocate(sia(uu*3))
+	allocate(a0(uu*3))
+	allocate(a1(uu*3))
 	! ----------------------------------------------------------------------------
 	
 	allocate(M(amax+1,tmax+1))
