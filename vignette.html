@@ -384,11 +384,12 @@ if (!is.na(adj.fixR0)){
 <div id="set-up-scenarios" class="section level4">
 <h4>Set up scenarios</h4>
 <p>Three types of assumptions are included for evaluation: 1. Contact matrices (POLYMOD-GBR, synthetic, proportional, uniform) 2. Age trend for vaccine efficacy (step, linear functions) 3. Proportion of SIA in zero-dose children (random, logistic function) Some assumptions are modified in fortran and others in R.</p>
-<pre class="r"><code>fortran_names &lt;- c(&quot;vaccine2019_sia_adjBeta_mcv2.exe&quot;,   # most updated version
+<pre class="r"><code>fortran_names &lt;- c(&quot;vaccine2019_sia_adjBeta_mcv2_rSIAdpd.exe&quot;,          # most updated version
                    &quot;vaccine2019_sia_adjBeta_mcv2_nodpdSIA.exe&quot;,
-                   &quot;vaccine2019_sia_adjBeta_mcv2_stepVE.exe&quot;,
+                   &quot;vaccine2019_sia_adjBeta_mcv2_stepVE_rSIAdpd.exe&quot;,
                    &quot;vaccine2019_sia_adjBeta_mcv2_nodpdSIA_stepVE.exe&quot;,
-                   &quot;vaccine2019_sia_adjBeta_mcv2_stepVE_SIAsa.exe&quot;  # sensitivity analysis for SIA delivery
+                   &quot;vaccine2019_sia_adjBeta_mcv2_stepVE_rSIAdpdSA.exe&quot;, # sensitivity analysis for SIA delivery
+                   &quot;vaccine2019_sia_adjBeta_mcv2_stepVE_rSIAnever.exe&quot;  # alternative assumption for SIA delivery
                    )
                       
 contact_mats &lt;- c(&quot;syn&quot;, &quot;polymod&quot;, &quot;prpmix&quot;, &quot;unimix&quot;)
@@ -401,11 +402,12 @@ main &lt;- list (
                    &quot;ContactPrp&quot;,    # (5) Base + proportional mixing
                    &quot;ContactUni&quot;,    # (6) Base + uniform mixing
                    &quot;Update&quot;,        # (7) Update: linear VE + synthetic matrix + non-random SIA delivery
-                   &quot;SIAdeliverSA&quot;   # (8) Base + sensitivity analysis for non-random SIA delivery
+                   &quot;SIAdeliverSA&quot;,  # (8) Base + sensitivity analysis for non-random SIA delivery
+                   &quot;SIAnever&quot;       # (9) Base + SIA delivery assuming 7.7% never reached
                   ),
-  fortran_model = fortran_names [c(4, 2, 3, 4, 4, 4, 1, 5)],
-  contact_mat   = contact_mats  [c(2, 2, 2, 1, 3, 4, 1, 2)],
-  step_ve       =                c(T, F, T, T, T, T, F, T)
+  fortran_model = fortran_names [c(4, 2, 3, 4, 4, 4, 1, 5, 6)],
+  contact_mat   = contact_mats  [c(2, 2, 2, 1, 3, 4, 1, 2, 2)],
+  step_ve       =                c(T, F, T, T, T, T, F, T, T)
 )</code></pre>
 <hr />
 </div>
@@ -433,7 +435,7 @@ print (paste0 (&quot;Evaluation started: &quot;, main$scenarios[imain]))</code><
 <h4>Assign file paths and global variables</h4>
 <pre class="r"><code>var &lt;- list (
   # vaccine coverage
-  vaccine_coverage_folder           = &quot;vac_coverage_top10/&quot;,
+  vaccine_coverage_folder           = &quot;vac_coverage_top10/base case/&quot;,
   coverage_prefix                   = &quot;coverage&quot;,
   touchstone                        = &quot;_&quot;,
   antigen                           = NULL,
@@ -454,10 +456,10 @@ print (paste0 (&quot;Evaluation started: &quot;, main$scenarios[imain]))</code><
 
   # countries - specify iso3 codes to analyse only these countries
   #             or set it to &quot;all&quot; to analyse all included countries
-  countries                         = c(&quot;PAK&quot;),#,&quot;IND&quot;
+  countries                         = c(&quot;PAK&quot;,&quot;IND&quot;),#
 
   cluster_cores                     = 1,    # number of cores 
-  psa                               = 0     # psa runs; 0 for single central run
+  psa                               = 5     # psa runs; 0 for single central run
 )
 
 # for central run: set number of runs to 0 (var$psa = 0)
@@ -470,8 +472,12 @@ if (var$psa == 0) {
 }
 
 # folders for burden estimate results
-dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Wolfson/&quot;)), recursive = T)
-dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Portnoy/&quot;)), recursive = T)</code></pre>
+dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Wolfson/&quot;)), recursive = T)</code></pre>
+<pre><code>## Warning in dir.create(file.path(paste0(getwd(), &quot;/&quot;, burden_estimate_folder, :
+## &#39;D:\dynamice\stochastic_burden_estimate\Wolfson&#39; already exists</code></pre>
+<pre class="r"><code>dir.create (file.path (paste0 (getwd(), &quot;/&quot;, burden_estimate_folder, &quot;Portnoy/&quot;)), recursive = T)</code></pre>
+<pre><code>## Warning in dir.create(file.path(paste0(getwd(), &quot;/&quot;, burden_estimate_folder, :
+## &#39;D:\dynamice\stochastic_burden_estimate\Portnoy&#39; already exists</code></pre>
 <hr />
 </div>
 <div id="set-up-vaccination-strategies" class="section level4">
@@ -578,7 +584,16 @@ burden_estimate_file &lt;- runScenario (
   )</code></pre>
 <pre><code>## [1] &quot;no openMPI&quot;</code></pre>
 <pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
-<pre><code>## [1] &quot;Generating data for model...&quot;</code></pre>
+<pre><code>## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;
+## [1] &quot;Generating data for model...&quot;</code></pre>
 <pre class="r"><code># estimate deaths and DALYs by Wolfson and Portnoy&#39;s methods
 estimate_deaths_dalys (cfr_option             = &quot;Wolfson&quot;,
                        burden_estimate_file   = burden_estimate_file,

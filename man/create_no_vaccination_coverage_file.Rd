@@ -22,8 +22,10 @@ file of any of other vaccination scenarios. This is done because the coverage
  file downloaded from VIMC for the no-vaccination scenario is empty.
 }
 \examples{
+\dontrun{
 create_no_vaccination_coverage_file (
  no_vaccination_coverage_file = "no-vaccination.csv",
  vaccination_coverage_file    = "mcv1-default.csv"
  )
+ }
 }

@@ -21,14 +21,18 @@
 #' @param plot_folder A folder name for the diagnostic plots to be saved.
 #' @param group_name A modelling group name used by VIMC.
 #' @param countries A vector of ISO country codes for plotting.
-#' @param cfr_option The method used for specifying the trend of case fatality
+#' @param cfr_options The method used for specifying the trend of case fatality
 #' ratios (CFRs): "Wolfson" or/and "Portnoy".
 #' @param psa Number of runs for probabilistic sensitivity analysis.
 #' @param start_year Beginning year of the plot.
 #' @param end_year End year of the plot.
 #' @param compare_plots A logical variable to determine whether to combine model
 #'  outputs across different scenarios and compare them in the same plot.
+#'
+#' @import ggplot2
+#'
 #' @examples
+#' \dontrun{
 #' diagnostic_plots (
 #'   vaccine_coverage_folder    = "vaccine_coverage/",
 #'   coverage_prefix            = "coverage",
@@ -45,6 +49,7 @@
 #'   start_year                 = 2000,
 #'   end_year                   = 2100,
 #'   compare_plots              = FALSE)
+#'   }
 diagnostic_plots <- function (vaccine_coverage_folder,
                               coverage_prefix,
                               touchstone,
@@ -184,7 +189,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           toplot = plotwhat[i]
 
-          p <- ggplot2::ggplot(burden_estimate [country == country_iso3_code],
+          p <- ggplot(burden_estimate [country == country_iso3_code],
                                aes(x = year, y = get(toplot))) +
             scale_x_continuous (breaks = scales::pretty_breaks ()) +
             stat_summary (fun = sum, geom = "line") +
@@ -233,7 +238,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           toplot = plotwhat [i]
 
-          p <- ggplot2::ggplot(all_burden [country == country_iso3_code],
+          p <- ggplot(all_burden [country == country_iso3_code],
                                aes(x     = year,
                                    y     = get (toplot),
                                    group = scenario,
@@ -291,7 +296,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           toplot = plotwhat [i]
 
-          p <- ggplot2::ggplot(all_burden_compare [country == country_iso3_code],
+          p <- ggplot(all_burden_compare [country == country_iso3_code],
                                aes(x     = year,
                                    y     = get (toplot),
                                    group = scenario,
@@ -341,7 +346,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           toplot = plotwhat [i]
 
-          p <- ggplot2::ggplot(all_burden_compare [country == country_iso3_code],
+          p <- ggplot(all_burden_compare [country == country_iso3_code],
                                aes(x     = scenario,
                                    y     = get (toplot),
                                    fill = factor (scenario))) +
@@ -400,7 +405,7 @@ diagnostic_plots <- function (vaccine_coverage_folder,
 
           toplot = plotwhat [i]
 
-          p <- ggplot2::ggplot(all_burden_compare [country == country_iso3_code],
+          p <- ggplot(all_burden_compare [country == country_iso3_code],
                                aes(x     = scenario,
                                    y     = get (toplot),
                                    fill = factor (scenario))) +

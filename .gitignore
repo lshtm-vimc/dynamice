@@ -13,4 +13,5 @@ stochastic_burden_estimate/
 data-raw/
 vac_coverage_upd/scenarios/
 model/fortran/measlesfunctions.mod
-inst/doc
+supp
+model/compiled/

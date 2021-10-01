@@ -40,7 +40,7 @@ runCountry(
   psa,
   psa_var,
   run_model,
-  remove_files
+  remove_files = F
 )
 }
 \arguments{
@@ -50,17 +50,17 @@ runCountry(
 
 \item{years}{A vector containing continuous calender years for simulation.}
 
-\item{vaccination}{A Numeric indicator that determines vaccination programmes
+\item{vaccination}{A numeric indicator that determines vaccination programmes
 for children: 0 - No vaccination, 1 - Only MCV1,  2 - MCV1 and MCV2.}
 
-\item{using_sia}{A numeric indicator that determines Whether supplementary
+\item{using_sia}{A numeric indicator that determines whether supplementary
 immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.}
 
 \item{dinf}{Duration of infection in days.}
 
 \item{gamma_tstep}{Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).}
 
-\item{amplitude}{A numeric variable for amplitude for seasonality.}
+\item{amplitude}{A numeric variable for amplitude of seasonality.}
 
 \item{take}{A 1*3 vector that denotes the level of vaccine protection using
 the 'take' ('all-or-not') assumption. Vaccine protection is assumed to vary
@@ -68,8 +68,8 @@ by age under a linear regression, with (1) and (2) elements of the vector
 representing the intercept and coefficient of the first dose, respectively.
 (3) element represents the vaccine protection by the second dose. Note that
 in the previous fortran model without the incorporation of age-related
-regression model, (1) and (2) elements were directly indicating protection of
- the first dose before and after 1 year old, respectively.}
+regression model, (1) and (2) elements reflected the protection of the first
+dose before and after 1 year old, respectively.}
 
 \item{degree}{A 1*3 vector that denotes the level of vaccine protection using
  the 'degree' ('leak') assumption. (1) and (2) elements represents the
@@ -77,7 +77,7 @@ regression model, (1) and (2) elements were directly indicating protection of
 (3) element shows that of the second dose. Note that the second dose only has
  an effect if \code{vaccine=2}.}
 
-\item{sia.method}{A Numeric indicator that determines how SIAs are carried
+\item{sia.method}{A numeric indicator that determines how SIAs are carried
 out: 1 - varying \code{take}, 2 - varying \code{degree}.}
 
 \item{c_coverage_routine}{A data frame for routine vaccination coverage under
@@ -89,8 +89,8 @@ for a specific country.}
 \item{c_timeliness}{A data frame for timeliness estimates by age for a
 specific country.}
 
-\item{contact_mat}{A character variable that indicates the assumption for
-contact pattern. "prpmix" - proportional mixing informed by age distribution
+\item{contact_mat}{A character variable that indicates the assumptions for
+contact patterns. "prpmix" - proportional mixing informed by age distribution
 of population, "unimix" -  uniform mixing (equal mixing probability across
 each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
 using local populations, and "syn" - country-specific synthetic matrix.}
@@ -127,7 +127,11 @@ outputs for the spin-up (equilibrium) period.}
 groups: 0 - all in annual age-strata, 1 - age between 0 and 2 in weekly
 age-strata and age between 3 and 100 in annual age-strata.}
 
-\item{debug_country}{A vector including ISO3 codes of country to debug, or *
+\item{debug_compartments}{A numeric variable that determines the compartments
+to output: 0 - number of cases, and 1 - each compartment.}
+
+\item{debug_country}{A vector including ISO3 country codes for countries to
+be included for debugging, or *
 to debug all countries.}
 
 \item{debug_relative}{A logical variable that determines the output format of
@@ -151,9 +155,6 @@ measles model.}
 
 \item{remove_files}{A logical variable that determines whether to remove
 output files after finishing a single country run.}
-
-\item{debug_compartment}{A numeric variable that determines the compartments
-to output: 0 - number of cases, and 1 - each compartment.}
 }
 \description{
 A function nested under \code{\link{runScenario}} to run the fortran codes
@@ -161,6 +162,7 @@ A function nested under \code{\link{runScenario}} to run the fortran codes
  probabilistic sensitivity analysis (PSA).
 }
 \examples{
+\dontrun{
 runCountry (
   ii                 = 2,
   iso3               = "BGD",
@@ -199,4 +201,5 @@ runCountry (
   run_model          = TRUE,
   remove_files       = FALSE
   )
+  }
 }

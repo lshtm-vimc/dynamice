@@ -47,6 +47,9 @@ model outputs for evaluation.Include a slash at the end.}
 
 \item{countries}{A vector of ISO country codes for plotting.}
 
+\item{cfr_options}{The method used for specifying the trend of case fatality
+ratios (CFRs): "Wolfson" or/and "Portnoy".}
+
 \item{psa}{Number of runs for probabilistic sensitivity analysis.}
 
 \item{start_year}{Beginning year of the plot.}
@@ -55,15 +58,13 @@ model outputs for evaluation.Include a slash at the end.}
 
 \item{compare_plots}{A logical variable to determine whether to combine model
 outputs across different scenarios and compare them in the same plot.}
-
-\item{cfr_option}{The method used for specifying the trend of case fatality
-ratios (CFRs): "Wolfson" or/and "Portnoy".}
 }
 \description{
 Create diagnostic plots of vaccine coverages and burden estimates (cases,
 deaths, dalys) for selected countries.
 }
 \examples{
+\dontrun{
 diagnostic_plots (
   vaccine_coverage_folder    = "vaccine_coverage/",
   coverage_prefix            = "coverage",
@@ -80,4 +81,5 @@ diagnostic_plots (
   start_year                 = 2000,
   end_year                   = 2100,
   compare_plots              = FALSE)
+  }
 }

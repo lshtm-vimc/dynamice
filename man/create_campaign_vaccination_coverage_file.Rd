@@ -23,8 +23,10 @@ coverage file for (routine + campaign) scenarios, by setting routine coverage
  they are only zeros to run campaign-only vaccination scenarios.
 }
 \examples{
+\dontrun{
 create_campaign_vaccination_coverage_file (
  campaign_only_vaccination_coverage_file    = "campaign-only-bestcase.csv",
  routine_campaign_vaccination_coverage_file = "campaign-bestcase.csv"
  )
+ }
 }

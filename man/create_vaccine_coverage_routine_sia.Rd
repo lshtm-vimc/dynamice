@@ -38,6 +38,7 @@ Generates files for routine programmes (MCV1, MCV2) and supplementary
 immunisation activities (SIAs) from the vaccine coverage files.
 }
 \examples{
+\dontrun{
   create_vaccine_coverage_routine_sia (
   vaccine_coverage_folder    = "vaccine_coverage/",
   vaccine_coverage_subfolder = "scenarios/",
@@ -47,4 +48,5 @@ immunisation activities (SIAs) from the vaccine coverage files.
   scenario_name              = "campaign-only-bestcase",
   rev_cov                    = TRUE
   )
+  }
 }

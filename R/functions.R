@@ -24,27 +24,27 @@
 #' @param ii Numeric order of the selected country for evaluation.
 #' @param iso3 ISO-3 code of the selected country.
 #' @param years A vector containing continuous calender years for simulation.
-#' @param vaccination A Numeric indicator that determines vaccination programmes
+#' @param vaccination A numeric indicator that determines vaccination programmes
 #'  for children: 0 - No vaccination, 1 - Only MCV1,  2 - MCV1 and MCV2.
-#' @param using_sia A numeric indicator that determines Whether supplementary
+#' @param using_sia A numeric indicator that determines whether supplementary
 #' immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.
 #' @param dinf Duration of infection in days.
 #' @param gamma_tstep Recovery rate, with a unit of 1/(\code{dinf}*\code{tstep}*year).
-#' @param amplitude A numeric variable for amplitude for seasonality.
+#' @param amplitude A numeric variable for amplitude of seasonality.
 #' @param take A 1*3 vector that denotes the level of vaccine protection using
 #' the 'take' ('all-or-not') assumption. Vaccine protection is assumed to vary
 #' by age under a linear regression, with (1) and (2) elements of the vector
 #' representing the intercept and coefficient of the first dose, respectively.
 #' (3) element represents the vaccine protection by the second dose. Note that
 #' in the previous fortran model without the incorporation of age-related
-#' regression model, (1) and (2) elements were directly indicating protection of
-#'  the first dose before and after 1 year old, respectively.
+#' regression model, (1) and (2) elements reflected the protection of the first
+#' dose before and after 1 year old, respectively.
 #' @param degree A 1*3 vector that denotes the level of vaccine protection using
 #'  the 'degree' ('leak') assumption. (1) and (2) elements represents the
 #'  protection of the first dose before and after 1 year old, respectively, and
 #' (3) element shows that of the second dose. Note that the second dose only has
 #'  an effect if \code{vaccine=2}.
-#' @param sia.method A Numeric indicator that determines how SIAs are carried
+#' @param sia.method A numeric indicator that determines how SIAs are carried
 #' out: 1 - varying \code{take}, 2 - varying \code{degree}.
 #' @param c_coverage_routine A data frame for routine vaccination coverage under
 #' a selected scenario for a specific country.
@@ -52,8 +52,8 @@
 #'  for a specific country.
 #' @param c_timeliness A data frame for timeliness estimates by age for a
 #' specific country.
-#' @param contact_mat A character variable that indicates the assumption for
-#' contact pattern. "prpmix" - proportional mixing informed by age distribution
+#' @param contact_mat A character variable that indicates the assumptions for
+#' contact patterns. "prpmix" - proportional mixing informed by age distribution
 #' of population, "unimix" -  uniform mixing (equal mixing probability across
 #' each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
 #' using local populations, and "syn" - country-specific synthetic matrix.
@@ -78,9 +78,10 @@
 #' @param debug_age A numeric variable that determines the format of output age
 #' groups: 0 - all in annual age-strata, 1 - age between 0 and 2 in weekly
 #' age-strata and age between 3 and 100 in annual age-strata.
-#' @param debug_compartment A numeric variable that determines the compartments
+#' @param debug_compartments A numeric variable that determines the compartments
 #' to output: 0 - number of cases, and 1 - each compartment.
-#' @param debug_country A vector including ISO3 codes of country to debug, or *
+#' @param debug_country A vector including ISO3 country codes for countries to
+#' be included for debugging, or *
 #' to debug all countries.
 #' @param debug_relative A logical variable that determines the output format of
 #' new cases: TRUE - proportion, and FALSE - absolute number.
@@ -96,7 +97,11 @@
 #' measles model.
 #' @param remove_files A logical variable that determines whether to remove
 #' output files after finishing a single country run.
+#'
+#' @import data.table
+#'
 #' @examples
+#' \dontrun{
 #' runCountry (
 #'   ii                 = 2,
 #'   iso3               = "BGD",
@@ -135,6 +140,7 @@
 #'   run_model          = TRUE,
 #'   remove_files       = FALSE
 #'   )
+#'   }
 runCountry <- function (
   #variables specific for loop
   ii,
@@ -182,7 +188,7 @@ runCountry <- function (
 
   #additional options
   run_model,
-  remove_files
+  remove_files = F # added by Han
 ) {
 
   # temporarily assign 3-letter-ISO code to Kosovo until Kosovo is assigned official ISO3-code
@@ -231,12 +237,12 @@ runCountry <- function (
     t_run <- t_end - (length(years):1) * tstep + 1
 
     # get timepoints for SIAs, assumed to take place at the beginning of a calendar year
-    # for multiple SIA rounds within a single year:
-    # if at mutually exclusive age groups, take as the same round and assume an interval of 1 timestep
-    # if at overlapping age groups, treat as separate rounds and assume a wider interval ex. 3 weeks by round(tstep/(52/3))
+    # for multiple SIA entries within a single year in a county:
+    # if they are entries of mutually exclusive age groups, assume occurring at a single timestep
+    # if they are different SIA rounds, assume occurring at a specified interval ex. 1 month (tstep/12)
 
     t_sia <- unlist (sapply (sort (unique (sia_year)), function (iyr, sia_year)
-      return (t_run[1] + tstep * (iyr - years[1]) + c(1:sum(sia_year == iyr) - 1)),
+      return (t_run[1] + tstep * (iyr - years[1]) + c(1:sum(sia_year == iyr) + round(tstep/12))),
       sia_year = sia_year
       ))
 
@@ -575,7 +581,8 @@ runCountry <- function (
   # if files are removed around the same time by different workers, position may change
   if(remove_files){
     files <- list.files(
-      paste0("./outcome/", "/",foldername,"/input/",psadir), full.names = TRUE
+      paste0("./outcome/", save_scenario, "/",foldername,"/input/",psadir),
+      pattern = iso3, full.names = TRUE
     )
     do.call(
       file.remove, list(
@@ -593,38 +600,38 @@ runCountry <- function (
 
 
 # ------------------------------------------------------------------------------
-#' Run the measles model for a selected vaccination scenario
+#' Run the measles model for a selected vaccination strategy
 #'
 #' A function that execute the measles model under a selected vaccination
-#' scenario, including a pre-specified set of countries and runs of probability
-#' sensitivity analysis (PSA).
+#' strategy, including a pre-specified set of countries and a set of probability
+#' sensitivity analysis (PSA) runs.
 #'
 #' @param vaccine_coverage_folder A folder name for the vaccine coverage files.
 #' @param vaccine_coverage_subfolder A folder name under the \code{x} folder for
 #' the vaccine coverage files.
-#' @param coverage_prefix A prefix used in the name of vaccine coverage file.
-#' @param antigen A disease name used by VIMC: "Measles".
-#' @param scenario_name A name of vaccination scenarios.
+#' @param coverage_prefix A prefix used in naming the vaccine coverage file.
+#' @param antigen Name of a disease: "Measles".
+#' @param scenario_name Name of the vaccination strategy selected.
 #' @param save_scenario A folder name for saving a selected scenario.
 #' @param burden_estimate_folder A folder name for the file which contains the
-#' model outputs for evaluation. Include a slash at the end.
+#' model outputs for evaluation. Include a forward slash at the end.
 #' @param group_name A modelling group name used by VIMC.
 #' @param log_name A file name for keeping a log.
 #' @param countries A vector of ISO-3 country codes used in the analysis. Use
 #' "all" to include all countries.
-#' @param cluster_cores A number of cores to be used in the cluster.
+#' @param cluster_cores Number of cores to be used for parallel computation.
 #' @param psa A numeric variable of the total runs for PSA. Use 0 to indicate a
 #' single run without PSA.
 #' @param vaccination A numeric indicator that determines vaccination programmes
 #'  for children: 0 - No vaccination, 1 - Only MCV1,  2 - MCV1 and MCV2.
-#' @param using_sia A numeric indicator that determines Whether supplementary
+#' @param using_sia A numeric indicator that determines whether supplementary
 #' immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.
 #' @param measles_model An executable file that processes Fortran codes of the
 #' measles model.
 #' @param debug_model A logical variable that determines whether to debug the
 #' model.
-#' @param contact_mat A character variable that indicates the assumption for
-#' contact pattern. "prpmix" - proportional mixing informed by age distribution
+#' @param contact_mat A character variable that indicates the assumptions for
+#' contact patterns. "prpmix" - proportional mixing informed by age distribution
 #' of population, "unimix" -  uniform mixing (equal mixing probability across
 #' each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
 #' using local populations, and "syn" - country-specific synthetic matrix.
@@ -634,7 +641,12 @@ runCountry <- function (
 #' should be applied.
 #' @param sim_years A numeric vector containing calendar years included for model
 #'  simulation.
+#'
+#' @import data.table
+#' @import foreach
+#'
 #' @examples
+#' \dontrun{
 #' runScenario (
 #'   vaccine_coverage_folder    = "vaccine_coverage_upd/",
 #'   vaccine_coverage_subfolder = "scenarios/"
@@ -656,6 +668,7 @@ runCountry <- function (
 #'   step_ve                    = FALSE,
 #'   sim_years                  = 1980:2100
 #'   )
+#'   }
 runScenario <- function (vaccine_coverage_folder    = "",
                          vaccine_coverage_subfolder = "",
                          coverage_prefix            = "",
@@ -767,10 +780,10 @@ runScenario <- function (vaccine_coverage_folder    = "",
   # load correct libraries when on cluster (using open MPI)
   if ("cluster_using_openmpi" %in% commandArgs()){
     using_openmpi <- TRUE
-    require(doMPI)
-    require(parallel)
-    cl <- startMPIcluster()
-    registerDoMPI(cl)
+    # require(doMPI) to delete
+   #  require(parallel)
+    cl <- doMPI::startMPIcluster()
+    doMPI::registerDoMPI(cl)
     print("using openMPI")
   } else {
     using_openmpi <- FALSE
@@ -1247,19 +1260,22 @@ runScenario <- function (vaccine_coverage_folder    = "",
 #' rates (CFRs) to the number of cases, and then calculates the
 #' disability-adjusted years (DALYs)
 #'
-#' @param cfr_options Methods for CFR estimates: "Wolfson" or/and "Portnoy".
-#' @param burden_estimate_file A file name for model outputs to be saved.
-#' @param burden_estimate_folder A folder name for the file which contains the
-#' model outputs for evaluation. Include a slash at the end.
-#' @param vimc_scenario A scenario name for vaccine coverage used in
-#' \code{data_cfr_portnoy.rda}, for extracting CFR estiamtes by the Portnoy
-#' method.
-#' @param portnoy_scenario A scenario name for future CFR trends when using the
+#' @param cfr_option Methods for CFR estimates: "Wolfson" or/and "Portnoy".
+#' @param burden_estimate_file File name for model outputs to be saved.
+#' @param burden_estimate_folder Folder name where \code{burden_estimate_file} is
+#'  saved. Include a forward slash at the end.
+#' @param vimc_scenario Name for vaccine strategy used in \code{data_cfr_portnoy.rda},
+#'  for extracting CFR estimates by the Portnoy method.
+#' @param portnoy_scenario Scenario name for future CFR trends used in the
 #' Portnoy method: "s4" - declining after 2018, or "s6" - staying stagnant at
 #' the 2018 level.
 #' @param psa A numeric variable of the total runs for PSA. Use 0 to indicate a
-#' single run without PSA.
+#' single run without PSA (central estimate).
+#'
+#' @import data.table
+#'
 #' @examples
+#' \dontrun{
 #' estimate_deaths_dalys (
 #'  cfr_option             = "Portnoy",
 #'  burden_estimate_file   = burden_estimate_file,
@@ -1268,6 +1284,7 @@ runScenario <- function (vaccine_coverage_folder    = "",
 #'  portnoy_scenario       = "s6",
 #'  psa                    = 0
 #'  )
+#'  }
 # ------------------------------------------------------------------------------
 #   save results in corresponding cfr_option subfolder
 #   append cfr_option to burden estimates file
@@ -1283,6 +1300,10 @@ estimate_deaths_dalys <- function (cfr_option,
   # read burden estimates (primarily cases)
   burden <- fread (file = paste0 (burden_estimate_folder,
                                   burden_estimate_file) )
+
+  if (psa > 0) {
+    psa_var	<- fread("psa_variables.csv")
+  }
 
   # ----------------------------------------------------------------------------
   # use CFRs -- Wolfson
@@ -1300,6 +1321,7 @@ estimate_deaths_dalys <- function (cfr_option,
       burden <- cfr [burden,
                      .(run_id, disease, year, age, i.country, country_name, cohort_size, cases, CFR, remain_lexp),
                      on = .(country_code = country) ]
+      burden <- burden [psa_var[, .(run_id, mortality_input)], on = .(run_id = run_id)]
     } else {
       burden <- cfr [burden,
                      .(disease, year, age, i.country, country_name, cohort_size, cases, CFR, remain_lexp),
@@ -1308,12 +1330,16 @@ estimate_deaths_dalys <- function (cfr_option,
 
     # estimate deaths
     # cfrs for ages above 5 years are half the cfr values for ages below 5 years
-    burden [age <  5, deaths := cases * CFR  ]
-    burden [age >= 5, deaths := cases * CFR/2]
+    if (psa > 0) {
+      burden [age <  5, deaths := cases * CFR     * mortality_input]
+      burden [age >= 5, deaths := cases * (CFR/2) * mortality_input]
+    } else {
+      burden [age <  5, deaths := cases * CFR  ]
+      burden [age >= 5, deaths := cases * CFR/2]
+    }
 
     # rename country column
     setnames (burden, old = "i.country", new = "country")
-
   }
 
 
@@ -1360,6 +1386,7 @@ estimate_deaths_dalys <- function (cfr_option,
                      .(run_id, disease, year, age, country, country_name, cohort_size, cases, over5, under5, remain_lexp),
                      on = .(country_code = country,
                             year         = year) ]
+      burden <- burden [psa_var[, .(run_id, mortality_input)], on = .(run_id = run_id)]
     } else {
       burden <- cfr [burden,
                      .(disease, year, age, country, country_name, cohort_size, cases, over5, under5, remain_lexp),
@@ -1367,13 +1394,15 @@ estimate_deaths_dalys <- function (cfr_option,
                             year         = year) ]
     }
 
-    # estimate deaths for ages under 5 years
-    burden [age < 5, deaths := cases * under5]
-
-    # estimate deaths for ages over 5 years
-    burden [age >= 5, deaths := cases * over5]
+    # estimate deaths for ages under 5 years and over 5 years
+    if (psa > 0) {
+      burden [age <  5, deaths := cases * under5 * mortality_input]
+      burden [age >= 5, deaths := cases * over5  * mortality_input]
+    } else {
+      burden [age <  5, deaths := cases * under5]
+      burden [age >= 5, deaths := cases * over5 ]
+    }
   }
-
 
   # ----------------------------------------------------------------------------
   # DALYs

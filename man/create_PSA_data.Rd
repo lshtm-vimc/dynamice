@@ -25,5 +25,7 @@ assumption, (4) "mortality_input"-proportion of change in case fatality
 ratios.
 }
 \examples{
-create_PSA_data (psa = 200, seed_state = 1)
+create_PSA_data (psa = 20,
+                 seed_state = 1,
+                 psadat_filename = "psa_variable.csv")
 }

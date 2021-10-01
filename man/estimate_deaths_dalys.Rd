@@ -14,21 +14,20 @@ estimate_deaths_dalys(
 )
 }
 \arguments{
-\item{burden_estimate_file}{A file name for model outputs to be saved.}
+\item{burden_estimate_file}{File name for model outputs to be saved.}
 
-\item{burden_estimate_folder}{A folder name for the file which contains the
-model outputs for evaluation. Include a slash at the end.}
+\item{burden_estimate_folder}{Folder name where \code{burden_estimate_file} is
+saved. Include a forward slash at the end.}
 
-\item{vimc_scenario}{A scenario name for vaccine coverage used in
-\code{data_cfr_portnoy.rda}, for extracting CFR estiamtes by the Portnoy
-method.}
+\item{vimc_scenario}{Name for vaccine strategy used in \code{data_cfr_portnoy.rda},
+for extracting CFR estimates by the Portnoy method.}
 
-\item{portnoy_scenario}{A scenario name for future CFR trends when using the
+\item{portnoy_scenario}{Scenario name for future CFR trends used in the
 Portnoy method: "s4" - declining after 2018, or "s6" - staying stagnant at
 the 2018 level.}
 
 \item{psa}{A numeric variable of the total runs for PSA. Use 0 to indicate a
-single run without PSA.}
+single run without PSA (central estimate).}
 
 \item{cfr_options}{Methods for CFR estimates: "Wolfson" or/and "Portnoy".}
 }
@@ -38,6 +37,7 @@ rates (CFRs) to the number of cases, and then calculates the
 disability-adjusted years (DALYs)
 }
 \examples{
+\dontrun{
 estimate_deaths_dalys (
  cfr_option             = "Portnoy",
  burden_estimate_file   = burden_estimate_file,
@@ -46,4 +46,5 @@ estimate_deaths_dalys (
  portnoy_scenario       = "s6",
  psa                    = 0
  )
+ }
 }

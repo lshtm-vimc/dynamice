@@ -5,5 +5,7 @@
 ^central_burden_estimate$
 ^stochastic_burden_estimate$
 ^plots$
-^test_log.txt
-^progress.txt
+^test_log
+^progress
+^supp$
+^model$

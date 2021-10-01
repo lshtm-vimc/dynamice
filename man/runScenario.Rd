@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{runScenario}
 \alias{runScenario}
-\title{Run the measles model for a selected vaccination scenario}
+\title{Run the measles model for a selected vaccination strategy}
 \usage{
 runScenario(
   vaccine_coverage_folder = "",
@@ -32,16 +32,16 @@ runScenario(
 \item{vaccine_coverage_subfolder}{A folder name under the \code{x} folder for
 the vaccine coverage files.}
 
-\item{coverage_prefix}{A prefix used in the name of vaccine coverage file.}
+\item{coverage_prefix}{A prefix used in naming the vaccine coverage file.}
 
-\item{antigen}{A disease name used by VIMC: "Measles".}
+\item{antigen}{Name of a disease: "Measles".}
 
-\item{scenario_name}{A name of vaccination scenarios.}
+\item{scenario_name}{Name of the vaccination strategy selected.}
 
 \item{save_scenario}{A folder name for saving a selected scenario.}
 
 \item{burden_estimate_folder}{A folder name for the file which contains the
-model outputs for evaluation. Include a slash at the end.}
+model outputs for evaluation. Include a forward slash at the end.}
 
 \item{group_name}{A modelling group name used by VIMC.}
 
@@ -50,7 +50,7 @@ model outputs for evaluation. Include a slash at the end.}
 \item{countries}{A vector of ISO-3 country codes used in the analysis. Use
 "all" to include all countries.}
 
-\item{cluster_cores}{A number of cores to be used in the cluster.}
+\item{cluster_cores}{Number of cores to be used for parallel computation.}
 
 \item{psa}{A numeric variable of the total runs for PSA. Use 0 to indicate a
 single run without PSA.}
@@ -58,7 +58,7 @@ single run without PSA.}
 \item{vaccination}{A numeric indicator that determines vaccination programmes
 for children: 0 - No vaccination, 1 - Only MCV1,  2 - MCV1 and MCV2.}
 
-\item{using_sia}{A numeric indicator that determines Whether supplementary
+\item{using_sia}{A numeric indicator that determines whether supplementary
 immunisation activities (SIAs) are implemented: 0 - no SIA, 1 - with SIA.}
 
 \item{measles_model}{An executable file that processes Fortran codes of the
@@ -67,8 +67,8 @@ measles model.}
 \item{debug_model}{A logical variable that determines whether to debug the
 model.}
 
-\item{contact_mat}{A character variable that indicates the assumption for
-contact pattern. "prpmix" - proportional mixing informed by age distribution
+\item{contact_mat}{A character variable that indicates the assumptions for
+contact patterns. "prpmix" - proportional mixing informed by age distribution
 of population, "unimix" -  uniform mixing (equal mixing probability across
 each age year), "polymod" - POLYMOD Great Britain physical contacts expanded
 using local populations, and "syn" - country-specific synthetic matrix.}
@@ -83,10 +83,11 @@ simulation.}
 }
 \description{
 A function that execute the measles model under a selected vaccination
-scenario, including a pre-specified set of countries and runs of probability
-sensitivity analysis (PSA).
+strategy, including a pre-specified set of countries and a set of probability
+sensitivity analysis (PSA) runs.
 }
 \examples{
+\dontrun{
 runScenario (
   vaccine_coverage_folder    = "vaccine_coverage_upd/",
   vaccine_coverage_subfolder = "scenarios/"
@@ -108,4 +109,5 @@ runScenario (
   step_ve                    = FALSE,
   sim_years                  = 1980:2100
   )
+  }
 }
